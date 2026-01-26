@@ -13,6 +13,12 @@ import Tickets from "./pages/Tickets";
 import NewTicket from "./pages/NewTicket";
 import NotFound from "./pages/NotFound";
 
+// Passwordless auth pages
+import AuthLogin from "./pages/auth/Login";
+import VerifyOTP from "./pages/auth/VerifyOTP";
+import MagicLinkSent from "./pages/auth/MagicLinkSent";
+import AuthCallback from "./pages/auth/Callback";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -26,6 +32,13 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            
+            {/* Passwordless auth routes */}
+            <Route path="/auth/login" element={<AuthLogin />} />
+            <Route path="/auth/verify-otp" element={<VerifyOTP />} />
+            <Route path="/auth/magic-link-sent" element={<MagicLinkSent />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
+            
             <Route
               path="/dashboard"
               element={
