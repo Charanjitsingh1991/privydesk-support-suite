@@ -110,6 +110,36 @@ export type Database = {
         }
         Relationships: []
       }
+      otp_codes: {
+        Row: {
+          code: string
+          created_at: string | null
+          email: string
+          expires_at: string
+          id: string
+          type: string
+          used_at: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string | null
+          email: string
+          expires_at: string
+          id?: string
+          type: string
+          used_at?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string | null
+          email?: string
+          expires_at?: string
+          id?: string
+          type?: string
+          used_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -162,6 +192,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      rate_limits: {
+        Row: {
+          action: string
+          attempts: number | null
+          blocked_until: string | null
+          first_attempt_at: string | null
+          id: string
+          identifier: string
+          last_attempt_at: string | null
+        }
+        Insert: {
+          action: string
+          attempts?: number | null
+          blocked_until?: string | null
+          first_attempt_at?: string | null
+          id?: string
+          identifier: string
+          last_attempt_at?: string | null
+        }
+        Update: {
+          action?: string
+          attempts?: number | null
+          blocked_until?: string | null
+          first_attempt_at?: string | null
+          id?: string
+          identifier?: string
+          last_attempt_at?: string | null
+        }
+        Relationships: []
       }
       subscription_plans: {
         Row: {
@@ -324,12 +384,34 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_rate_limit: {
+        Args: {
+          p_action: string
+          p_identifier: string
+          p_max_attempts: number
+          p_window_minutes: number
+        }
+        Returns: {
+          allowed: boolean
+          attempts_remaining: number
+          blocked_until: string
+        }[]
+      }
+      cleanup_expired_otps: { Args: never; Returns: undefined }
+      generate_otp: {
+        Args: { p_email: string; p_expires_minutes?: number; p_type: string }
+        Returns: string
+      }
       get_user_organization_id: { Args: never; Returns: string }
       get_user_role: {
         Args: never
         Returns: Database["public"]["Enums"]["user_role"]
       }
       is_super_admin: { Args: never; Returns: boolean }
+      verify_otp: {
+        Args: { p_code: string; p_email: string; p_type: string }
+        Returns: boolean
+      }
     }
     Enums: {
       org_status: "active" | "suspended" | "cancelled"
