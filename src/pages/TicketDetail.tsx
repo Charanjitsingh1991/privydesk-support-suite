@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useUser } from '@/hooks/useSession';
@@ -28,8 +28,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { MessageList } from '@/components/messages/MessageList';
-import { MessageComposer } from '@/components/messages/MessageComposer';
+import { MessageComposer, MessageComposerHandle } from '@/components/messages/MessageComposer';
 import { PresenceIndicator } from '@/components/messages/PresenceIndicator';
+import { AIInsightsPanel } from '@/components/tickets/AIInsightsPanel';
+import { AIResponseSuggester } from '@/components/tickets/AIResponseSuggester';
 import {
   ArrowLeft,
   MoreHorizontal,
@@ -80,6 +82,7 @@ export default function TicketDetail() {
   const [agents, setAgents] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const composerRef = useRef<MessageComposerHandle>(null);
 
   const canEdit = role === 'admin' || role === 'agent' || role === 'super_admin';
 
@@ -205,6 +208,17 @@ export default function TicketDetail() {
     }
     setUpdating(false);
   };
+
+  const handleApplyCategory = (category: string) => {
+    updateTicket({ category });
+  };
+
+  const handleApplySuggestion = (content: string) => {
+    composerRef.current?.insertContent(content);
+  };
+
+  // Get message contents for AI context
+  const messageContents = messages.map((m) => m.content);
 
   const handleCloseTicket = () => {
     updateTicket({ status: 'closed' });
@@ -387,7 +401,17 @@ export default function TicketDetail() {
 
             {/* Composer */}
             <Card className="overflow-hidden">
+              <div className="flex items-center justify-end px-3 pt-2 border-b pb-2">
+                <AIResponseSuggester
+                  subject={ticket.subject}
+                  description={ticket.description}
+                  messages={messageContents}
+                  onSelect={handleApplySuggestion}
+                  disabled={isClosed}
+                />
+              </div>
               <MessageComposer
+                ref={composerRef}
                 ticketId={ticket.id}
                 onMessageSent={refetchMessages}
                 onTyping={startTyping}
@@ -549,6 +573,18 @@ export default function TicketDetail() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* AI Insights */}
+            {canEdit && (
+              <AIInsightsPanel
+                subject={ticket.subject}
+                description={ticket.description}
+                messages={messageContents}
+                currentCategory={ticket.category}
+                onApplyCategory={handleApplyCategory}
+                onApplySuggestion={handleApplySuggestion}
+              />
+            )}
 
             {/* Time tracking */}
             <Card>
