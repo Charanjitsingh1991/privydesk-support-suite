@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { ProtectedRoute, OnboardingRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -30,25 +30,28 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Public routes */}
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             
-            {/* Passwordless auth routes */}
+            {/* Passwordless auth routes (public) */}
             <Route path="/auth/login" element={<AuthLogin />} />
             <Route path="/auth/verify-otp" element={<VerifyOTP />} />
             <Route path="/auth/magic-link-sent" element={<MagicLinkSent />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
             
-            {/* Onboarding */}
+            {/* Onboarding - requires auth but NO organization */}
             <Route
               path="/onboarding"
               element={
-                <ProtectedRoute>
+                <OnboardingRoute>
                   <Onboarding />
-                </ProtectedRoute>
+                </OnboardingRoute>
               }
             />
+            
+            {/* Protected routes - require auth AND organization */}
             <Route
               path="/dashboard"
               element={
@@ -73,6 +76,8 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            
+            {/* 404 fallback */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
