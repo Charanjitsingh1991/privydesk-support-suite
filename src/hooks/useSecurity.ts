@@ -360,3 +360,222 @@ export function useFlaggedContent() {
 
   return { flaggedItems, loading, fetchFlaggedContent, reviewContent };
 }
+
+// GDPR Compliance utilities
+export function useGDPRCompliance() {
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  // Export all user data
+  const exportUserData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      // Gather all user data
+      const [
+        { data: profile },
+        { data: tickets },
+        { data: messages },
+        { data: sessions },
+      ] = await Promise.all([
+        supabase.from('profiles').select('*').eq('id', user.id).single(),
+        supabase.from('tickets').select('*').eq('created_by', user.id),
+        supabase.from('messages').select('*').eq('user_id', user.id),
+        supabase.from('user_sessions').select('*').eq('user_id', user.id),
+      ]);
+
+      const exportData = {
+        exportDate: new Date().toISOString(),
+        user: {
+          id: user.id,
+          email: user.email,
+          created_at: user.created_at,
+        },
+        profile,
+        tickets: tickets || [],
+        messages: messages || [],
+        sessions: sessions || [],
+      };
+
+      // Create downloadable file
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { 
+        type: 'application/json' 
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `privydesk-data-export-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast({
+        title: 'Data Exported',
+        description: 'Your data has been downloaded successfully.',
+      });
+    } catch (error: any) {
+      console.error('Failed to export data:', error);
+      toast({
+        title: 'Export Failed',
+        description: 'Failed to export your data. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [toast]);
+
+  // Request account deletion (30-day grace period)
+  const requestAccountDeletion = useCallback(async (reason?: string) => {
+    setLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const deletionDate = new Date();
+      deletionDate.setDate(deletionDate.getDate() + 30);
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('preferences')
+        .eq('id', user.id)
+        .single();
+
+      const updatedPrefs = {
+        ...((profile?.preferences as Record<string, unknown>) || {}),
+        deletion_requested: true,
+        deletion_requested_at: new Date().toISOString(),
+        deletion_scheduled_for: deletionDate.toISOString(),
+        deletion_reason: reason,
+      };
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({ preferences: updatedPrefs as unknown as null })
+        .eq('id', user.id);
+
+      if (error) throw error;
+
+      toast({
+        title: 'Deletion Requested',
+        description: `Your account will be deleted on ${deletionDate.toLocaleDateString()}. You can cancel this within 30 days.`,
+      });
+
+      return deletionDate;
+    } catch (error: any) {
+      console.error('Failed to request deletion:', error);
+      toast({
+        title: 'Request Failed',
+        description: 'Failed to request account deletion.',
+        variant: 'destructive',
+      });
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }, [toast]);
+
+  // Cancel deletion request
+  const cancelAccountDeletion = useCallback(async () => {
+    setLoading(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('preferences')
+        .eq('id', user.id)
+        .single();
+
+      const updatedPrefs = { ...((profile?.preferences as Record<string, unknown>) || {}) };
+      delete updatedPrefs.deletion_requested;
+      delete updatedPrefs.deletion_requested_at;
+      delete updatedPrefs.deletion_scheduled_for;
+      delete updatedPrefs.deletion_reason;
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({ preferences: updatedPrefs as unknown as null })
+        .eq('id', user.id);
+
+      if (error) throw error;
+
+      toast({
+        title: 'Deletion Cancelled',
+        description: 'Your account deletion has been cancelled.',
+      });
+    } catch (error: any) {
+      console.error('Failed to cancel deletion:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to cancel account deletion.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [toast]);
+
+  // Update consent preferences
+  const updateConsentPreferences = useCallback(async (
+    consents: {
+      analytics?: boolean;
+      marketing?: boolean;
+      thirdParty?: boolean;
+    }
+  ) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('preferences')
+        .eq('id', user.id)
+        .single();
+
+      const existingPrefs = (profile?.preferences as Record<string, unknown>) || {};
+      const existingConsent = (existingPrefs.consent as Record<string, unknown>) || {};
+      
+      const updatedPrefs = {
+        ...existingPrefs,
+        consent: {
+          ...existingConsent,
+          ...consents,
+          updated_at: new Date().toISOString(),
+        },
+      } as Record<string, unknown>;
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({ preferences: updatedPrefs as unknown as null })
+        .eq('id', user.id);
+
+      if (error) throw error;
+
+      toast({
+        title: 'Preferences Updated',
+        description: 'Your privacy preferences have been saved.',
+      });
+    } catch (error: any) {
+      console.error('Failed to update preferences:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update preferences.',
+        variant: 'destructive',
+      });
+    }
+  }, [toast]);
+
+  return {
+    loading,
+    exportUserData,
+    requestAccountDeletion,
+    cancelAccountDeletion,
+    updateConsentPreferences,
+  };
+}

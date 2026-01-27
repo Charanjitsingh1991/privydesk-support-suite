@@ -25,6 +25,7 @@ import Analytics from "./pages/Analytics";
 import Team from "./pages/Team";
 import Clients from "./pages/Clients";
 import Settings from "./pages/Settings";
+import PrivacySettings from "./pages/PrivacySettings";
 
 // Passwordless auth pages
 import AuthLogin from "./pages/auth/Login";
@@ -141,6 +142,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <SecuritySettings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/settings/privacy"
+              element={
+                <ProtectedRoute>
+                  <PrivacySettings />
                 </ProtectedRoute>
               }
             />
