@@ -104,6 +104,62 @@ export type Database = {
           },
         ]
       }
+      analytics_daily_stats: {
+        Row: {
+          avg_resolution_time_minutes: number | null
+          avg_response_time_minutes: number | null
+          created_at: string
+          csat_average: number | null
+          csat_count: number
+          id: string
+          organization_id: string
+          sla_compliance_rate: number | null
+          stat_date: string
+          tickets_closed: number
+          tickets_created: number
+          tickets_resolved: number
+          updated_at: string
+        }
+        Insert: {
+          avg_resolution_time_minutes?: number | null
+          avg_response_time_minutes?: number | null
+          created_at?: string
+          csat_average?: number | null
+          csat_count?: number
+          id?: string
+          organization_id: string
+          sla_compliance_rate?: number | null
+          stat_date: string
+          tickets_closed?: number
+          tickets_created?: number
+          tickets_resolved?: number
+          updated_at?: string
+        }
+        Update: {
+          avg_resolution_time_minutes?: number | null
+          avg_response_time_minutes?: number | null
+          created_at?: string
+          csat_average?: number | null
+          csat_count?: number
+          id?: string
+          organization_id?: string
+          sla_compliance_rate?: number | null
+          stat_date?: string
+          tickets_closed?: number
+          tickets_created?: number
+          tickets_resolved?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analytics_daily_stats_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blocked_ips: {
         Row: {
           blocked_at: string | null
@@ -148,6 +204,57 @@ export type Database = {
             columns: ["organization_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      csat_responses: {
+        Row: {
+          created_at: string
+          feedback_text: string | null
+          id: string
+          organization_id: string
+          rating_agent: number | null
+          rating_resolution: number
+          rating_response_time: number | null
+          submitted_at: string
+          ticket_id: string
+        }
+        Insert: {
+          created_at?: string
+          feedback_text?: string | null
+          id?: string
+          organization_id: string
+          rating_agent?: number | null
+          rating_resolution: number
+          rating_response_time?: number | null
+          submitted_at?: string
+          ticket_id: string
+        }
+        Update: {
+          created_at?: string
+          feedback_text?: string | null
+          id?: string
+          organization_id?: string
+          rating_agent?: number | null
+          rating_resolution?: number
+          rating_response_time?: number | null
+          submitted_at?: string
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "csat_responses_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "csat_responses_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "tickets"
             referencedColumns: ["id"]
           },
         ]
@@ -816,6 +923,50 @@ export type Database = {
           },
         ]
       }
+      sla_configurations: {
+        Row: {
+          business_hours_only: boolean
+          created_at: string
+          first_response_minutes: number
+          id: string
+          is_active: boolean
+          organization_id: string
+          priority: string
+          resolution_minutes: number
+          updated_at: string
+        }
+        Insert: {
+          business_hours_only?: boolean
+          created_at?: string
+          first_response_minutes?: number
+          id?: string
+          is_active?: boolean
+          organization_id: string
+          priority: string
+          resolution_minutes?: number
+          updated_at?: string
+        }
+        Update: {
+          business_hours_only?: boolean
+          created_at?: string
+          first_response_minutes?: number
+          id?: string
+          is_active?: boolean
+          organization_id?: string
+          priority?: string
+          resolution_minutes?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sla_configurations_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       subscription_plans: {
         Row: {
           created_at: string | null
@@ -1284,6 +1435,52 @@ export type Database = {
       generate_otp: {
         Args: { p_email: string; p_expires_minutes?: number; p_type: string }
         Returns: string
+      }
+      get_agent_performance: {
+        Args: {
+          p_end_date: string
+          p_organization_id: string
+          p_start_date: string
+        }
+        Returns: {
+          agent_avatar: string
+          agent_id: string
+          agent_name: string
+          avg_resolution_minutes: number
+          avg_response_minutes: number
+          csat_average: number
+          tickets_assigned: number
+          tickets_resolved: number
+        }[]
+      }
+      get_ticket_analytics: {
+        Args: {
+          p_end_date: string
+          p_organization_id: string
+          p_start_date: string
+        }
+        Returns: {
+          avg_resolution_minutes: number
+          avg_response_minutes: number
+          closed_tickets: number
+          in_progress_tickets: number
+          open_tickets: number
+          resolved_tickets: number
+          total_tickets: number
+        }[]
+      }
+      get_tickets_by_date: {
+        Args: {
+          p_end_date: string
+          p_organization_id: string
+          p_start_date: string
+        }
+        Returns: {
+          closed_count: number
+          created_count: number
+          date: string
+          resolved_count: number
+        }[]
       }
       get_user_organization_id: { Args: never; Returns: string }
       get_user_role: {
