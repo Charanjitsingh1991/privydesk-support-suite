@@ -9,7 +9,7 @@ const corsHeaders = {
 interface VerifyOTPRequest {
   email: string;
   code: string;
-  type: "login" | "signup" | "verify_email";
+  type: "login" | "signup" | "verify_email" | "onboarding";
 }
 
 serve(async (req) => {
@@ -23,6 +23,10 @@ serve(async (req) => {
     if (!email || !code || !type) {
       throw new Error("Email, code, and type are required");
     }
+
+    // The database enforces an allowed set of OTP types via a CHECK constraint.
+    // Treat onboarding as verify_email for storage/verification consistency.
+    const effectiveType = type === "onboarding" ? "verify_email" : type;
 
     const supabaseAdmin = createClient(
       Deno.env.get("SUPABASE_URL")!,
@@ -66,7 +70,7 @@ serve(async (req) => {
       {
         p_email: email,
         p_code: code,
-        p_type: type,
+        p_type: effectiveType,
       }
     );
 
@@ -89,7 +93,7 @@ serve(async (req) => {
     }
 
     // For login/signup, create a session
-    if (type === "login" || type === "signup") {
+    if (effectiveType === "login" || effectiveType === "signup") {
       // Check if user exists using listUsers with filter
       const { data: usersData } = await supabaseAdmin.auth.admin.listUsers();
       const existingUser = usersData?.users?.find(u => u.email === email);
@@ -152,7 +156,7 @@ serve(async (req) => {
     }
 
     // For verify_email, just mark as verified
-    if (type === "verify_email") {
+    if (effectiveType === "verify_email") {
       const { data: usersData } = await supabaseAdmin.auth.admin.listUsers();
       const user = usersData?.users?.find(u => u.email === email);
       

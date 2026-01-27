@@ -124,6 +124,10 @@ serve(async (req) => {
       throw new Error("Email and type are required");
     }
 
+    // The database enforces an allowed set of OTP types via a CHECK constraint.
+    // Treat onboarding as verify_email for storage/verification consistency.
+    const dbOtpType = type === "onboarding" ? "verify_email" : type;
+
     const supabaseAdmin = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
@@ -165,7 +169,7 @@ serve(async (req) => {
       "generate_otp",
       {
         p_email: email,
-        p_type: type,
+        p_type: dbOtpType,
         p_expires_minutes: 10,
       }
     );
