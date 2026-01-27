@@ -46,74 +46,58 @@ function getOTPEmailTemplate(code: string, type: string): string {
                      type === "verify_email" ? "verify your email address" : 
                      type === "onboarding" ? "complete your organization setup" :
                      "sign in to your account";
-  
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your PRIVYDESK Verification Code</title>
-</head>
-<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f5;">
-  <table role="presentation" style="width: 100%; border-collapse: collapse;">
-    <tr>
-      <td align="center" style="padding: 40px 0;">
-        <table role="presentation" style="width: 600px; max-width: 100%; border-collapse: collapse; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-          <!-- Header -->
-          <tr>
-            <td style="padding: 40px 40px 20px; text-align: center; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); border-radius: 12px 12px 0 0;">
-              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">PRIVYDESK</h1>
-              <p style="margin: 8px 0 0; color: rgba(255, 255, 255, 0.9); font-size: 14px;">Secure Support Platform</p>
-            </td>
-          </tr>
-          
-          <!-- Content -->
-          <tr>
-            <td style="padding: 40px;">
-              <h2 style="margin: 0 0 16px; color: #18181b; font-size: 24px; font-weight: 600;">Your Verification Code</h2>
-              <p style="margin: 0 0 24px; color: #52525b; font-size: 16px; line-height: 1.6;">
-                Use the code below to ${actionText}. This code will expire in 10 minutes.
-              </p>
-              
-              <!-- OTP Code Box -->
-              <table role="presentation" style="width: 100%; border-collapse: collapse;">
-                <tr>
-                  <td align="center" style="padding: 24px 0;">
-                    <div style="display: inline-block; padding: 20px 40px; background: linear-gradient(135deg, #f4f4f5 0%, #e4e4e7 100%); border-radius: 12px; border: 2px dashed #a1a1aa;">
-                      <span style="font-family: 'Courier New', monospace; font-size: 36px; font-weight: 700; letter-spacing: 8px; color: #4f46e5;">${code}</span>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-              
-              <p style="margin: 24px 0 0; color: #71717a; font-size: 14px; line-height: 1.6; text-align: center;">
-                Enter this code in the verification form to continue.
-              </p>
-              
-              <hr style="margin: 32px 0; border: none; border-top: 1px solid #e4e4e7;" />
-              
-              <p style="margin: 0; color: #a1a1aa; font-size: 12px; line-height: 1.6;">
-                If you didn't request this code, you can safely ignore this email. Someone may have entered your email address by mistake.
-              </p>
-            </td>
-          </tr>
-          
-          <!-- Footer -->
-          <tr>
-            <td style="padding: 24px 40px; background-color: #fafafa; border-radius: 0 0 12px 12px; text-align: center;">
-              <p style="margin: 0; color: #71717a; font-size: 12px;">
-                © 2024 PRIVYDESK. All rights reserved.
-              </p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-  `;
+
+  // Some email clients show literal "=20" artifacts when the HTML is sent with
+  // quoted-printable encoding but not decoded correctly. A reliable workaround
+  // is to avoid indentation/trailing whitespace and keep the markup compact.
+  const year = new Date().getFullYear();
+
+  return [
+    '<!doctype html>',
+    '<html lang="en">',
+    '<head>',
+    '<meta charset="utf-8"/>',
+    '<meta name="viewport" content="width=device-width, initial-scale=1"/>',
+    '<meta name="x-apple-disable-message-reformatting"/>',
+    '<title>Your PRIVYDESK Verification Code</title>',
+    '</head>',
+    '<body style="margin:0;padding:0;background:#f4f4f5;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">',
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;">',
+    '<tr>',
+    '<td align="center" style="padding:32px 12px;">',
+    '<table role="presentation" width="560" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:560px;max-width:100%;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.10);">',
+    '<tr>',
+    '<td style="padding:28px 28px 22px;text-align:center;background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);">',
+    '<div style="font-size:22px;line-height:1.1;font-weight:800;letter-spacing:.4px;color:#ffffff;">PRIVYDESK</div>',
+    '<div style="margin-top:8px;font-size:13px;line-height:1.4;color:rgba(255,255,255,.9);">Secure Support Platform</div>',
+    '</td>',
+    '</tr>',
+    '<tr>',
+    '<td style="padding:28px;">',
+    '<h1 style="margin:0 0 10px;font-size:22px;line-height:1.3;color:#18181b;">Your verification code</h1>',
+    `<p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#52525b;">Use the code below to ${actionText}. This code will expire in 10 minutes.</p>`,
+    '<div style="text-align:center;padding:18px 0 8px;">',
+    '<div style="display:inline-block;padding:16px 22px;border-radius:14px;background:#f4f4f5;border:1px dashed #a1a1aa;">',
+    `<span style="font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-size:34px;font-weight:800;letter-spacing:10px;color:#4f46e5;">${code}</span>`,
+    '</div>',
+    '</div>',
+    '<p style="margin:14px 0 0;font-size:13px;line-height:1.6;color:#71717a;text-align:center;">Enter this code in the verification form to continue.</p>',
+    '<hr style="margin:22px 0;border:none;border-top:1px solid #e4e4e7;"/>',
+    '<p style="margin:0;font-size:12px;line-height:1.6;color:#a1a1aa;">If you didn\'t request this code, you can safely ignore this email.</p>',
+    '</td>',
+    '</tr>',
+    '<tr>',
+    '<td style="padding:18px 28px;background:#fafafa;text-align:center;">',
+    `<p style="margin:0;font-size:12px;line-height:1.6;color:#71717a;">© ${year} PRIVYDESK. All rights reserved.</p>`,
+    '</td>',
+    '</tr>',
+    '</table>',
+    '</td>',
+    '</tr>',
+    '</table>',
+    '</body>',
+    '</html>',
+  ].join('');
 }
 
 serve(async (req) => {
