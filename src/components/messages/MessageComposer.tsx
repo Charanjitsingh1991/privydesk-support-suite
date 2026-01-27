@@ -5,79 +5,73 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { RichTextEditor } from '@/components/ui/RichTextEditor';
 import { FileUpload, UploadedFile } from '@/components/ui/FileUpload';
-import { Send, Paperclip, MessageSquareText, Loader2, Eye, EyeOff } from 'lucide-react';
+import { CannedResponses } from '@/components/messages/CannedResponses';
+import {
+  Send,
+  Paperclip,
+  Loader2,
+  Eye,
+  EyeOff,
+  Smile,
+  Save,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
 interface MessageComposerProps {
   ticketId: string;
   onMessageSent: () => void;
+  onTyping?: () => void;
   disabled?: boolean;
 }
 
-const CANNED_RESPONSES = [
-  {
-    id: 'greeting',
-    name: 'Greeting',
-    content: 'Hello! Thank you for reaching out. I\'d be happy to help you with this.',
-  },
-  {
-    id: 'more-info',
-    name: 'Request More Info',
-    content: 'To better assist you, could you please provide more details about the issue you\'re experiencing?',
-  },
-  {
-    id: 'resolved',
-    name: 'Issue Resolved',
-    content: 'I\'m glad we could resolve this for you! Is there anything else I can help you with?',
-  },
-  {
-    id: 'escalate',
-    name: 'Escalation Notice',
-    content: 'I\'m escalating this to our specialized team for further assistance. They will be in touch shortly.',
-  },
-];
+const DRAFT_SAVE_INTERVAL = 3000; // 3 seconds
 
 export function MessageComposer({
   ticketId,
   onMessageSent,
+  onTyping,
   disabled = false,
 }: MessageComposerProps) {
-  const { userId, role } = useUser();
+  const { userId, role, fullName } = useUser();
   const [content, setContent] = useState('');
   const [isInternal, setIsInternal] = useState(false);
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [loading, setLoading] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
+  const [draftSaved, setDraftSaved] = useState(false);
   const draftTimeoutRef = useRef<NodeJS.Timeout>();
+  const lastTypingRef = useRef<number>(0);
 
   // Auto-save draft
   useEffect(() => {
-    if (!content) return;
+    if (!content && !files.length) {
+      localStorage.removeItem(`ticket-draft-${ticketId}`);
+      setDraftSaved(false);
+      return;
+    }
 
     draftTimeoutRef.current = setTimeout(() => {
-      localStorage.setItem(`ticket-draft-${ticketId}`, JSON.stringify({ content, isInternal }));
-    }, 5000);
+      localStorage.setItem(
+        `ticket-draft-${ticketId}`,
+        JSON.stringify({ content, isInternal, files: files.map(f => ({ name: f.name, url: f.url })) })
+      );
+      setDraftSaved(true);
+      setTimeout(() => setDraftSaved(false), 2000);
+    }, DRAFT_SAVE_INTERVAL);
 
     return () => {
       if (draftTimeoutRef.current) {
         clearTimeout(draftTimeoutRef.current);
       }
     };
-  }, [content, isInternal, ticketId]);
+  }, [content, isInternal, files, ticketId]);
 
   // Load draft on mount
   useEffect(() => {
@@ -85,22 +79,42 @@ export function MessageComposer({
     if (draft) {
       try {
         const { content: draftContent, isInternal: draftInternal } = JSON.parse(draft);
-        setContent(draftContent);
-        setIsInternal(draftInternal);
+        setContent(draftContent || '');
+        setIsInternal(draftInternal || false);
       } catch {}
     }
   }, [ticketId]);
 
-  const handleCannedResponse = (response: (typeof CANNED_RESPONSES)[0]) => {
-    setContent((prev) => prev + (prev ? '\n\n' : '') + response.content);
+  // Handle content change with typing indicator
+  const handleContentChange = useCallback(
+    (value: string) => {
+      setContent(value);
+
+      // Trigger typing indicator (throttled)
+      const now = Date.now();
+      if (onTyping && now - lastTypingRef.current > 2000) {
+        lastTypingRef.current = now;
+        onTyping();
+      }
+    },
+    [onTyping]
+  );
+
+  const handleCannedResponse = (response: string) => {
+    // Replace variables
+    const processed = response
+      .replace(/\{\{customer_name\}\}/g, fullName || 'Customer')
+      .replace(/\{\{ticket_id\}\}/g, ticketId.slice(0, 8));
+    
+    setContent((prev) => prev + (prev ? '\n\n' : '') + processed);
   };
 
   const uploadFiles = async () => {
-    const uploadedUrls: string[] = [];
+    const uploadedUrls: { url: string; name: string }[] = [];
 
     for (const file of files) {
       if (file.status === 'complete' && file.url) {
-        uploadedUrls.push(file.url);
+        uploadedUrls.push({ url: file.url, name: file.name });
         continue;
       }
 
@@ -134,7 +148,7 @@ export function MessageComposer({
               : f
           )
         );
-        uploadedUrls.push(urlData.publicUrl);
+        uploadedUrls.push({ url: urlData.publicUrl, name: file.name });
       }
     }
 
@@ -148,9 +162,9 @@ export function MessageComposer({
 
     try {
       // Upload files first
-      let attachmentUrls: string[] = [];
+      let attachments: { url: string; name?: string }[] = [];
       if (files.length > 0) {
-        attachmentUrls = await uploadFiles();
+        attachments = await uploadFiles();
       }
 
       // Create message
@@ -159,7 +173,7 @@ export function MessageComposer({
         user_id: userId,
         content: content.trim(),
         is_internal: isInternal,
-        attachments: attachmentUrls.map(url => ({ url })),
+        attachments: attachments,
       });
 
       if (error) throw error;
@@ -180,37 +194,26 @@ export function MessageComposer({
     }
   };
 
+  // Handle Cmd+Enter shortcut
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault();
+        handleSubmit();
+      }
+    },
+    [handleSubmit]
+  );
+
   const canSendInternal = role === 'admin' || role === 'agent' || role === 'super_admin';
 
   return (
-    <div className="border-t bg-background">
+    <div className="border-t bg-background" onKeyDown={handleKeyDown}>
       <div className="p-4 space-y-4">
         {/* Toolbar */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 flex-wrap">
           {/* Canned responses */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" size="sm">
-                <MessageSquareText className="h-4 w-4 mr-2" />
-                Canned Responses
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align="start" className="w-64">
-              <div className="space-y-1">
-                {CANNED_RESPONSES.map((response) => (
-                  <Button
-                    key={response.id}
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-start"
-                    onClick={() => handleCannedResponse(response)}
-                  >
-                    {response.name}
-                  </Button>
-                ))}
-              </div>
-            </PopoverContent>
-          </Popover>
+          <CannedResponses onSelect={handleCannedResponse} />
 
           <Button
             variant="outline"
@@ -221,6 +224,14 @@ export function MessageComposer({
             <Paperclip className="h-4 w-4 mr-2" />
             Attach
           </Button>
+
+          {/* Draft saved indicator */}
+          {draftSaved && (
+            <span className="text-xs text-muted-foreground flex items-center gap-1">
+              <Save className="h-3 w-3" />
+              Draft saved
+            </span>
+          )}
 
           {canSendInternal && (
             <div className="flex items-center gap-2 ml-auto">
@@ -246,8 +257,12 @@ export function MessageComposer({
         {/* Editor */}
         <RichTextEditor
           value={content}
-          onChange={setContent}
-          placeholder={isInternal ? 'Add an internal note (only visible to your team)...' : 'Write a reply...'}
+          onChange={handleContentChange}
+          placeholder={
+            isInternal
+              ? 'Add an internal note (only visible to your team)...'
+              : 'Write a reply... (Cmd+Enter to send)'
+          }
           minHeight="100px"
           disabled={disabled}
           className={cn(isInternal && 'border-warning/50')}
@@ -264,7 +279,10 @@ export function MessageComposer({
         )}
 
         {/* Submit */}
-        <div className="flex justify-end">
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-muted-foreground">
+            {content.length} characters
+          </span>
           <Button
             onClick={handleSubmit}
             disabled={!content.trim() || loading || disabled}
