@@ -73,14 +73,20 @@ export function LoginForm() {
           variant: 'destructive',
         });
       }
+      setLoading(false);
     } else {
       // Reset on successful login
       setFailedAttempts(0);
       loginRateLimiter.reset(email);
-      navigate('/dashboard');
+      
+      // Check user's profile for organization - the AuthContext will update
+      // and ProtectedRoute will handle the redirect appropriately
+      // We use a small delay to let auth state propagate
+      setTimeout(() => {
+        setLoading(false);
+        navigate('/dashboard');
+      }, 100);
     }
-
-    setLoading(false);
   };
 
   return (
