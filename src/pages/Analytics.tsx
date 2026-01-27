@@ -13,6 +13,7 @@ import { SLATracker } from '@/components/analytics/SLATracker';
 import { DateRangeSelector } from '@/components/analytics/DateRangeSelector';
 import { ExportReport } from '@/components/analytics/ExportReport';
 import { RecentActivityFeed } from '@/components/analytics/RecentActivityFeed';
+import { AIInsightsWidget } from '@/components/analytics/AIInsightsWidget';
 import { 
   useAnalytics, 
   useTicketsByPriority, 
@@ -160,7 +161,8 @@ export default function Analytics() {
         </div>
 
         {/* Bottom Row */}
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-3">
+          <AIInsightsWidget />
           <SLATracker configurations={slaConfigs} loading={slaLoading} />
           <RecentActivityFeed />
         </div>
