@@ -14,6 +14,8 @@ import {
   Mail,
   CreditCard,
   LucideIcon,
+  MessageCircle,
+  Inbox,
 } from 'lucide-react';
 import type { UserRole } from '@/types/database';
 
@@ -52,7 +54,7 @@ export const getNavigationByRole = (role: UserRole): NavSection[] => {
           items: [
             { title: 'Dashboard', href: '/dashboard', icon: Home },
             { title: 'Tickets', href: '/dashboard/tickets', icon: Ticket },
-            { title: 'Live Chat', href: '/dashboard/chat', icon: MessageSquare },
+            { title: 'Live Chat', href: '/dashboard/live-chat', icon: Inbox },
             { title: 'Team Members', href: '/dashboard/team', icon: Users },
             { title: 'Clients', href: '/dashboard/clients', icon: UserCircle },
             { title: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
@@ -62,6 +64,7 @@ export const getNavigationByRole = (role: UserRole): NavSection[] => {
           title: 'Settings',
           items: [
             { title: 'General', href: '/dashboard/settings', icon: Settings },
+            { title: 'Chat Widget', href: '/dashboard/chat-widget', icon: MessageCircle },
             { title: 'Branding', href: '/dashboard/settings/branding', icon: Palette },
             { title: 'Domain', href: '/dashboard/settings/domain', icon: Globe },
             { title: 'Email Config', href: '/dashboard/settings/email', icon: Mail },
@@ -76,7 +79,7 @@ export const getNavigationByRole = (role: UserRole): NavSection[] => {
           items: [
             { title: 'Dashboard', href: '/dashboard', icon: Home },
             { title: 'My Tickets', href: '/dashboard/tickets', icon: Ticket },
-            { title: 'Active Chats', href: '/dashboard/chat', icon: MessageSquare },
+            { title: 'Live Chat', href: '/dashboard/live-chat', icon: Inbox },
             { title: 'My Performance', href: '/dashboard/performance', icon: TrendingUp },
           ],
         },

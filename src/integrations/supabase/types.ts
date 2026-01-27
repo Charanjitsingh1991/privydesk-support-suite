@@ -14,6 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
+      agent_availability: {
+        Row: {
+          agent_id: string
+          created_at: string
+          current_chats: number
+          id: string
+          last_activity_at: string
+          max_concurrent_chats: number
+          organization_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          agent_id: string
+          created_at?: string
+          current_chats?: number
+          id?: string
+          last_activity_at?: string
+          max_concurrent_chats?: number
+          organization_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          agent_id?: string
+          created_at?: string
+          current_chats?: number
+          id?: string
+          last_activity_at?: string
+          max_concurrent_chats?: number
+          organization_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_availability_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_availability_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           attachments: Json[] | null
@@ -393,6 +444,229 @@ export type Database = {
           },
           {
             foreignKeyName: "tickets_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      widget_config: {
+        Row: {
+          business_hours: Json
+          created_at: string
+          emoji_picker_enabled: boolean
+          file_upload_enabled: boolean
+          id: string
+          is_enabled: boolean
+          notification_sound: string | null
+          offline_message: string
+          organization_id: string
+          position: string
+          pre_chat_form_enabled: boolean
+          primary_color: string
+          topics: string[] | null
+          trigger_text: string
+          updated_at: string
+          welcome_message: string
+        }
+        Insert: {
+          business_hours?: Json
+          created_at?: string
+          emoji_picker_enabled?: boolean
+          file_upload_enabled?: boolean
+          id?: string
+          is_enabled?: boolean
+          notification_sound?: string | null
+          offline_message?: string
+          organization_id: string
+          position?: string
+          pre_chat_form_enabled?: boolean
+          primary_color?: string
+          topics?: string[] | null
+          trigger_text?: string
+          updated_at?: string
+          welcome_message?: string
+        }
+        Update: {
+          business_hours?: Json
+          created_at?: string
+          emoji_picker_enabled?: boolean
+          file_upload_enabled?: boolean
+          id?: string
+          is_enabled?: boolean
+          notification_sound?: string | null
+          offline_message?: string
+          organization_id?: string
+          position?: string
+          pre_chat_form_enabled?: boolean
+          primary_color?: string
+          topics?: string[] | null
+          trigger_text?: string
+          updated_at?: string
+          welcome_message?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "widget_config_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: true
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      widget_conversations: {
+        Row: {
+          assigned_agent_id: string | null
+          created_at: string
+          ended_at: string | null
+          id: string
+          organization_id: string
+          page_url: string | null
+          referrer: string | null
+          started_at: string
+          status: string
+          topic: string | null
+          updated_at: string
+          user_agent: string | null
+          visitor_id: string
+        }
+        Insert: {
+          assigned_agent_id?: string | null
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          organization_id: string
+          page_url?: string | null
+          referrer?: string | null
+          started_at?: string
+          status?: string
+          topic?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          visitor_id: string
+        }
+        Update: {
+          assigned_agent_id?: string | null
+          created_at?: string
+          ended_at?: string | null
+          id?: string
+          organization_id?: string
+          page_url?: string | null
+          referrer?: string | null
+          started_at?: string
+          status?: string
+          topic?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          visitor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "widget_conversations_assigned_agent_id_fkey"
+            columns: ["assigned_agent_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "widget_conversations_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "widget_conversations_visitor_id_fkey"
+            columns: ["visitor_id"]
+            isOneToOne: false
+            referencedRelation: "widget_visitors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      widget_messages: {
+        Row: {
+          attachments: Json[] | null
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          is_read: boolean
+          sender_id: string | null
+          sender_type: string
+        }
+        Insert: {
+          attachments?: Json[] | null
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          sender_id?: string | null
+          sender_type: string
+        }
+        Update: {
+          attachments?: Json[] | null
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          sender_id?: string | null
+          sender_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "widget_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "widget_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      widget_visitors: {
+        Row: {
+          created_at: string
+          email: string | null
+          first_seen_at: string
+          id: string
+          last_seen_at: string
+          metadata: Json | null
+          name: string | null
+          organization_id: string
+          session_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          first_seen_at?: string
+          id?: string
+          last_seen_at?: string
+          metadata?: Json | null
+          name?: string | null
+          organization_id: string
+          session_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          first_seen_at?: string
+          id?: string
+          last_seen_at?: string
+          metadata?: Json | null
+          name?: string | null
+          organization_id?: string
+          session_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "widget_visitors_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
             referencedRelation: "organizations"
