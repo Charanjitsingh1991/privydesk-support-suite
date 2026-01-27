@@ -2,3 +2,6 @@ project_id = "bfhifrxycjlzjsffpxgc"
 
 [functions.analyze-ticket]
 verify_jwt = false
+
+[functions.api-v1]
+verify_jwt = false
