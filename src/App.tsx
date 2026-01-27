@@ -12,6 +12,7 @@ import Dashboard from "./pages/Dashboard";
 import Tickets from "./pages/Tickets";
 import NewTicket from "./pages/NewTicket";
 import NotFound from "./pages/NotFound";
+import Onboarding from "./pages/Onboarding";
 
 // Passwordless auth pages
 import AuthLogin from "./pages/auth/Login";
@@ -39,6 +40,15 @@ const App = () => (
             <Route path="/auth/magic-link-sent" element={<MagicLinkSent />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
             
+            {/* Onboarding */}
+            <Route
+              path="/onboarding"
+              element={
+                <ProtectedRoute>
+                  <Onboarding />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/dashboard"
               element={
