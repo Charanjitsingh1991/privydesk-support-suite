@@ -9,7 +9,7 @@ const corsHeaders = {
 
 interface OTPRequest {
   email: string;
-  type: "login" | "signup" | "verify_email";
+  type: "login" | "signup" | "verify_email" | "onboarding";
 }
 
 async function sendEmail(to: string, subject: string, html: string) {
@@ -40,6 +40,7 @@ async function sendEmail(to: string, subject: string, html: string) {
 function getOTPEmailTemplate(code: string, type: string): string {
   const actionText = type === "signup" ? "complete your registration" : 
                      type === "verify_email" ? "verify your email address" : 
+                     type === "onboarding" ? "complete your organization setup" :
                      "sign in to your account";
   
   return `
