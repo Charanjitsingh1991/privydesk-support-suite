@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import Tickets from "./pages/Tickets";
 import NewTicket from "./pages/NewTicket";
+import TicketDetail from "./pages/TicketDetail";
 import NotFound from "./pages/NotFound";
 import Onboarding from "./pages/Onboarding";
 
@@ -73,6 +74,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <NewTicket />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/tickets/:id"
+              element={
+                <ProtectedRoute>
+                  <TicketDetail />
                 </ProtectedRoute>
               }
             />
