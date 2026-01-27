@@ -106,14 +106,13 @@ async function hmacSha1(key: Uint8Array, data: Uint8Array): Promise<Uint8Array> 
 // Generate a TOTP code for the current time
 export async function generateTOTP(secret: string): Promise<string> {
   const key = base32Decode(secret);
-  const counter = Math.floor(Date.now() / 1000 / TOTP_PERIOD);
+  let counter = Math.floor(Date.now() / 1000 / TOTP_PERIOD);
   
   // Convert counter to 8-byte big-endian
   const counterBytes = new Uint8Array(8);
   for (let i = 7; i >= 0; i--) {
     counterBytes[i] = counter & 0xff;
-    // eslint-disable-next-line no-param-reassign
-    (counter as unknown as number) >>>= 8;
+    counter >>>= 8;
   }
   
   const hmac = await hmacSha1(key, counterBytes);
