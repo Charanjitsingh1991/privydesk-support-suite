@@ -17,6 +17,7 @@ import Onboarding from "./pages/Onboarding";
 import WidgetEmbed from "./pages/WidgetEmbed";
 import ChatWidgetSettings from "./pages/ChatWidgetSettings";
 import LiveChatInbox from "./pages/LiveChatInbox";
+import Files from "./pages/Files";
 
 // Passwordless auth pages
 import AuthLogin from "./pages/auth/Login";
@@ -101,6 +102,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <LiveChatInbox />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/files"
+              element={
+                <ProtectedRoute>
+                  <Files />
                 </ProtectedRoute>
               }
             />
