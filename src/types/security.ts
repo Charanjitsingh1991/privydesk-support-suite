@@ -92,6 +92,20 @@ export interface SecuritySettings {
   notify_new_device_login: boolean;
   scan_external_links: boolean;
   block_dangerous_attachments: boolean;
+  // Password policies
+  password_min_length?: number;
+  password_require_uppercase?: boolean;
+  password_require_lowercase?: boolean;
+  password_require_numbers?: boolean;
+  password_require_symbols?: boolean;
+  password_expiry_days?: number;
+  password_history_count?: number;
+  // 2FA policies
+  require_2fa_for_admins?: boolean;
+  require_2fa_for_agents?: boolean;
+  // Account lockout
+  max_login_attempts?: number;
+  lockout_duration_minutes?: number;
 }
 
 export interface LinkScanResult {

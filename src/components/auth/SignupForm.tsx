@@ -1,23 +1,41 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Mail, Lock, User } from 'lucide-react';
+import { PasswordStrengthMeter } from '@/components/auth/PasswordStrengthMeter';
+import { validatePassword, DEFAULT_PASSWORD_POLICY } from '@/lib/security/password-validator';
+import { Loader2, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 
 export function SignupForm() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const { signUp } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const passwordValidation = useMemo(() => {
+    return validatePassword(password, DEFAULT_PASSWORD_POLICY, [email, fullName]);
+  }, [password, email, fullName]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate password before submitting
+    if (!passwordValidation.isValid) {
+      toast({
+        title: 'Invalid password',
+        description: passwordValidation.errors[0] || 'Please choose a stronger password',
+        variant: 'destructive',
+      });
+      return;
+    }
+    
     setLoading(true);
 
     const { error } = await signUp(email, password, fullName);
@@ -79,19 +97,38 @@ export function SignupForm() {
           <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             id="password"
-            type="password"
-            placeholder="••••••••"
+            type={showPassword ? 'text' : 'password'}
+            placeholder="••••••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="pl-10"
-            minLength={6}
+            className="pl-10 pr-10"
+            minLength={12}
             required
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+          >
+            {showPassword ? (
+              <EyeOff className="w-4 h-4" />
+            ) : (
+              <Eye className="w-4 h-4" />
+            )}
+          </button>
         </div>
-        <p className="text-xs text-muted-foreground">Must be at least 6 characters</p>
+        <PasswordStrengthMeter 
+          password={password} 
+          email={email} 
+          fullName={fullName}
+        />
       </div>
 
-      <Button type="submit" className="w-full" disabled={loading}>
+      <Button 
+        type="submit" 
+        className="w-full" 
+        disabled={loading || !passwordValidation.isValid}
+      >
         {loading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
