@@ -67,10 +67,16 @@ export type Database = {
       }
       organizations: {
         Row: {
+          branding: Json | null
+          company_size: string | null
           created_at: string | null
           custom_domain: string | null
+          domain_verification_method: string | null
+          domain_verification_token: string | null
           domain_verified: boolean | null
+          email_config: Json | null
           id: string
+          industry: string | null
           logo_url: string | null
           metadata: Json | null
           name: string
@@ -78,13 +84,20 @@ export type Database = {
           primary_color: string | null
           slug: string
           status: Database["public"]["Enums"]["org_status"] | null
+          timezone: string | null
           updated_at: string | null
         }
         Insert: {
+          branding?: Json | null
+          company_size?: string | null
           created_at?: string | null
           custom_domain?: string | null
+          domain_verification_method?: string | null
+          domain_verification_token?: string | null
           domain_verified?: boolean | null
+          email_config?: Json | null
           id?: string
+          industry?: string | null
           logo_url?: string | null
           metadata?: Json | null
           name: string
@@ -92,13 +105,20 @@ export type Database = {
           primary_color?: string | null
           slug: string
           status?: Database["public"]["Enums"]["org_status"] | null
+          timezone?: string | null
           updated_at?: string | null
         }
         Update: {
+          branding?: Json | null
+          company_size?: string | null
           created_at?: string | null
           custom_domain?: string | null
+          domain_verification_method?: string | null
+          domain_verification_token?: string | null
           domain_verified?: boolean | null
+          email_config?: Json | null
           id?: string
+          industry?: string | null
           logo_url?: string | null
           metadata?: Json | null
           name?: string
@@ -106,6 +126,7 @@ export type Database = {
           primary_color?: string | null
           slug?: string
           status?: Database["public"]["Enums"]["org_status"] | null
+          timezone?: string | null
           updated_at?: string | null
         }
         Relationships: []
