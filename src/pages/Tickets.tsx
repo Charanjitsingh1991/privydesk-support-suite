@@ -1,74 +1,45 @@
-import { useEffect, useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { StatusBadge, PriorityBadge } from '@/components/ui/StatusBadge';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { Card, CardContent } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Plus, Search, Filter } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
-import type { Ticket, Profile, TicketStatus } from '@/types/database';
-
-interface TicketWithRelations extends Ticket {
-  creator?: Profile;
-  assignee?: Profile;
-}
+import { TicketFilters, TicketFiltersState } from '@/components/tickets/TicketFilters';
+import { TicketsTable } from '@/components/tickets/TicketsTable';
+import { TicketsKanban } from '@/components/tickets/TicketsKanban';
+import { CreateTicketModal } from '@/components/tickets/CreateTicketModal';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Plus, Tag, UserPlus, Download, RefreshCw } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function Tickets() {
-  const [tickets, setTickets] = useState<TicketWithRelations[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [view, setView] = useState<'list' | 'kanban'>('list');
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [selectedTickets, setSelectedTickets] = useState<string[]>([]);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [filters, setFilters] = useState<TicketFiltersState>({
+    search: '',
+    statuses: [],
+    priorities: [],
+    assignedTo: null,
+    dateRange: undefined,
+    tags: [],
+    sortBy: 'newest',
+  });
 
-  useEffect(() => {
-    async function fetchTickets() {
-      let query = supabase
-        .from('tickets')
-        .select(`
-          *,
-          creator:profiles!tickets_created_by_fkey(*),
-          assignee:profiles!tickets_assigned_to_fkey(*)
-        `)
-        .order('created_at', { ascending: false });
+  const handleRefresh = useCallback(() => {
+    setRefreshKey((k) => k + 1);
+    setSelectedTickets([]);
+  }, []);
 
-      if (statusFilter !== 'all') {
-        query = query.eq('status', statusFilter as TicketStatus);
-      }
-
-      const { data, error } = await query;
-
-      if (!error && data) {
-        setTickets(data as TicketWithRelations[]);
-      }
-      setLoading(false);
-    }
-
-    fetchTickets();
-  }, [statusFilter]);
-
-  const filteredTickets = tickets.filter(
-    (ticket) =>
-      ticket.subject.toLowerCase().includes(search.toLowerCase()) ||
-      ticket.description.toLowerCase().includes(search.toLowerCase())
-  );
+  const handleBulkAction = (action: string) => {
+    toast.info(`Bulk action "${action}" for ${selectedTickets.length} tickets`);
+    // TODO: Implement bulk actions
+  };
 
   return (
     <DashboardLayout>
@@ -79,128 +50,114 @@ export default function Tickets() {
             <h1 className="text-2xl font-bold">Tickets</h1>
             <p className="text-muted-foreground">Manage and track all support tickets</p>
           </div>
-          <Button asChild>
-            <Link to="/dashboard/tickets/new">
-              <Plus className="w-4 h-4 mr-2" />
-              New Ticket
-            </Link>
+          <Button onClick={() => setShowCreateModal(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            Create Ticket
           </Button>
         </div>
 
         {/* Filters */}
         <Card>
           <CardContent className="p-4">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search tickets..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-full sm:w-[180px]">
-                  <Filter className="w-4 h-4 mr-2" />
-                  <SelectValue placeholder="Filter by status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="open">Open</SelectItem>
-                  <SelectItem value="in_progress">In Progress</SelectItem>
-                  <SelectItem value="waiting_customer">Waiting</SelectItem>
-                  <SelectItem value="resolved">Resolved</SelectItem>
-                  <SelectItem value="closed">Closed</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <TicketFilters
+              filters={filters}
+              onFiltersChange={setFilters}
+              view={view}
+              onViewChange={setView}
+            />
           </CardContent>
         </Card>
 
-        {/* Tickets Table */}
+        {/* Bulk actions toolbar */}
+        {selectedTickets.length > 0 && (
+          <div className="flex items-center gap-3 p-3 bg-primary/5 border border-primary/20 rounded-lg animate-in">
+            <span className="text-sm font-medium">
+              {selectedTickets.length} ticket{selectedTickets.length > 1 ? 's' : ''} selected
+            </span>
+            <div className="flex items-center gap-2 ml-auto">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Assign to...
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => handleBulkAction('assign')}>
+                    Assign to Me
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Change status...
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => handleBulkAction('status-open')}>
+                    Open
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleBulkAction('status-in_progress')}>
+                    In Progress
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleBulkAction('status-resolved')}>
+                    Resolved
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <Button variant="outline" size="sm" onClick={() => handleBulkAction('tag')}>
+                <Tag className="h-4 w-4 mr-2" />
+                Add tags
+              </Button>
+
+              <Button variant="outline" size="sm" onClick={() => handleBulkAction('export')}>
+                <Download className="h-4 w-4 mr-2" />
+                Export
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSelectedTickets([])}
+              >
+                Clear selection
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Tickets display */}
         <Card>
-          <CardContent className="p-0">
-            {loading ? (
-              <div className="p-6 space-y-4">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className="flex items-center gap-4">
-                    <Skeleton className="h-10 w-10 rounded-full" />
-                    <div className="flex-1 space-y-2">
-                      <Skeleton className="h-4 w-3/4" />
-                      <Skeleton className="h-3 w-1/2" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : filteredTickets.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">No tickets found</p>
-                <Button asChild variant="link" className="mt-2">
-                  <Link to="/dashboard/tickets/new">Create your first ticket</Link>
-                </Button>
-              </div>
+          <CardContent className={view === 'kanban' ? 'p-4' : 'p-0'}>
+            {view === 'list' ? (
+              <TicketsTable
+                key={refreshKey}
+                filters={filters}
+                selectedTickets={selectedTickets}
+                onSelectionChange={setSelectedTickets}
+                onRefresh={handleRefresh}
+              />
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Ticket</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Priority</TableHead>
-                    <TableHead>Assignee</TableHead>
-                    <TableHead>Created</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredTickets.map((ticket) => (
-                    <TableRow key={ticket.id} className="cursor-pointer hover:bg-muted/50">
-                      <TableCell>
-                        <Link
-                          to={`/dashboard/tickets/${ticket.id}`}
-                          className="block"
-                        >
-                          <div className="font-medium">{ticket.subject}</div>
-                          <div className="text-sm text-muted-foreground line-clamp-1">
-                            {ticket.description}
-                          </div>
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <StatusBadge status={ticket.status} />
-                      </TableCell>
-                      <TableCell>
-                        <PriorityBadge priority={ticket.priority} />
-                      </TableCell>
-                      <TableCell>
-                        {ticket.assignee ? (
-                          <div className="flex items-center gap-2">
-                            <Avatar className="h-7 w-7">
-                              <AvatarImage src={ticket.assignee.avatar_url || undefined} />
-                              <AvatarFallback className="bg-primary/10 text-primary text-xs">
-                                {ticket.assignee.full_name
-                                  ?.split(' ')
-                                  .map((n) => n[0])
-                                  .join('')
-                                  .toUpperCase()}
-                              </AvatarFallback>
-                            </Avatar>
-                            <span className="text-sm">{ticket.assignee.full_name}</span>
-                          </div>
-                        ) : (
-                          <span className="text-sm text-muted-foreground">Unassigned</span>
-                        )}
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        {formatDistanceToNow(new Date(ticket.created_at), { addSuffix: true })}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <TicketsKanban
+                key={refreshKey}
+                filters={filters}
+                onRefresh={handleRefresh}
+              />
             )}
           </CardContent>
         </Card>
       </div>
+
+      {/* Create Ticket Modal */}
+      <CreateTicketModal
+        open={showCreateModal}
+        onOpenChange={setShowCreateModal}
+        onSuccess={handleRefresh}
+      />
     </DashboardLayout>
   );
 }
