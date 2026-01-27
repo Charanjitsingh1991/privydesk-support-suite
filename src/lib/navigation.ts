@@ -17,6 +17,7 @@ import {
   MessageCircle,
   Inbox,
   FolderOpen,
+  Shield,
 } from 'lucide-react';
 import type { UserRole } from '@/types/database';
 
@@ -67,6 +68,7 @@ export const getNavigationByRole = (role: UserRole): NavSection[] => {
           title: 'Settings',
           items: [
             { title: 'General', href: '/dashboard/settings', icon: Settings },
+            { title: 'Security', href: '/dashboard/settings/security', icon: Shield },
             { title: 'Chat Widget', href: '/dashboard/chat-widget', icon: MessageCircle },
             { title: 'Email Migration', href: '/dashboard/settings/email-migration', icon: Mail },
             { title: 'Branding', href: '/dashboard/settings/branding', icon: Palette },

@@ -20,6 +20,7 @@ import LiveChatInbox from "./pages/LiveChatInbox";
 import Files from "./pages/Files";
 import EmailArchive from "./pages/EmailArchive";
 import EmailMigration from "./pages/EmailMigration";
+import SecuritySettings from "./pages/SecuritySettings";
 
 // Passwordless auth pages
 import AuthLogin from "./pages/auth/Login";
@@ -128,6 +129,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <EmailMigration />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/settings/security"
+              element={
+                <ProtectedRoute>
+                  <SecuritySettings />
                 </ProtectedRoute>
               }
             />
