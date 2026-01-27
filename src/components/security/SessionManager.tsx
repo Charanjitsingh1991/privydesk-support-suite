@@ -10,12 +10,25 @@ import {
   Globe,
   LogOut,
   Loader2,
-  CheckCircle2
+  CheckCircle2,
+  MapPin,
+  Clock,
 } from 'lucide-react';
 import { useUserSessions } from '@/hooks/useSecurity';
 import { formatDistanceToNow } from 'date-fns';
+import { cn } from '@/lib/utils';
 
-export function SessionManager() {
+interface SessionManagerProps {
+  showCard?: boolean;
+  maxHeight?: string;
+  className?: string;
+}
+
+export function SessionManager({ 
+  showCard = true, 
+  maxHeight = '400px',
+  className 
+}: SessionManagerProps) {
   const { sessions, loading, fetchSessions, terminateSession, terminateAllSessions } = useUserSessions();
 
   useEffect(() => {
@@ -39,8 +52,86 @@ export function SessionManager() {
     return parts.length > 0 ? parts.join(', ') : 'Unknown location';
   };
 
+  const content = (
+    <>
+      {loading ? (
+        <div className="flex items-center justify-center py-8">
+          <Loader2 className="h-6 w-6 animate-spin" />
+        </div>
+      ) : sessions.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
+          <CheckCircle2 className="h-12 w-12 mb-2" />
+          <p>No active sessions</p>
+        </div>
+      ) : (
+        <ScrollArea className={cn(maxHeight && `h-[${maxHeight}]`)}>
+          <div className="space-y-3">
+            {sessions.map((session) => (
+              <div 
+                key={session.id} 
+                className={cn(
+                  'flex items-start justify-between p-4 rounded-lg border transition-colors',
+                  session.is_current 
+                    ? 'border-primary bg-primary/5' 
+                    : 'hover:bg-muted/50'
+                )}
+              >
+                <div className="flex gap-3">
+                  <div className="flex-shrink-0 mt-1 p-2 rounded-full bg-muted">
+                    {getDeviceIcon(session.device_type)}
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-medium">
+                        {session.browser || 'Unknown Browser'}
+                      </span>
+                      <span className="text-muted-foreground text-sm">
+                        on {session.os || 'Unknown OS'}
+                      </span>
+                      {session.is_current && (
+                        <Badge variant="default" className="text-xs">
+                          Current
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <MapPin className="h-3 w-3" />
+                      {getLocationString(session.geo_location)}
+                      <span className="mx-1">•</span>
+                      IP: {session.ip_address || 'Unknown'}
+                    </div>
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        Active {formatDistanceToNow(new Date(session.last_activity_at), { addSuffix: true })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                {!session.is_current && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => terminateSession(session.id)}
+                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                  >
+                    <LogOut className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
+      )}
+    </>
+  );
+
+  if (!showCard) {
+    return <div className={className}>{content}</div>;
+  }
+
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
@@ -63,73 +154,7 @@ export function SessionManager() {
         </div>
       </CardHeader>
       <CardContent>
-        {loading ? (
-          <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-6 w-6 animate-spin" />
-          </div>
-        ) : sessions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
-            <CheckCircle2 className="h-12 w-12 mb-2" />
-            <p>No active sessions</p>
-          </div>
-        ) : (
-          <ScrollArea className="h-[400px]">
-            <div className="space-y-4">
-              {sessions.map((session) => (
-                <div 
-                  key={session.id} 
-                  className={`flex items-start justify-between p-4 rounded-lg border ${
-                    session.is_current ? 'border-primary bg-primary/5' : ''
-                  }`}
-                >
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 mt-1">
-                      {getDeviceIcon(session.device_type)}
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">
-                          {session.browser || 'Unknown Browser'} on {session.os || 'Unknown OS'}
-                        </span>
-                        {session.is_current && (
-                          <Badge variant="default" className="text-xs">
-                            Current Session
-                          </Badge>
-                        )}
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        {getLocationString(session.geo_location)}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        IP: {session.ip_address || 'Unknown'}
-                      </p>
-                      <div className="flex gap-4 mt-1 text-xs text-muted-foreground">
-                        <span>
-                          Started: {formatDistanceToNow(new Date(session.created_at), { addSuffix: true })}
-                        </span>
-                        <span>
-                          Last activity: {formatDistanceToNow(new Date(session.last_activity_at), { addSuffix: true })}
-                        </span>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        Expires: {formatDistanceToNow(new Date(session.expires_at), { addSuffix: true })}
-                      </p>
-                    </div>
-                  </div>
-                  {!session.is_current && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => terminateSession(session.id)}
-                    >
-                      <LogOut className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
-        )}
+        {content}
       </CardContent>
     </Card>
   );
