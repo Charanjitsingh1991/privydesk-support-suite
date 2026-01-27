@@ -16,6 +16,7 @@ import {
   LucideIcon,
   MessageCircle,
   Inbox,
+  FolderOpen,
 } from 'lucide-react';
 import type { UserRole } from '@/types/database';
 
@@ -55,6 +56,7 @@ export const getNavigationByRole = (role: UserRole): NavSection[] => {
             { title: 'Dashboard', href: '/dashboard', icon: Home },
             { title: 'Tickets', href: '/dashboard/tickets', icon: Ticket },
             { title: 'Live Chat', href: '/dashboard/live-chat', icon: Inbox },
+            { title: 'Files', href: '/dashboard/files', icon: FolderOpen },
             { title: 'Team Members', href: '/dashboard/team', icon: Users },
             { title: 'Clients', href: '/dashboard/clients', icon: UserCircle },
             { title: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
@@ -80,6 +82,7 @@ export const getNavigationByRole = (role: UserRole): NavSection[] => {
             { title: 'Dashboard', href: '/dashboard', icon: Home },
             { title: 'My Tickets', href: '/dashboard/tickets', icon: Ticket },
             { title: 'Live Chat', href: '/dashboard/live-chat', icon: Inbox },
+            { title: 'Files', href: '/dashboard/files', icon: FolderOpen },
             { title: 'My Performance', href: '/dashboard/performance', icon: TrendingUp },
           ],
         },
