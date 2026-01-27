@@ -65,6 +65,93 @@ export type Database = {
           },
         ]
       }
+      allowed_domains: {
+        Row: {
+          added_by: string | null
+          created_at: string | null
+          domain: string
+          id: string
+          organization_id: string
+        }
+        Insert: {
+          added_by?: string | null
+          created_at?: string | null
+          domain: string
+          id?: string
+          organization_id: string
+        }
+        Update: {
+          added_by?: string | null
+          created_at?: string | null
+          domain?: string
+          id?: string
+          organization_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "allowed_domains_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "allowed_domains_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blocked_ips: {
+        Row: {
+          blocked_at: string | null
+          blocked_by: string | null
+          expires_at: string | null
+          id: string
+          ip_address: string
+          is_global: boolean | null
+          organization_id: string | null
+          reason: string | null
+        }
+        Insert: {
+          blocked_at?: string | null
+          blocked_by?: string | null
+          expires_at?: string | null
+          id?: string
+          ip_address: string
+          is_global?: boolean | null
+          organization_id?: string | null
+          reason?: string | null
+        }
+        Update: {
+          blocked_at?: string | null
+          blocked_by?: string | null
+          expires_at?: string | null
+          id?: string
+          ip_address?: string
+          is_global?: boolean | null
+          organization_id?: string | null
+          reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blocked_ips_blocked_by_fkey"
+            columns: ["blocked_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blocked_ips_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       email_archive: {
         Row: {
           auto_linked: boolean | null
@@ -305,6 +392,79 @@ export type Database = {
           },
         ]
       }
+      flagged_content: {
+        Row: {
+          action_taken: string | null
+          auto_flagged: boolean | null
+          content_id: string | null
+          content_type: string
+          created_at: string | null
+          flagged_by: string | null
+          flagged_content: string | null
+          id: string
+          organization_id: string
+          reason: string
+          reviewed: boolean | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          severity: string
+        }
+        Insert: {
+          action_taken?: string | null
+          auto_flagged?: boolean | null
+          content_id?: string | null
+          content_type: string
+          created_at?: string | null
+          flagged_by?: string | null
+          flagged_content?: string | null
+          id?: string
+          organization_id: string
+          reason: string
+          reviewed?: boolean | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          severity?: string
+        }
+        Update: {
+          action_taken?: string | null
+          auto_flagged?: boolean | null
+          content_id?: string | null
+          content_type?: string
+          created_at?: string | null
+          flagged_by?: string | null
+          flagged_content?: string | null
+          id?: string
+          organization_id?: string
+          reason?: string
+          reviewed?: boolean | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          severity?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "flagged_content_flagged_by_fkey"
+            columns: ["flagged_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "flagged_content_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "flagged_content_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           attachments: Json[] | null
@@ -373,6 +533,7 @@ export type Database = {
           name: string
           plan: Database["public"]["Enums"]["plan_type"] | null
           primary_color: string | null
+          security_settings: Json | null
           slug: string
           status: Database["public"]["Enums"]["org_status"] | null
           timezone: string | null
@@ -394,6 +555,7 @@ export type Database = {
           name: string
           plan?: Database["public"]["Enums"]["plan_type"] | null
           primary_color?: string | null
+          security_settings?: Json | null
           slug: string
           status?: Database["public"]["Enums"]["org_status"] | null
           timezone?: string | null
@@ -415,6 +577,7 @@ export type Database = {
           name?: string
           plan?: Database["public"]["Enums"]["plan_type"] | null
           primary_color?: string | null
+          security_settings?: Json | null
           slug?: string
           status?: Database["public"]["Enums"]["org_status"] | null
           timezone?: string | null
@@ -451,6 +614,57 @@ export type Database = {
           used_at?: string | null
         }
         Relationships: []
+      }
+      pending_clients: {
+        Row: {
+          created_at: string | null
+          email: string
+          full_name: string | null
+          id: string
+          organization_id: string
+          rejection_reason: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          full_name?: string | null
+          id?: string
+          organization_id: string
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          full_name?: string | null
+          id?: string
+          organization_id?: string
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pending_clients_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pending_clients_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -534,6 +748,73 @@ export type Database = {
           last_attempt_at?: string | null
         }
         Relationships: []
+      }
+      security_events: {
+        Row: {
+          created_at: string | null
+          details: Json | null
+          event_type: string
+          id: string
+          ip_address: string | null
+          organization_id: string | null
+          resolved: boolean | null
+          resolved_at: string | null
+          resolved_by: string | null
+          severity: string
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          details?: Json | null
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          organization_id?: string | null
+          resolved?: boolean | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          details?: Json | null
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          organization_id?: string | null
+          resolved?: boolean | null
+          resolved_at?: string | null
+          resolved_by?: string | null
+          severity?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "security_events_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "security_events_resolved_by_fkey"
+            columns: ["resolved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "security_events_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       subscription_plans: {
         Row: {
@@ -687,6 +968,65 @@ export type Database = {
             columns: ["organization_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_sessions: {
+        Row: {
+          browser: string | null
+          created_at: string | null
+          device_fingerprint: string | null
+          device_type: string | null
+          expires_at: string
+          geo_location: Json | null
+          id: string
+          ip_address: string | null
+          is_current: boolean | null
+          last_activity_at: string | null
+          os: string | null
+          session_token_hash: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          browser?: string | null
+          created_at?: string | null
+          device_fingerprint?: string | null
+          device_type?: string | null
+          expires_at: string
+          geo_location?: Json | null
+          id?: string
+          ip_address?: string | null
+          is_current?: boolean | null
+          last_activity_at?: string | null
+          os?: string | null
+          session_token_hash: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          browser?: string | null
+          created_at?: string | null
+          device_fingerprint?: string | null
+          device_type?: string | null
+          expires_at?: string
+          geo_location?: Json | null
+          id?: string
+          ip_address?: string | null
+          is_current?: boolean | null
+          last_activity_at?: string | null
+          os?: string | null
+          session_token_hash?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_sessions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -919,6 +1259,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_domain_allowed: {
+        Args: { p_email: string; p_organization_id: string }
+        Returns: {
+          allowed: boolean
+          requires_approval: boolean
+        }[]
+      }
       check_rate_limit: {
         Args: {
           p_action: string
@@ -933,6 +1280,7 @@ export type Database = {
         }[]
       }
       cleanup_expired_otps: { Args: never; Returns: undefined }
+      cleanup_expired_sessions: { Args: never; Returns: undefined }
       generate_otp: {
         Args: { p_email: string; p_expires_minutes?: number; p_type: string }
         Returns: string
@@ -943,6 +1291,18 @@ export type Database = {
         Returns: Database["public"]["Enums"]["user_role"]
       }
       is_super_admin: { Args: never; Returns: boolean }
+      log_security_event: {
+        Args: {
+          p_details?: Json
+          p_event_type: string
+          p_ip_address?: string
+          p_organization_id: string
+          p_severity?: string
+          p_user_agent?: string
+          p_user_id?: string
+        }
+        Returns: string
+      }
       verify_otp: {
         Args: { p_code: string; p_email: string; p_type: string }
         Returns: boolean
