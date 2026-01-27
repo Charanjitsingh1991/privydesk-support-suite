@@ -55,17 +55,18 @@ export default function AuthCallback() {
           }
         }
 
-        // Check if this is a new user (first login)
+        // Check user profile and organization status
         const { data: { user } } = await supabase.auth.getUser();
         
         if (user) {
           const { data: profile } = await supabase
             .from("profiles")
-            .select("last_login_at")
+            .select("last_login_at, organization_id")
             .eq("id", user.id)
             .single();
 
           const isFirstLogin = !profile?.last_login_at;
+          const hasOrganization = !!profile?.organization_id;
 
           // Update last login
           await supabase
@@ -87,14 +88,23 @@ export default function AuthCallback() {
               // Don't block login for email errors
             }
           }
-        }
 
-        setStatus("success");
-        
-        // Redirect to dashboard after a short delay
-        setTimeout(() => {
-          navigate("/dashboard", { replace: true });
-        }, 1500);
+          setStatus("success");
+          
+          // Redirect based on organization status
+          setTimeout(() => {
+            if (hasOrganization) {
+              navigate("/dashboard", { replace: true });
+            } else {
+              navigate("/onboarding", { replace: true });
+            }
+          }, 1500);
+        } else {
+          setStatus("success");
+          setTimeout(() => {
+            navigate("/onboarding", { replace: true });
+          }, 1500);
+        }
       } catch (error: any) {
         console.error("Auth callback error:", error);
         setStatus("error");
