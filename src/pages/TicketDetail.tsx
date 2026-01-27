@@ -2,6 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useUser } from '@/hooks/useSession';
+import { useRealtimeMessages } from '@/hooks/useRealtimeMessages';
+import { useTypingIndicator } from '@/hooks/useTypingIndicator';
+import { usePresence } from '@/hooks/usePresence';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { StatusBadge, PriorityBadge } from '@/components/ui/StatusBadge';
 import { Button } from '@/components/ui/button';
@@ -24,8 +27,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { TicketTimeline, TimelineEvent } from '@/components/tickets/TicketTimeline';
-import { MessageComposer } from '@/components/tickets/MessageComposer';
+import { MessageList } from '@/components/messages/MessageList';
+import { MessageComposer } from '@/components/messages/MessageComposer';
+import { PresenceIndicator } from '@/components/messages/PresenceIndicator';
 import {
   ArrowLeft,
   MoreHorizontal,
@@ -70,15 +74,44 @@ const PRIORITY_OPTIONS: { value: TicketPriority; label: string }[] = [
 export default function TicketDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { userId, role } = useUser();
+  const { userId, role, fullName, avatarUrl } = useUser();
 
   const [ticket, setTicket] = useState<TicketWithRelations | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
   const [agents, setAgents] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
 
   const canEdit = role === 'admin' || role === 'agent' || role === 'super_admin';
+
+  // Real-time messages
+  const {
+    messages,
+    loading: messagesLoading,
+    connectionState,
+    refetch: refetchMessages,
+    markAsRead,
+    retryMessage,
+  } = useRealtimeMessages({
+    ticketId: id || '',
+    enabled: !!id,
+  });
+
+  // Typing indicator
+  const { typingText, startTyping } = useTypingIndicator({
+    ticketId: id || '',
+    userId,
+    userName: fullName || 'User',
+    enabled: !!id && !!userId,
+  });
+
+  // Presence tracking
+  const { viewers, otherViewerCount } = usePresence({
+    ticketId: id || '',
+    userId,
+    userName: fullName || 'User',
+    avatarUrl: avatarUrl || undefined,
+    enabled: !!id && !!userId,
+  });
 
   const fetchTicket = useCallback(async () => {
     if (!id) return;
@@ -102,20 +135,6 @@ export default function TicketDetail() {
     setTicket(data as TicketWithRelations);
   }, [id, navigate]);
 
-  const fetchMessages = useCallback(async () => {
-    if (!id) return;
-
-    const { data, error } = await supabase
-      .from('messages')
-      .select('*')
-      .eq('ticket_id', id)
-      .order('created_at', { ascending: true });
-
-    if (!error && data) {
-      setMessages(data as Message[]);
-    }
-  }, [id]);
-
   const fetchAgents = useCallback(async () => {
     const { data } = await supabase
       .from('profiles')
@@ -126,29 +145,24 @@ export default function TicketDetail() {
   }, []);
 
   useEffect(() => {
-    Promise.all([fetchTicket(), fetchMessages(), fetchAgents()]).finally(() => {
+    Promise.all([fetchTicket(), fetchAgents()]).finally(() => {
       setLoading(false);
     });
-  }, [fetchTicket, fetchMessages, fetchAgents]);
+  }, [fetchTicket, fetchAgents]);
 
-  // Real-time subscription
+  // Mark messages as read when viewing
+  useEffect(() => {
+    if (userId && messages.length > 0) {
+      markAsRead(userId);
+    }
+  }, [userId, messages.length, markAsRead]);
+
+  // Real-time ticket subscription
   useEffect(() => {
     if (!id) return;
 
     const channel = supabase
-      .channel(`ticket-${id}`)
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'messages',
-          filter: `ticket_id=eq.${id}`,
-        },
-        () => {
-          fetchMessages();
-        }
-      )
+      .channel(`ticket-status-${id}`)
       .on(
         'postgres_changes',
         {
@@ -166,7 +180,7 @@ export default function TicketDetail() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [id, fetchMessages, fetchTicket]);
+  }, [id, fetchTicket]);
 
   const updateTicket = async (updates: {
     status?: TicketStatus;
@@ -200,56 +214,30 @@ export default function TicketDetail() {
     updateTicket({ status: 'open' });
   };
 
-  // Convert messages to timeline events
-  const getTimelineEvents = (): TimelineEvent[] => {
-    const events: TimelineEvent[] = [];
-
-    // Add original description as first event
-    if (ticket?.creator) {
-      events.push({
-        id: 'original',
-        type: 'message',
-        content: ticket.description,
-        user: ticket.creator,
-        created_at: ticket.created_at,
-      });
-    }
-
-    // Add messages
-    messages.forEach((msg) => {
-      // Find user - for now just use a placeholder since we don't have joined user data
-      const user: Profile = {
-        id: msg.user_id,
-        email: '',
-        full_name: 'User',
-        role: 'client',
-        organization_id: null,
-        avatar_url: null,
-        is_active: true,
-        email_verified: true,
-        last_login_at: null,
-        created_at: '',
-        updated_at: '',
-        preferences: {},
-      };
-
-      events.push({
-        id: msg.id,
-        type: msg.is_internal ? 'internal_note' : 'message',
-        content: msg.content,
-        user,
-        created_at: msg.created_at || '',
-        metadata: {
-          is_internal: msg.is_internal || false,
-          attachments: (msg.attachments as any[])?.map((a: any) => a.url) || [],
-        },
-      });
-    });
-
-    return events.sort(
-      (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-    );
-  };
+  // Prepare messages for MessageList
+  const messagesWithDescription = [
+    // Add original description as first message
+    ...(ticket?.creator
+      ? [
+          {
+            id: 'original',
+            content: ticket.description,
+            user: ticket.creator,
+            user_id: ticket.created_by,
+            created_at: ticket.created_at,
+            is_internal: false,
+            attachments: [],
+            read_by: [],
+          },
+        ]
+      : []),
+    ...messages.map((msg) => ({
+      ...msg,
+      user: msg.user,
+      attachments: (msg.attachments as any[]) || [],
+      read_by: msg.read_by || [],
+    })),
+  ];
 
   if (loading) {
     return (
@@ -359,12 +347,41 @@ export default function TicketDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Timeline */}
           <div className="lg:col-span-2 space-y-4">
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base">Activity</CardTitle>
+            {/* Presence indicator */}
+            {otherViewerCount > 0 && (
+              <PresenceIndicator viewers={viewers} currentUserId={userId} />
+            )}
+
+            {/* Messages */}
+            <Card className="overflow-hidden">
+              <CardHeader className="pb-3 flex flex-row items-center justify-between">
+                <CardTitle className="text-base">Conversation</CardTitle>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  {connectionState === 'connected' && (
+                    <span className="flex items-center gap-1 text-green-600">
+                      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      Live
+                    </span>
+                  )}
+                </div>
               </CardHeader>
-              <CardContent>
-                <TicketTimeline events={getTimelineEvents()} />
+              <CardContent className="p-0">
+                <div className="h-[400px]">
+                  <MessageList
+                    messages={messagesWithDescription}
+                    currentUserId={userId}
+                    currentUserRole={role}
+                    typingText={typingText}
+                    connectionState={connectionState}
+                    loading={messagesLoading}
+                    onRetry={(messageId) => {
+                      const msg = messages.find((m) => m.id === messageId);
+                      if (msg) {
+                        retryMessage(messageId, msg.content, userId || '', msg.is_internal || false);
+                      }
+                    }}
+                  />
+                </div>
               </CardContent>
             </Card>
 
@@ -372,7 +389,8 @@ export default function TicketDetail() {
             <Card className="overflow-hidden">
               <MessageComposer
                 ticketId={ticket.id}
-                onMessageSent={fetchMessages}
+                onMessageSent={refetchMessages}
+                onTyping={startTyping}
                 disabled={isClosed}
               />
             </Card>
