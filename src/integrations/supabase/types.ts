@@ -1123,6 +1123,66 @@ export type Database = {
           },
         ]
       }
+      user_invitations: {
+        Row: {
+          accepted_at: string | null
+          created_at: string | null
+          custom_message: string | null
+          email: string
+          full_name: string
+          id: string
+          invited_by: string
+          organization_id: string
+          role: Database["public"]["Enums"]["user_role"]
+          status: string
+          token: string
+          token_expires_at: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          created_at?: string | null
+          custom_message?: string | null
+          email: string
+          full_name: string
+          id?: string
+          invited_by: string
+          organization_id: string
+          role?: Database["public"]["Enums"]["user_role"]
+          status?: string
+          token: string
+          token_expires_at: string
+        }
+        Update: {
+          accepted_at?: string | null
+          created_at?: string | null
+          custom_message?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          invited_by?: string
+          organization_id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          status?: string
+          token?: string
+          token_expires_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_invitations_invited_by_fkey"
+            columns: ["invited_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_invitations_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_sessions: {
         Row: {
           browser: string | null
@@ -1410,6 +1470,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_invitation: {
+        Args: { p_token: string; p_user_id: string }
+        Returns: boolean
+      }
       check_domain_allowed: {
         Args: { p_email: string; p_organization_id: string }
         Returns: {
@@ -1430,8 +1494,10 @@ export type Database = {
           blocked_until: string
         }[]
       }
+      cleanup_expired_invitations: { Args: never; Returns: undefined }
       cleanup_expired_otps: { Args: never; Returns: undefined }
       cleanup_expired_sessions: { Args: never; Returns: undefined }
+      generate_invitation_token: { Args: never; Returns: string }
       generate_otp: {
         Args: { p_email: string; p_expires_minutes?: number; p_type: string }
         Returns: string
