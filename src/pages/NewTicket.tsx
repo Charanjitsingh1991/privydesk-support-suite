@@ -75,7 +75,7 @@ export default function NewTicket() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-2xl mx-auto animate-in">
+      <div className="max-w-2xl mx-auto">
         <Button
           variant="ghost"
           className="mb-4 -ml-2"
