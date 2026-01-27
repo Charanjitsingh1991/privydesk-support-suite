@@ -21,6 +21,7 @@ import Files from "./pages/Files";
 import EmailArchive from "./pages/EmailArchive";
 import EmailMigration from "./pages/EmailMigration";
 import SecuritySettings from "./pages/SecuritySettings";
+import Analytics from "./pages/Analytics";
 
 // Passwordless auth pages
 import AuthLogin from "./pages/auth/Login";
@@ -137,6 +138,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <SecuritySettings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/analytics"
+              element={
+                <ProtectedRoute>
+                  <Analytics />
                 </ProtectedRoute>
               }
             />
