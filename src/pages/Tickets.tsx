@@ -21,7 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Plus, Search, Filter } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
@@ -72,7 +72,7 @@ export default function Tickets() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6 animate-in">
+      <div className="space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>

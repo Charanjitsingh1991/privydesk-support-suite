@@ -1,91 +1,51 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { StatsCard } from '@/components/dashboard/StatsCard';
-import { TicketList } from '@/components/tickets/TicketList';
-import { Ticket, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { ClientDashboard } from '@/components/dashboard/ClientDashboard';
+import { AgentDashboard } from '@/components/dashboard/AgentDashboard';
+import { SuperAdminDashboard } from '@/components/dashboard/SuperAdminDashboard';
+import { useUser } from '@/hooks/useSession';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState } from 'react';
 
 export default function Dashboard() {
+  const { role } = useUser();
   const { profile } = useAuth();
-  const [stats, setStats] = useState({
-    totalTickets: 0,
-    openTickets: 0,
-    resolvedTickets: 0,
-    avgResponseTime: '2.4h',
-  });
+  const [organizationName, setOrganizationName] = useState<string>('');
 
   useEffect(() => {
-    async function fetchStats() {
-      const { count: total } = await supabase
-        .from('tickets')
-        .select('*', { count: 'exact', head: true });
+    const fetchOrganization = async () => {
+      if (profile?.organization_id) {
+        const { data } = await supabase
+          .from('organizations')
+          .select('name')
+          .eq('id', profile.organization_id)
+          .single();
+        
+        if (data) {
+          setOrganizationName(data.name);
+        }
+      }
+    };
 
-      const { count: open } = await supabase
-        .from('tickets')
-        .select('*', { count: 'exact', head: true })
-        .eq('status', 'open');
+    fetchOrganization();
+  }, [profile?.organization_id]);
 
-      const { count: resolved } = await supabase
-        .from('tickets')
-        .select('*', { count: 'exact', head: true })
-        .eq('status', 'resolved');
-
-      setStats({
-        totalTickets: total || 0,
-        openTickets: open || 0,
-        resolvedTickets: resolved || 0,
-        avgResponseTime: '2.4h',
-      });
+  const renderDashboard = () => {
+    switch (role) {
+      case 'super_admin':
+        return <SuperAdminDashboard />;
+      case 'admin':
+      case 'agent':
+        return <AgentDashboard />;
+      case 'client':
+      default:
+        return <ClientDashboard organizationName={organizationName} />;
     }
-
-    fetchStats();
-  }, []);
+  };
 
   return (
     <DashboardLayout>
-      <div className="space-y-6 animate-in">
-        {/* Welcome message */}
-        <div>
-          <h1 className="text-2xl font-bold">
-            Welcome back, {profile?.full_name?.split(' ')[0] || 'there'}! 👋
-          </h1>
-          <p className="text-muted-foreground mt-1">
-            Here's what's happening with your support queue today.
-          </p>
-        </div>
-
-        {/* Stats grid */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatsCard
-            title="Total Tickets"
-            value={stats.totalTickets}
-            change={12}
-            icon={<Ticket className="w-5 h-5" />}
-          />
-          <StatsCard
-            title="Open Tickets"
-            value={stats.openTickets}
-            change={-8}
-            icon={<AlertCircle className="w-5 h-5" />}
-          />
-          <StatsCard
-            title="Resolved"
-            value={stats.resolvedTickets}
-            change={24}
-            icon={<CheckCircle className="w-5 h-5" />}
-          />
-          <StatsCard
-            title="Avg. Response"
-            value={stats.avgResponseTime}
-            change={-15}
-            icon={<Clock className="w-5 h-5" />}
-          />
-        </div>
-
-        {/* Recent tickets */}
-        <TicketList />
-      </div>
+      {renderDashboard()}
     </DashboardLayout>
   );
 }
