@@ -13,6 +13,8 @@ interface AISentimentBadgeProps {
   score?: number;
   emotions?: string[];
   showDetails?: boolean;
+  escalationRecommended?: boolean;
+  escalationReason?: string;
   className?: string;
 }
 
@@ -49,6 +51,8 @@ export function AISentimentBadge({
   score,
   emotions = [],
   showDetails = true,
+  escalationRecommended = false,
+  escalationReason,
   className,
 }: AISentimentBadgeProps) {
   const config = SENTIMENT_CONFIG[sentiment as keyof typeof SENTIMENT_CONFIG] || SENTIMENT_CONFIG.neutral;
@@ -61,10 +65,13 @@ export function AISentimentBadge({
     >
       <Icon className="h-3 w-3" />
       <span className="capitalize">{config.label}</span>
+      {escalationRecommended && (
+        <AlertCircle className="h-3 w-3 text-red-600 ml-1" />
+      )}
     </Badge>
   );
 
-  if (!showDetails || (emotions.length === 0 && score === undefined)) {
+  if (!showDetails || (emotions.length === 0 && score === undefined && !escalationRecommended)) {
     return badge;
   }
 
@@ -74,6 +81,12 @@ export function AISentimentBadge({
         <TooltipTrigger asChild>{badge}</TooltipTrigger>
         <TooltipContent className="max-w-xs">
           <div className="space-y-2">
+            {escalationRecommended && (
+              <div className="p-1.5 bg-red-100 dark:bg-red-900/30 rounded text-xs text-red-800 dark:text-red-300">
+                <p className="font-medium">⚠️ Escalation Recommended</p>
+                {escalationReason && <p className="mt-1">{escalationReason}</p>}
+              </div>
+            )}
             {score !== undefined && (
               <p className="text-xs">
                 Sentiment score: <span className="font-medium">{score.toFixed(2)}</span>

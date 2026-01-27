@@ -13,6 +13,13 @@ export interface SentimentResult {
   score: number;
   emotions: string[];
   reasoning: string;
+  escalation_recommended: boolean;
+  escalation_reason?: string;
+}
+
+export interface TagsResult {
+  tags: string[];
+  reasoning: string;
 }
 
 export interface ResponseSuggestion {
@@ -39,9 +46,10 @@ export function useTicketAI() {
   const [sentimentResult, setSentimentResult] = useState<SentimentResult | null>(null);
   const [suggestions, setSuggestions] = useState<ResponseSuggestion[]>([]);
   const [fullAnalysis, setFullAnalysis] = useState<FullAnalysisResult | null>(null);
+  const [tagsResult, setTagsResult] = useState<TagsResult | null>(null);
 
   const analyzeTicket = useCallback(async (
-    type: 'categorize' | 'sentiment' | 'suggest_response' | 'full_analysis',
+    type: 'categorize' | 'sentiment' | 'suggest_response' | 'full_analysis' | 'extract_tags',
     subject: string,
     description: string,
     messages: string[] = []
@@ -73,6 +81,9 @@ export function useTicketAI() {
         case 'full_analysis':
           setFullAnalysis(data.result);
           break;
+        case 'extract_tags':
+          setTagsResult(data.result);
+          break;
       }
 
       return data.result;
@@ -101,11 +112,16 @@ export function useTicketAI() {
     return analyzeTicket('full_analysis', subject, description, messages);
   }, [analyzeTicket]);
 
+  const extractTags = useCallback((subject: string, description: string) => {
+    return analyzeTicket('extract_tags', subject, description);
+  }, [analyzeTicket]);
+
   const clearResults = useCallback(() => {
     setCategoryResult(null);
     setSentimentResult(null);
     setSuggestions([]);
     setFullAnalysis(null);
+    setTagsResult(null);
   }, []);
 
   return {
@@ -114,10 +130,12 @@ export function useTicketAI() {
     sentimentResult,
     suggestions,
     fullAnalysis,
+    tagsResult,
     categorize,
     analyzeSentiment,
     suggestResponses,
     performFullAnalysis,
+    extractTags,
     clearResults,
   };
 }

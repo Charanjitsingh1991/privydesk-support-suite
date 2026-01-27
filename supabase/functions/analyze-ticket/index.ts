@@ -6,7 +6,7 @@ const corsHeaders = {
 };
 
 interface AnalysisRequest {
-  type: "categorize" | "sentiment" | "suggest_response" | "full_analysis";
+  type: "categorize" | "sentiment" | "suggest_response" | "full_analysis" | "extract_tags";
   subject: string;
   description: string;
   messages?: string[];
@@ -23,12 +23,19 @@ interface SentimentResult {
   score: number;
   emotions: string[];
   reasoning: string;
+  escalation_recommended: boolean;
+  escalation_reason?: string;
 }
 
 interface ResponseSuggestion {
   title: string;
   content: string;
   tone: string;
+}
+
+interface TagsResult {
+  tags: string[];
+  reasoning: string;
 }
 
 serve(async (req) => {
@@ -83,8 +90,13 @@ Provide your confidence score (0-100) and brief reasoning.`;
 1. Overall sentiment (positive, neutral, negative, frustrated, urgent)
 2. Sentiment score (-1 to 1, where -1 is very negative and 1 is very positive)
 3. Detected emotions (anger, frustration, satisfaction, confusion, urgency, gratitude, etc.)
+4. Whether escalation is recommended (true if customer is very frustrated or issue is critical)
 
-Focus on understanding the customer's emotional state to help agents respond appropriately.`;
+Focus on understanding the customer's emotional state to help agents respond appropriately.
+Flag for escalation if:
+- Negative sentiment detected 3+ times in messages
+- Urgency indicators like "immediately", "asap", "critical", "broken", "down"
+- Explicit threats to leave or cancel`;
 
       toolDefinition = {
         type: "function",
@@ -103,9 +115,41 @@ Focus on understanding the customer's emotional state to help agents respond app
                 type: "array",
                 items: { type: "string" }
               },
+              reasoning: { type: "string" },
+              escalation_recommended: { type: "boolean" },
+              escalation_reason: { type: "string" }
+            },
+            required: ["sentiment", "score", "emotions", "reasoning", "escalation_recommended"],
+            additionalProperties: false
+          }
+        }
+      };
+    } else if (type === "extract_tags") {
+      systemPrompt = `You are a tag extraction expert. Analyze the support ticket and extract relevant tags.
+Extract up to 5 concise, lowercase, hyphenated tags that describe:
+- The main issue or topic
+- Affected features or products
+- Technical keywords
+- Action type (e.g., "password-reset", "refund-request", "feature-question")
+
+Tags should be specific and actionable, not generic like "help" or "issue".`;
+
+      toolDefinition = {
+        type: "function",
+        function: {
+          name: "extract_tags",
+          description: "Extract relevant tags from a support ticket",
+          parameters: {
+            type: "object",
+            properties: {
+              tags: {
+                type: "array",
+                items: { type: "string" },
+                maxItems: 5
+              },
               reasoning: { type: "string" }
             },
-            required: ["sentiment", "score", "emotions", "reasoning"],
+            required: ["tags", "reasoning"],
             additionalProperties: false
           }
         }
