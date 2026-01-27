@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useUser } from '@/hooks/useSession';
 import { Button } from '@/components/ui/button';
@@ -31,14 +31,14 @@ interface MessageComposerProps {
   disabled?: boolean;
 }
 
+export interface MessageComposerHandle {
+  insertContent: (content: string) => void;
+}
+
 const DRAFT_SAVE_INTERVAL = 3000; // 3 seconds
 
-export function MessageComposer({
-  ticketId,
-  onMessageSent,
-  onTyping,
-  disabled = false,
-}: MessageComposerProps) {
+export const MessageComposer = forwardRef<MessageComposerHandle, MessageComposerProps>(
+  function MessageComposer({ ticketId, onMessageSent, onTyping, disabled = false }, ref) {
   const { userId, role, fullName } = useUser();
   const [content, setContent] = useState('');
   const [isInternal, setIsInternal] = useState(false);
@@ -48,6 +48,13 @@ export function MessageComposer({
   const [draftSaved, setDraftSaved] = useState(false);
   const draftTimeoutRef = useRef<NodeJS.Timeout>();
   const lastTypingRef = useRef<number>(0);
+
+  // Expose insertContent method via ref
+  useImperativeHandle(ref, () => ({
+    insertContent: (newContent: string) => {
+      setContent((prev) => prev + (prev ? '\n\n' : '') + newContent);
+    },
+  }), []);
 
   // Auto-save draft
   useEffect(() => {
@@ -296,4 +303,4 @@ export function MessageComposer({
       </div>
     </div>
   );
-}
+});
