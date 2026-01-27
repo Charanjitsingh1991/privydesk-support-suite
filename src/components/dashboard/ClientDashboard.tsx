@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 interface ClientDashboardProps {
   organizationName?: string;
@@ -32,18 +33,18 @@ const getStatusColor = (status: string) => {
 
 export function ClientDashboard({ organizationName = 'Your Organization' }: ClientDashboardProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Welcome Banner */}
       <Card className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-primary/20">
-        <CardContent className="p-6">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <CardContent className="p-4 md:p-6">
+          <div className="flex flex-col gap-4">
             <div>
-              <h2 className="text-2xl font-bold">Welcome to {organizationName}</h2>
-              <p className="text-muted-foreground mt-1">
+              <h2 className="text-xl md:text-2xl font-bold">Welcome to {organizationName}</h2>
+              <p className="text-muted-foreground mt-1 text-sm md:text-base">
                 How can we help you today? Create a new ticket or check on existing ones.
               </p>
             </div>
-            <Button asChild size="lg" className="shrink-0">
+            <Button asChild size="lg" className="w-full md:w-auto md:self-start touch-target">
               <Link to="/dashboard/tickets/new">
                 <PlusCircle className="h-5 w-5 mr-2" />
                 Create New Ticket
@@ -53,30 +54,30 @@ export function ClientDashboard({ organizationName = 'Your Organization' }: Clie
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-4 md:gap-6 lg:grid-cols-3">
         {/* Recent Tickets */}
         <Card className="lg:col-span-2">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 px-4 md:px-6">
             <CardTitle className="text-base font-medium">Recent Tickets</CardTitle>
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" size="sm" asChild className="touch-target">
               <Link to="/dashboard/tickets">
                 View all <ArrowRight className="h-4 w-4 ml-1" />
               </Link>
             </Button>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
+          <CardContent className="px-4 md:px-6">
+            <div className="space-y-2 md:space-y-3">
               {recentTickets.map(ticket => (
                 <Link
                   key={ticket.id}
                   to={`/dashboard/tickets/${ticket.id}`}
-                  className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors"
+                  className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors touch-target"
                 >
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate">{ticket.subject}</p>
+                  <div className="flex-1 min-w-0 mr-3">
+                    <p className="font-medium truncate text-sm md:text-base">{ticket.subject}</p>
                     <p className="text-xs text-muted-foreground">{ticket.createdAt}</p>
                   </div>
-                  <Badge variant="secondary" className={getStatusColor(ticket.status)}>
+                  <Badge variant="secondary" className={cn('shrink-0 text-xs', getStatusColor(ticket.status))}>
                     {ticket.status.replace('_', ' ')}
                   </Badge>
                 </Link>

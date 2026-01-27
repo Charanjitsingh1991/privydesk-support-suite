@@ -4,6 +4,11 @@ import { cn } from '@/lib/utils';
 import { Sidebar } from './Sidebar';
 import { TopNav } from './TopNav';
 import { Breadcrumbs } from './Breadcrumbs';
+import { BottomNav } from '@/components/mobile/BottomNav';
+import { FloatingActionButton } from '@/components/mobile/FloatingActionButton';
+import { InstallPrompt } from '@/components/mobile/InstallPrompt';
+import { OfflineBanner } from '@/components/mobile/OfflineBanner';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface DashboardLayoutProps {
   children?: React.ReactNode;
@@ -12,6 +17,7 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   // Close mobile menu on resize
   useEffect(() => {
@@ -27,6 +33,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Offline Banner */}
+      <OfflineBanner />
+
       {/* Mobile overlay */}
       {mobileMenuOpen && (
         <div
@@ -66,14 +75,24 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <main
         className={cn(
           'pt-16 min-h-screen transition-all duration-300',
-          sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'
+          sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64',
+          isMobile && 'pb-bottom-nav'
         )}
       >
-        <div className="container mx-auto p-6">
-          <Breadcrumbs className="mb-6" />
+        <div className="container mx-auto p-4 md:p-6">
+          <Breadcrumbs className="mb-4 md:mb-6" />
           {children || <Outlet />}
         </div>
       </main>
+
+      {/* Mobile Bottom Navigation */}
+      <BottomNav />
+
+      {/* Floating Action Button */}
+      <FloatingActionButton />
+
+      {/* PWA Install Prompt */}
+      <InstallPrompt />
     </div>
   );
 }
