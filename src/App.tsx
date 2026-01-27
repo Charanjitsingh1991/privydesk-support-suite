@@ -18,6 +18,8 @@ import WidgetEmbed from "./pages/WidgetEmbed";
 import ChatWidgetSettings from "./pages/ChatWidgetSettings";
 import LiveChatInbox from "./pages/LiveChatInbox";
 import Files from "./pages/Files";
+import EmailArchive from "./pages/EmailArchive";
+import EmailMigration from "./pages/EmailMigration";
 
 // Passwordless auth pages
 import AuthLogin from "./pages/auth/Login";
@@ -110,6 +112,22 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Files />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/emails"
+              element={
+                <ProtectedRoute>
+                  <EmailArchive />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/settings/email-migration"
+              element={
+                <ProtectedRoute>
+                  <EmailMigration />
                 </ProtectedRoute>
               }
             />

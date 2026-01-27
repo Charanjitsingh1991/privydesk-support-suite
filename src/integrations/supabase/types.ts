@@ -65,6 +65,246 @@ export type Database = {
           },
         ]
       }
+      email_archive: {
+        Row: {
+          auto_linked: boolean | null
+          bcc_recipients: Json | null
+          body_content: string | null
+          body_content_type: string | null
+          body_preview: string | null
+          categories: Json | null
+          cc_recipients: Json | null
+          conversation_id: string | null
+          created_at: string | null
+          folder_path: string | null
+          from_email: string
+          from_name: string | null
+          has_attachments: boolean | null
+          id: string
+          importance: string | null
+          imported_at: string | null
+          is_read: boolean | null
+          linked_client_id: string | null
+          linked_ticket_id: string | null
+          organization_id: string
+          outlook_message_id: string | null
+          received_datetime: string
+          search_vector: unknown
+          sent_datetime: string | null
+          subject: string
+          to_recipients: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          auto_linked?: boolean | null
+          bcc_recipients?: Json | null
+          body_content?: string | null
+          body_content_type?: string | null
+          body_preview?: string | null
+          categories?: Json | null
+          cc_recipients?: Json | null
+          conversation_id?: string | null
+          created_at?: string | null
+          folder_path?: string | null
+          from_email: string
+          from_name?: string | null
+          has_attachments?: boolean | null
+          id?: string
+          importance?: string | null
+          imported_at?: string | null
+          is_read?: boolean | null
+          linked_client_id?: string | null
+          linked_ticket_id?: string | null
+          organization_id: string
+          outlook_message_id?: string | null
+          received_datetime: string
+          search_vector?: unknown
+          sent_datetime?: string | null
+          subject: string
+          to_recipients?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          auto_linked?: boolean | null
+          bcc_recipients?: Json | null
+          body_content?: string | null
+          body_content_type?: string | null
+          body_preview?: string | null
+          categories?: Json | null
+          cc_recipients?: Json | null
+          conversation_id?: string | null
+          created_at?: string | null
+          folder_path?: string | null
+          from_email?: string
+          from_name?: string | null
+          has_attachments?: boolean | null
+          id?: string
+          importance?: string | null
+          imported_at?: string | null
+          is_read?: boolean | null
+          linked_client_id?: string | null
+          linked_ticket_id?: string | null
+          organization_id?: string
+          outlook_message_id?: string | null
+          received_datetime?: string
+          search_vector?: unknown
+          sent_datetime?: string | null
+          subject?: string
+          to_recipients?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_archive_linked_client_id_fkey"
+            columns: ["linked_client_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_archive_linked_ticket_id_fkey"
+            columns: ["linked_ticket_id"]
+            isOneToOne: false
+            referencedRelation: "tickets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_archive_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_attachments: {
+        Row: {
+          content_id: string | null
+          content_type: string
+          created_at: string | null
+          download_status: string | null
+          downloaded_at: string | null
+          email_archive_id: string
+          file_name: string
+          file_size: number
+          file_url: string | null
+          id: string
+          is_inline: boolean | null
+        }
+        Insert: {
+          content_id?: string | null
+          content_type: string
+          created_at?: string | null
+          download_status?: string | null
+          downloaded_at?: string | null
+          email_archive_id: string
+          file_name: string
+          file_size: number
+          file_url?: string | null
+          id?: string
+          is_inline?: boolean | null
+        }
+        Update: {
+          content_id?: string | null
+          content_type?: string
+          created_at?: string | null
+          download_status?: string | null
+          downloaded_at?: string | null
+          email_archive_id?: string
+          file_name?: string
+          file_size?: number
+          file_url?: string | null
+          id?: string
+          is_inline?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_attachments_email_archive_id_fkey"
+            columns: ["email_archive_id"]
+            isOneToOne: false
+            referencedRelation: "email_archive"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_import_jobs: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          created_by: string
+          error_log: Json | null
+          error_message: string | null
+          failed_emails: number | null
+          id: string
+          organization_id: string
+          processed_attachments: number | null
+          processed_emails: number | null
+          pst_file_name: string | null
+          pst_file_size: number | null
+          pst_file_url: string | null
+          started_at: string | null
+          status: string | null
+          total_attachments: number | null
+          total_emails: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          created_by: string
+          error_log?: Json | null
+          error_message?: string | null
+          failed_emails?: number | null
+          id?: string
+          organization_id: string
+          processed_attachments?: number | null
+          processed_emails?: number | null
+          pst_file_name?: string | null
+          pst_file_size?: number | null
+          pst_file_url?: string | null
+          started_at?: string | null
+          status?: string | null
+          total_attachments?: number | null
+          total_emails?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string
+          error_log?: Json | null
+          error_message?: string | null
+          failed_emails?: number | null
+          id?: string
+          organization_id?: string
+          processed_attachments?: number | null
+          processed_emails?: number | null
+          pst_file_name?: string | null
+          pst_file_size?: number | null
+          pst_file_url?: string | null
+          started_at?: string | null
+          status?: string | null
+          total_attachments?: number | null
+          total_emails?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_import_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_import_jobs_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           attachments: Json[] | null

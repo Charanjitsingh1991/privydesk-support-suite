@@ -56,6 +56,7 @@ export const getNavigationByRole = (role: UserRole): NavSection[] => {
             { title: 'Dashboard', href: '/dashboard', icon: Home },
             { title: 'Tickets', href: '/dashboard/tickets', icon: Ticket },
             { title: 'Live Chat', href: '/dashboard/live-chat', icon: Inbox },
+            { title: 'Email Archive', href: '/dashboard/emails', icon: Mail },
             { title: 'Files', href: '/dashboard/files', icon: FolderOpen },
             { title: 'Team Members', href: '/dashboard/team', icon: Users },
             { title: 'Clients', href: '/dashboard/clients', icon: UserCircle },
@@ -67,6 +68,7 @@ export const getNavigationByRole = (role: UserRole): NavSection[] => {
           items: [
             { title: 'General', href: '/dashboard/settings', icon: Settings },
             { title: 'Chat Widget', href: '/dashboard/chat-widget', icon: MessageCircle },
+            { title: 'Email Migration', href: '/dashboard/settings/email-migration', icon: Mail },
             { title: 'Branding', href: '/dashboard/settings/branding', icon: Palette },
             { title: 'Domain', href: '/dashboard/settings/domain', icon: Globe },
             { title: 'Email Config', href: '/dashboard/settings/email', icon: Mail },
@@ -82,6 +84,7 @@ export const getNavigationByRole = (role: UserRole): NavSection[] => {
             { title: 'Dashboard', href: '/dashboard', icon: Home },
             { title: 'My Tickets', href: '/dashboard/tickets', icon: Ticket },
             { title: 'Live Chat', href: '/dashboard/live-chat', icon: Inbox },
+            { title: 'Email Archive', href: '/dashboard/emails', icon: Mail },
             { title: 'Files', href: '/dashboard/files', icon: FolderOpen },
             { title: 'My Performance', href: '/dashboard/performance', icon: TrendingUp },
           ],
