@@ -67,14 +67,8 @@ export const getNavigationByRole = (role: UserRole): NavSection[] => {
         {
           title: 'Settings',
           items: [
-            { title: 'General', href: '/dashboard/settings', icon: Settings },
-            { title: 'Security', href: '/dashboard/settings/security', icon: Shield },
+            { title: 'Settings', href: '/dashboard/settings', icon: Settings },
             { title: 'Chat Widget', href: '/dashboard/chat-widget', icon: MessageCircle },
-            { title: 'Email Migration', href: '/dashboard/settings/email-migration', icon: Mail },
-            { title: 'Branding', href: '/dashboard/settings/branding', icon: Palette },
-            { title: 'Domain', href: '/dashboard/settings/domain', icon: Globe },
-            { title: 'Email Config', href: '/dashboard/settings/email', icon: Mail },
-            { title: 'Subscription', href: '/dashboard/settings/subscription', icon: CreditCard },
           ],
         },
       ];
