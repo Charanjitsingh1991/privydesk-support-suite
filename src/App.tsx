@@ -14,6 +14,9 @@ import NewTicket from "./pages/NewTicket";
 import TicketDetail from "./pages/TicketDetail";
 import NotFound from "./pages/NotFound";
 import Onboarding from "./pages/Onboarding";
+import WidgetEmbed from "./pages/WidgetEmbed";
+import ChatWidgetSettings from "./pages/ChatWidgetSettings";
+import LiveChatInbox from "./pages/LiveChatInbox";
 
 // Passwordless auth pages
 import AuthLogin from "./pages/auth/Login";
@@ -85,6 +88,25 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/dashboard/chat-widget"
+              element={
+                <ProtectedRoute>
+                  <ChatWidgetSettings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/live-chat"
+              element={
+                <ProtectedRoute>
+                  <LiveChatInbox />
+                </ProtectedRoute>
+              }
+            />
+            
+            {/* Widget embed route (public) */}
+            <Route path="/widget/:orgId" element={<WidgetEmbed />} />
             
             {/* 404 fallback */}
             <Route path="*" element={<NotFound />} />
