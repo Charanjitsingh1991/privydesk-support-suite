@@ -22,6 +22,8 @@ import EmailArchive from "./pages/EmailArchive";
 import EmailMigration from "./pages/EmailMigration";
 import SecuritySettings from "./pages/SecuritySettings";
 import Analytics from "./pages/Analytics";
+import Team from "./pages/Team";
+import Clients from "./pages/Clients";
 
 // Passwordless auth pages
 import AuthLogin from "./pages/auth/Login";
@@ -146,6 +148,22 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Analytics />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/team"
+              element={
+                <ProtectedRoute>
+                  <Team />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/clients"
+              element={
+                <ProtectedRoute>
+                  <Clients />
                 </ProtectedRoute>
               }
             />
