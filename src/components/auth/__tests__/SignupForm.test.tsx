@@ -1,8 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
-import { render } from '@/test/test-utils';
+import { screen, fireEvent, waitFor, render } from '@/test/test-utils';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
 import { SignupForm } from '../SignupForm';
 import { AuthProvider } from '@/contexts/AuthContext';
 
@@ -41,12 +39,41 @@ vi.mock('@/hooks/use-toast', () => ({
   }),
 }));
 
+// Mock zxcvbn to return high score for password validation
+vi.mock('zxcvbn', () => ({
+  default: () => ({
+    score: 4,
+    feedback: { suggestions: [], warning: '' },
+    crack_times_display: { offline_slow_hashing_1e4_per_second: 'centuries' },
+  }),
+}));
+
+// Mock password validator to always return valid for strong passwords
+vi.mock('@/lib/security/password-validator', () => ({
+  validatePassword: (password: string) => ({
+    isValid: password.length >= 12,
+    score: 4,
+    errors: password.length < 12 ? ['Password must be at least 12 characters'] : [],
+    suggestions: [],
+    estimatedCrackTime: 'centuries',
+  }),
+  getPasswordStrengthLabel: (score: number) => ({
+    label: score >= 3 ? 'Strong' : 'Weak',
+    color: score >= 3 ? 'text-green-600' : 'text-red-600',
+    bgColor: score >= 3 ? 'bg-green-500' : 'bg-red-500',
+  }),
+  DEFAULT_PASSWORD_POLICY: {
+    minLength: 12,
+    requireUppercase: true,
+    requireLowercase: true,
+    requireNumbers: true,
+    requireSymbols: true,
+    minScore: 3,
+  },
+}));
+
 function renderSignupForm() {
-  return render(
-    <BrowserRouter>
-      <SignupForm />
-    </BrowserRouter>
-  );
+  return render(<SignupForm />);
 }
 
 describe('SignupForm', () => {
@@ -144,8 +171,13 @@ describe('SignupForm', () => {
       await userEvent.type(screen.getByLabelText(/email/i), 'john@example.com');
       await userEvent.type(screen.getByLabelText(/password/i), 'SuperSecure123!@#Password');
 
-      // Submit the form
-      fireEvent.submit(screen.getByRole('button', { name: /create account/i }).closest('form')!);
+      // Wait for the button to be enabled (password strength check)
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /create account/i })).not.toBeDisabled();
+      });
+
+      // Click the submit button
+      await userEvent.click(screen.getByRole('button', { name: /create account/i }));
 
       await waitFor(() => {
         expect(mockSignUp).toHaveBeenCalledWith(
@@ -164,7 +196,11 @@ describe('SignupForm', () => {
       await userEvent.type(screen.getByLabelText(/email/i), 'john@example.com');
       await userEvent.type(screen.getByLabelText(/password/i), 'SuperSecure123!@#Password');
 
-      fireEvent.submit(screen.getByRole('button', { name: /create account/i }).closest('form')!);
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /create account/i })).not.toBeDisabled();
+      });
+
+      await userEvent.click(screen.getByRole('button', { name: /create account/i }));
 
       await waitFor(() => {
         expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
@@ -179,7 +215,11 @@ describe('SignupForm', () => {
       await userEvent.type(screen.getByLabelText(/email/i), 'john@example.com');
       await userEvent.type(screen.getByLabelText(/password/i), 'SuperSecure123!@#Password');
 
-      fireEvent.submit(screen.getByRole('button', { name: /create account/i }).closest('form')!);
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /create account/i })).not.toBeDisabled();
+      });
+
+      await userEvent.click(screen.getByRole('button', { name: /create account/i }));
 
       await waitFor(() => {
         expect(screen.getByText(/creating account/i)).toBeInTheDocument();
