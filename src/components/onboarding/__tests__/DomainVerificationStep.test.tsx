@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { screen, waitFor } from '@testing-library/react';
-import { render } from '@/test/test-utils';
+import { screen, waitFor, render } from '@/test/test-utils';
 import userEvent from '@testing-library/user-event';
 import { DomainVerificationStep } from '../DomainVerificationStep';
 import type { OnboardingData } from '@/hooks/useOnboardingState';

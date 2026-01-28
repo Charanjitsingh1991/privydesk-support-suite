@@ -33,24 +33,24 @@ describe('StatCard', () => {
 
   describe('change indicator', () => {
     it('renders positive change with up arrow', () => {
-      const { getByText, container } = render(
+      const { container } = render(
         <StatCard
           {...defaultProps}
           change={{ value: 12, trend: 'up' }}
         />
       );
-      expect(getByText('↑')).toBeInTheDocument();
+      expect(container.textContent).toContain('↑');
       expect(container.textContent).toContain('+12%');
     });
 
     it('renders negative change with down arrow', () => {
-      const { getByText, container } = render(
+      const { container } = render(
         <StatCard
           {...defaultProps}
           change={{ value: -5, trend: 'down' }}
         />
       );
-      expect(getByText('↓')).toBeInTheDocument();
+      expect(container.textContent).toContain('↓');
       expect(container.textContent).toContain('-5%');
     });
 

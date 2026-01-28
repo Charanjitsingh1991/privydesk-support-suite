@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, RenderOptions } from '@testing-library/react';
+import { render as rtlRender, RenderOptions, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -31,11 +31,11 @@ function customRender(
   ui: React.ReactElement,
   options?: Omit<RenderOptions, 'wrapper'>
 ) {
-  return render(ui, { wrapper: AllProviders, ...options });
+  return rtlRender(ui, { wrapper: AllProviders, ...options });
 }
 
-// Re-export everything
-export * from '@testing-library/react';
+// Re-export everything from @testing-library/react
+export { screen, fireEvent, waitFor, act } from '@testing-library/react';
 export { customRender as render };
 
 // Test data factories

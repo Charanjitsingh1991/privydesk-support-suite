@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { screen, waitFor, act } from '@testing-library/react';
-import { render } from '@/test/test-utils';
+import { screen, waitFor, act, render } from '@/test/test-utils';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 
 // Mock Supabase client
