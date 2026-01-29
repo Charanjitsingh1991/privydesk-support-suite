@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { GlassCard, StatCard } from '@/components/ui/GlassCard';
 import { GradientButton } from '@/components/ui/GradientButton';
 import { GridPattern, DottedBackground, AnimatedGrid } from '@/components/ui/GridPattern';
+import { WorkflowDiagram } from '@/components/ui/WorkflowDiagram';
 import {
   Ticket,
   Shield,
@@ -244,33 +245,10 @@ export default function Index() {
         </div>
       </motion.header>
 
-      {/* Hero Section - Dark Fintech */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
-        {/* Grid Pattern Background */}
-        <DottedBackground />
-        
-        {/* Floating elements for depth - Dark Fintech */}
-        <motion.div
-          className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl"
-          style={{ background: 'radial-gradient(circle, rgba(163, 230, 53, 0.15) 0%, transparent 70%)' }}
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl"
-          style={{ background: 'radial-gradient(circle, rgba(34, 211, 238, 0.1) 0%, transparent 70%)' }}
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -50, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
+      {/* Hero Section - Premium Fintech */}
+      <section className="relative pt-40 pb-32 lg:pt-56 lg:pb-48 overflow-hidden">
+        {/* Subtle Grid Background */}
+        <GridPattern variant="grid" className="opacity-100" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             className="max-w-4xl mx-auto text-center"
@@ -280,75 +258,76 @@ export default function Index() {
           >
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-lime/10 border border-accent-lime/20 backdrop-blur-glass mb-8"
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-glass mb-12"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <Sparkles className="w-4 h-4 text-accent-lime" />
-              <span className="text-sm font-medium text-white">AI-Powered Multi-Tenant SaaS Helpdesk</span>
+              <Sparkles className="w-5 h-5 text-white/70" />
+              <span className="text-base font-semibold text-white/90 tracking-wide">AI-Powered Multi-Tenant SaaS Helpdesk</span>
             </motion.div>
 
             {/* Main Heading */}
             <motion.h1
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              className="text-hero font-bold mb-8 leading-tight text-white"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Customer Support That{' '}
-              <span className="gradient-text text-glow">Scales With You</span>
+              Make your{' '}
+              <span className="gradient-text text-glow">Finance</span>
+              <br />
+              more efficient.
             </motion.h1>
 
             {/* Subheading */}
             <motion.p
-              className="text-xl lg:text-2xl text-white/70 mb-10 max-w-3xl mx-auto leading-relaxed"
+              className="text-xl lg:text-2xl text-white/60 mb-14 max-w-3xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              Transform your customer support with AI-powered ticketing, real-time chat, and enterprise-grade security.
-              Built for teams that demand excellence.
+              An easy way to manage your support tickets with AI-powered automation,
+              real-time analytics, and enterprise-grade security.
             </motion.p>
 
             {/* CTA Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
               <Link to="/signup">
-                <GradientButton variant="primary" size="lg">
-                  <Zap className="mr-2 w-5 h-5" />
-                  Start Free Trial
-                </GradientButton>
+                <button className="premium-button bg-white text-black font-semibold hover:shadow-glow-primary hover:scale-105">
+                  Get Started Free
+                  <ArrowRight className="ml-2 w-5 h-5 inline" />
+                </button>
               </Link>
               <Link to="/login">
-                <GradientButton variant="ghost" size="lg">
+                <button className="premium-button bg-transparent text-white border border-white/20 hover:border-white/40 hover:shadow-glow-primary">
                   View Live Demo
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </GradientButton>
+                </button>
               </Link>
             </motion.div>
 
             {/* Trust Indicators */}
             <motion.div
-              className="mt-16 flex flex-wrap justify-center items-center gap-8 text-white/50 text-sm"
+              className="flex flex-wrap justify-center items-center gap-10 text-white/40 text-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
               <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-success" />
+                <CheckCircle className="w-5 h-5 text-white/50" />
                 <span>No credit card required</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-success" />
+                <CheckCircle className="w-5 h-5 text-white/50" />
                 <span>14-day free trial</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-success" />
+                <CheckCircle className="w-5 h-5 text-white/50" />
                 <span>Cancel anytime</span>
               </div>
             </motion.div>
@@ -357,9 +336,9 @@ export default function Index() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 relative">
-        <AnimatedGrid className="opacity-30" />
-        <div className="container mx-auto px-4">
+      <section className="py-32 relative">
+        <AnimatedGrid className="opacity-20" />
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             className="grid grid-cols-2 lg:grid-cols-4 gap-6"
             variants={staggerContainerVariants}
@@ -369,15 +348,15 @@ export default function Index() {
           >
             {stats.map((stat, index) => (
               <motion.div key={index} variants={staggerItemVariants}>
-                <StatCard hover3D glowOnHover className="text-center">
-                  <div className="flex justify-center mb-4">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gradient-primary-start to-gradient-primary-end flex items-center justify-center shadow-glow-primary">
-                      <stat.icon className="w-7 h-7 text-white" />
+                <div className="premium-card p-8 text-center">
+                  <div className="flex justify-center mb-6">
+                    <div className="icon-badge bg-white/5 border border-white/10">
+                      <stat.icon className="w-8 h-8 text-white/70" />
                     </div>
                   </div>
-                  <div className="text-4xl font-bold gradient-text mb-2">{stat.value}</div>
-                  <div className="text-white/60">{stat.label}</div>
-                </StatCard>
+                  <div className="text-5xl font-bold text-white mb-3">{stat.value}</div>
+                  <div className="text-white/50 text-lg">{stat.label}</div>
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -385,19 +364,19 @@ export default function Index() {
       </section>
 
       {/* Features Section */}
-      <section ref={featuresRef} className="py-24 relative">
-        <GridPattern variant="dots" className="opacity-20" />
-        <div className="container mx-auto px-4">
+      <section ref={featuresRef} className="py-32 relative">
+        <GridPattern variant="dots" className="opacity-10" />
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={featuresInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4 gradient-text">
+            <h2 className="text-section-title font-bold mb-6 gradient-text">
               Everything You Need to Succeed
             </h2>
-            <p className="text-xl text-white/70 max-w-2xl mx-auto">
+            <p className="text-xl text-white/50 max-w-2xl mx-auto">
               Powerful features designed to help your team deliver exceptional customer experiences
             </p>
           </motion.div>
@@ -411,13 +390,13 @@ export default function Index() {
           >
             {features.map((feature, index) => (
               <motion.div key={index} variants={staggerItemVariants}>
-                <GlassCard hover3D glowOnHover className="h-full">
-                  <div className={`w-14 h-14 rounded-xl ${feature.iconBg} flex items-center justify-center mb-4 border border-white/5`}>
-                    <feature.icon className={`w-7 h-7 bg-gradient-to-br ${feature.gradient} bg-clip-text text-transparent`} style={{ WebkitTextFillColor: 'transparent' }} />
+                <div className="premium-card p-8 h-full">
+                  <div className="icon-badge bg-white/5 border border-white/10 mb-6">
+                    <feature.icon className="w-8 h-8 text-white/70" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 text-white">{feature.title}</h3>
-                  <p className="text-white/60 leading-relaxed">{feature.description}</p>
-                </GlassCard>
+                  <h3 className="text-2xl font-bold mb-4 text-white">{feature.title}</h3>
+                  <p className="text-white/50 leading-relaxed text-lg">{feature.description}</p>
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -425,19 +404,19 @@ export default function Index() {
       </section>
 
       {/* Pricing Section */}
-      <section ref={pricingRef} className="py-24 relative">
-        <DottedBackground className="opacity-30" />
-        <div className="container mx-auto px-4">
+      <section ref={pricingRef} className="py-32 relative">
+        <DottedBackground className="opacity-20" />
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={pricingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4 gradient-text">
+            <h2 className="text-section-title font-bold mb-6 gradient-text">
               Simple, Transparent Pricing
             </h2>
-            <p className="text-xl text-white/70">
+            <p className="text-xl text-white/50">
               Choose the perfect plan for your team. No hidden fees.
             </p>
           </motion.div>
@@ -450,71 +429,81 @@ export default function Index() {
             viewport={{ once: true }}
           >
             {plans.map((plan, index) => (
-              <motion.div
-                key={index}
-                variants={staggerItemVariants}
-                className={plan.popular ? 'lg:scale-105' : ''}
-              >
-                <GlassCard
-                  variant={plan.popular ? 'gradient-border' : 'default'}
-                  className="h-full relative"
-                  hover3D={plan.popular}
-                  glowOnHover={plan.popular}
-                >
+              <motion.div key={index} variants={staggerItemVariants}>
+                <div className={`premium-card p-10 relative h-full ${plan.popular ? 'border-white/10' : ''}`}>
                   {plan.popular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-gradient-primary-start to-gradient-primary-end text-white text-sm font-semibold shadow-glow-primary">
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-white text-black text-sm font-bold">
                       Most Popular
                     </div>
                   )}
                   
-                  <div className="mb-6">
-                    <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-                    <div className="flex items-baseline gap-2 mb-2">
-                      <span className="text-5xl font-bold gradient-text">{plan.price}</span>
-                      <span className="text-white/50">{plan.period}</span>
+                  <div className="mb-8">
+                    <h3 className="text-3xl font-bold text-white mb-4">{plan.name}</h3>
+                    <div className="flex items-baseline gap-3 mb-3">
+                      <span className="text-6xl font-bold gradient-text">{plan.price}</span>
+                      <span className="text-white/40 text-lg">{plan.period}</span>
                     </div>
-                    <p className="text-white/70">{plan.description}</p>
+                    <p className="text-white/60 text-lg">{plan.description}</p>
                   </div>
 
-                  <Link to="/signup" className="block mb-6">
-                    <GradientButton
-                      variant={plan.popular ? 'primary' : 'ghost'}
-                      size="lg"
-                      fullWidth
-                    >
+                  <Link to="/signup" className="block mb-8">
+                    <button className={`premium-button w-full ${plan.popular ? 'bg-white text-black font-semibold hover:shadow-glow-primary' : 'bg-transparent text-white border border-white/20 hover:border-white/40 hover:shadow-glow-primary'}`}>
                       {plan.cta}
-                    </GradientButton>
+                    </button>
                   </Link>
 
-                  <ul className="space-y-3">
+                  <ul className="space-y-4">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                        <span className="text-white/80">{feature}</span>
+                        <CheckCircle className="w-5 h-5 text-white/50 flex-shrink-0 mt-1" />
+                        <span className="text-white/70 text-lg">{feature}</span>
                       </li>
                     ))}
                   </ul>
-                </GlassCard>
+                </div>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
+      {/* Workflow Section */}
+      <section className="py-32 relative">
+        <GridPattern variant="grid" className="opacity-100" />
+        <div className="container mx-auto px-4 max-w-6xl relative z-10">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-section-title font-bold mb-6 text-white">
+              How It Works
+            </h2>
+            <p className="text-xl text-white/50">
+              Automated ticket workflow from creation to resolution
+            </p>
+          </motion.div>
+
+          <WorkflowDiagram />
+        </div>
+      </section>
+
       {/* Testimonials Section */}
-      <section ref={testimonialsRef} className="py-24 relative">
-        <AnimatedGrid className="opacity-20" />
-        <div className="container mx-auto px-4">
+      <section ref={testimonialsRef} className="py-32 relative">
+        <AnimatedGrid className="opacity-10" />
+        <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={testimonialsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4 gradient-text">
+            <h2 className="text-section-title font-bold mb-6 gradient-text">
               Loved by Support Teams Worldwide
             </h2>
-            <p className="text-xl text-white/70">
+            <p className="text-xl text-white/50">
               See what our customers have to say about PRIVYDESK
             </p>
           </motion.div>
@@ -528,25 +517,25 @@ export default function Index() {
           >
             {testimonials.map((testimonial, index) => (
               <motion.div key={index} variants={staggerItemVariants}>
-                <GlassCard hover3D className="h-full">
-                  <div className="flex gap-1 mb-4">
+                <div className="premium-card p-8 h-full">
+                  <div className="flex gap-1 mb-6">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-warning text-warning" />
+                      <Star key={i} className="w-5 h-5 fill-white/70 text-white/70" />
                     ))}
                   </div>
-                  <p className="text-white/80 mb-6 leading-relaxed italic">
+                  <p className="text-white/70 mb-8 leading-relaxed text-lg italic">
                     "{testimonial.content}"
                   </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gradient-primary-start to-gradient-primary-end flex items-center justify-center text-2xl">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-2xl">
                       {testimonial.avatar}
                     </div>
                     <div>
-                      <div className="font-semibold text-white">{testimonial.name}</div>
-                      <div className="text-sm text-white/50">{testimonial.role}</div>
+                      <div className="font-bold text-white text-lg">{testimonial.name}</div>
+                      <div className="text-white/40">{testimonial.role}</div>
                     </div>
                   </div>
-                </GlassCard>
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -554,106 +543,107 @@ export default function Index() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-24 relative">
-        <DottedBackground />
-        <div className="container mx-auto px-4">
-          <GlassCard variant="gradient-border" className="max-w-4xl mx-auto text-center" padding="lg">
+      <section className="py-32 relative">
+        <DottedBackground className="opacity-20" />
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="premium-card p-16 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-4xl lg:text-5xl font-bold mb-6 gradient-text">
+              <h2 className="text-section-title font-bold mb-8 gradient-text">
                 Ready to Transform Your Support?
               </h2>
-              <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto">
+              <p className="text-2xl text-white/60 mb-12 max-w-3xl mx-auto leading-relaxed">
                 Join thousands of teams already using PRIVYDESK to deliver exceptional customer experiences.
                 Start your free 14-day trial today.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <Link to="/signup">
-                  <GradientButton variant="primary" size="lg">
-                    <Sparkles className="mr-2 w-5 h-5" />
+                  <button className="premium-button bg-white text-black font-semibold hover:shadow-glow-primary hover:scale-105">
+                    <Sparkles className="mr-2 w-5 h-5 inline" />
                     Start Free Trial
-                  </GradientButton>
+                  </button>
                 </Link>
                 <Link to="/login">
-                  <GradientButton variant="secondary" size="lg">
-                    <Headphones className="mr-2 w-5 h-5" />
+                  <button className="premium-button bg-transparent text-white border border-white/20 hover:border-white/40 hover:shadow-glow-primary">
                     Talk to Sales
-                  </GradientButton>
+                  </button>
                 </Link>
               </div>
             </motion.div>
-          </GlassCard>
+          </div>
         </div>
       </section>
 
-      {/* Premium Footer */}
-      <footer className="py-16 border-t border-glass-border backdrop-blur-glass bg-glass-base/50">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 mb-12">
+      {/* Aplio-Style Footer */}
+      <footer className="py-20 border-t border-white/5 bg-black">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-4 mb-16">
             {/* Brand */}
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-glass bg-gradient-to-br from-gradient-primary-start to-gradient-primary-end flex items-center justify-center shadow-glow-primary">
-                  <Ticket className="w-5 h-5 text-white" />
-                </div>
-                <span className="font-bold text-xl gradient-text">PRIVYDESK</span>
+              <div className="mb-6">
+                <span className="font-bold text-2xl text-white">privydesk</span>
               </div>
-              <p className="text-white/60 mb-4">
-                AI-powered helpdesk platform for modern support teams.
+              <p className="text-white/50 text-sm leading-relaxed mb-6">
+                AI-powered helpdesk platform for modern support teams. Streamline your customer service.
               </p>
-              <div className="flex gap-3">
-                <a href="#" className="w-10 h-10 rounded-full bg-glass-base border border-glass-border flex items-center justify-center hover:bg-glass-hover hover:border-accent-lime/30 transition-colors">
-                  <Twitter className="w-5 h-5 text-white/60 hover:text-accent-lime transition-colors" />
+            </div>
+
+            {/* Explore */}
+            <div>
+              <h4 className="font-semibold text-white mb-6 text-sm">Explore</h4>
+              <ul className="space-y-3 text-white/60 text-sm">
+                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Services</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Career</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Testimonials</a></li>
+              </ul>
+            </div>
+
+            {/* Resources */}
+            <div>
+              <h4 className="font-semibold text-white mb-6 text-sm">Resources</h4>
+              <ul className="space-y-3 text-white/60 text-sm">
+                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">API Reference</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Integration</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Support</a></li>
+              </ul>
+            </div>
+
+            {/* Get In Touch */}
+            <div>
+              <h4 className="font-semibold text-white mb-6 text-sm">Get In Touch</h4>
+              <ul className="space-y-3 text-white/60 text-sm">
+                <li><a href="#" className="hover:text-white transition-colors">Need Support?</a></li>
+                <li><a href="mailto:info@privydesk.com" className="hover:text-white transition-colors">info@privydesk.com</a></li>
+                <li><a href="tel:+1234567890" className="hover:text-white transition-colors">+1 (234) 567-890</a></li>
+              </ul>
+              <div className="flex gap-3 mt-6">
+                <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+                  <Twitter className="w-4 h-4 text-white/60" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-glass-base border border-glass-border flex items-center justify-center hover:bg-glass-hover hover:border-accent-lime/30 transition-colors">
-                  <Github className="w-5 h-5 text-white/60 hover:text-accent-lime transition-colors" />
+                <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+                  <Github className="w-4 h-4 text-white/60" />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-glass-base border border-glass-border flex items-center justify-center hover:bg-glass-hover hover:border-accent-lime/30 transition-colors">
-                  <Linkedin className="w-5 h-5 text-white/60 hover:text-accent-lime transition-colors" />
+                <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+                  <Linkedin className="w-4 h-4 text-white/60" />
                 </a>
               </div>
-            </div>
-
-            {/* Product */}
-            <div>
-              <h4 className="font-semibold text-white mb-4">Product</h4>
-              <ul className="space-y-2 text-white/60">
-                <li><a href="#" className="hover:text-accent-lime transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-accent-lime transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-accent-lime transition-colors">API</a></li>
-                <li><a href="#" className="hover:text-accent-lime transition-colors">Integrations</a></li>
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h4 className="font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-white/60">
-                <li><a href="#" className="hover:text-accent-lime transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-accent-lime transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-accent-lime transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-accent-lime transition-colors">Contact</a></li>
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <h4 className="font-semibold text-white mb-4">Legal</h4>
-              <ul className="space-y-2 text-white/60">
-                <li><a href="#" className="hover:text-accent-lime transition-colors">Privacy</a></li>
-                <li><a href="#" className="hover:text-accent-lime transition-colors">Terms</a></li>
-                <li><a href="#" className="hover:text-accent-lime transition-colors">Security</a></li>
-                <li><a href="#" className="hover:text-accent-lime transition-colors">Compliance</a></li>
-              </ul>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-glass-border text-center text-white/50">
-            <p>© 2024 PRIVYDESK. All rights reserved. Built with ❤️ for support teams worldwide.</p>
+          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-white/40 text-sm">2025 Privydesk. All Rights Reserved</p>
+            <div className="flex gap-6 text-white/40 text-sm">
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms & Conditions</a>
+            </div>
           </div>
         </div>
       </footer>

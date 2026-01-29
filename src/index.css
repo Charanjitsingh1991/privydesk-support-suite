@@ -430,3 +430,92 @@
   background-color: rgba(163, 230, 53, 0.3);
   color: #ffffff;
 }
+
+/* ============================================
+   PREMIUM TYPOGRAPHY
+   ============================================ */
+
+.text-display {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-hero {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.text-section-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* Premium card styling - Dark Gray with Dotted Inner Border */
+.premium-card {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px dotted rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.premium-card::after {
+  content: '';
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(circle at center, rgba(163, 230, 53, 0.08) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.premium-card:hover {
+  background: #222222;
+  border-color: rgba(255, 255, 255, 0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.premium-card:hover::after {
+  opacity: 1;
+}
+
+/* Premium button */
+.premium-button {
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Icon badge premium */
+.icon-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.icon-badge:hover {
+  transform: scale(1.1) rotate(5deg);
+}

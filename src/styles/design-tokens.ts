@@ -9,23 +9,23 @@ export const designTokens = {
   // COLOR PALETTE - DARK FINTECH MODE
   // ============================================
   colors: {
-    // Background - Dark Fintech
+    // Background - Pure Black
     background: {
-      base: 'linear-gradient(180deg, #0a0a0a 0%, #111111 100%)',
-      baseStart: '#0a0a0a',
-      baseEnd: '#111111',
-      overlay: 'rgba(10, 10, 10, 0.95)',
+      base: '#000000',
+      baseStart: '#000000',
+      baseEnd: '#000000',
+      overlay: 'rgba(0, 0, 0, 0.95)',
       card: '#1a1a1a',
-      cardHover: '#1f1f1f',
+      cardHover: '#222222',
     },
 
-    // Glass Surfaces - Dark Glass
+    // Glass Surfaces - Pure Dark with Minimal Borders
     glass: {
-      base: 'rgba(255, 255, 255, 0.03)',
-      hover: 'rgba(255, 255, 255, 0.05)',
-      active: 'rgba(255, 255, 255, 0.08)',
-      border: 'rgba(255, 255, 255, 0.08)',
-      borderHover: 'rgba(163, 230, 53, 0.3)',
+      base: 'rgba(0, 0, 0, 0.4)',
+      hover: 'rgba(0, 0, 0, 0.6)',
+      active: 'rgba(0, 0, 0, 0.8)',
+      border: 'rgba(255, 255, 255, 0.03)',
+      borderHover: 'rgba(255, 255, 255, 0.06)',
     },
 
     // Gradient Accents - Lime Green Primary
