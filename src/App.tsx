@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
+import Pricing from "./pages/Pricing";
 import Resources from "./pages/Resources";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -68,6 +69,7 @@ const AnimatedRoutes = () => {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
