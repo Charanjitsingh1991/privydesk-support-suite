@@ -25,53 +25,55 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         
-        // Premium Design System Colors - Light Mode
-        'bg-base-start': '#f0f9ff',
-        'bg-base-end': '#fef3f2',
+        // Premium Design System Colors - Dark Fintech
+        'bg-base-start': '#0a0a0a',
+        'bg-base-end': '#111111',
+        'bg-card': '#1a1a1a',
+        'bg-card-hover': '#1f1f1f',
         
-        // Glass surfaces - Light
+        // Glass surfaces - Dark
         glass: {
-          base: 'rgba(255, 255, 255, 0.7)',
-          hover: 'rgba(255, 255, 255, 0.85)',
-          active: 'rgba(255, 255, 255, 0.95)',
-          border: 'rgba(14, 165, 233, 0.15)',
-          'border-hover': 'rgba(14, 165, 233, 0.3)',
+          base: 'rgba(255, 255, 255, 0.03)',
+          hover: 'rgba(255, 255, 255, 0.05)',
+          active: 'rgba(255, 255, 255, 0.08)',
+          border: 'rgba(255, 255, 255, 0.08)',
+          'border-hover': 'rgba(163, 230, 53, 0.3)',
         },
         
-        // Gradient colors - Teal/Coral
-        'gradient-primary-start': '#0ea5e9',
-        'gradient-primary-end': '#06b6d4',
-        'gradient-secondary-start': '#f97316',
-        'gradient-secondary-end': '#fb923c',
+        // Gradient colors - Lime Green Primary
+        'gradient-primary-start': '#a3e635',
+        'gradient-primary-end': '#84cc16',
+        'gradient-secondary-start': '#22d3ee',
+        'gradient-secondary-end': '#06b6d4',
         
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          sky: '#0ea5e9',
-          cyan: '#06b6d4',
+          lime: '#a3e635',
+          green: '#84cc16',
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
-          orange: '#f97316',
-          coral: '#fb923c',
+          cyan: '#22d3ee',
+          blue: '#06b6d4',
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
         success: {
-          DEFAULT: '#059669',
-          foreground: '#ffffff',
-          light: '#34d399',
+          DEFAULT: '#84cc16',
+          foreground: '#000000',
+          light: '#a3e635',
         },
         warning: {
-          DEFAULT: '#d97706',
-          foreground: '#ffffff',
+          DEFAULT: '#f59e0b',
+          foreground: '#000000',
           light: '#fbbf24',
         },
         error: {
-          DEFAULT: '#dc2626',
+          DEFAULT: '#ef4444',
           foreground: '#ffffff',
           light: '#f87171',
         },
@@ -82,6 +84,10 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          lime: '#a3e635',
+          cyan: '#22d3ee',
+          purple: '#a855f7',
+          pink: '#ec4899',
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -102,17 +108,17 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         status: {
-          open: '#0284c7',
-          'in-progress': '#7c3aed',
-          waiting: '#d97706',
-          resolved: '#059669',
-          closed: '#64748b',
+          open: '#22d3ee',
+          'in-progress': '#a3e635',
+          waiting: '#f59e0b',
+          resolved: '#84cc16',
+          closed: '#6b7280',
         },
         priority: {
-          low: '#059669',
-          medium: '#d97706',
-          high: '#ea580c',
-          urgent: '#dc2626',
+          low: '#84cc16',
+          medium: '#f59e0b',
+          high: '#fb923c',
+          urgent: '#ef4444',
         },
       },
       borderRadius: {
@@ -125,20 +131,20 @@ export default {
       },
       boxShadow: {
         glow: "var(--shadow-glow)",
-        // Card shadows - Light mode
-        'card': '0 10px 40px rgba(14, 165, 233, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05)',
-        'card-hover': '0 20px 60px rgba(14, 165, 233, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08)',
-        'card-active': '0 5px 20px rgba(14, 165, 233, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04)',
-        // Glow effects
-        'glow-primary': '0 0 30px rgba(14, 165, 233, 0.25)',
-        'glow-primary-strong': '0 0 50px rgba(14, 165, 233, 0.4)',
-        'glow-secondary': '0 0 30px rgba(249, 115, 22, 0.25)',
-        'glow-success': '0 0 30px rgba(5, 150, 105, 0.25)',
-        'glow-warning': '0 0 30px rgba(217, 119, 6, 0.25)',
-        'glow-error': '0 0 30px rgba(220, 38, 38, 0.25)',
+        // Card shadows - Dark fintech
+        'card': '0 4px 24px rgba(0, 0, 0, 0.4), 0 0 1px rgba(255, 255, 255, 0.1)',
+        'card-hover': '0 8px 40px rgba(163, 230, 53, 0.15), 0 0 1px rgba(255, 255, 255, 0.15)',
+        'card-active': '0 2px 12px rgba(0, 0, 0, 0.3)',
+        // Glow effects - Lime green
+        'glow-primary': '0 0 40px rgba(163, 230, 53, 0.3)',
+        'glow-primary-strong': '0 0 60px rgba(163, 230, 53, 0.5)',
+        'glow-secondary': '0 0 40px rgba(34, 211, 238, 0.3)',
+        'glow-success': '0 0 40px rgba(132, 204, 22, 0.3)',
+        'glow-warning': '0 0 40px rgba(245, 158, 11, 0.3)',
+        'glow-error': '0 0 40px rgba(239, 68, 68, 0.3)',
         // Inner glow
-        'inner-glow-primary': 'inset 0 0 40px rgba(14, 165, 233, 0.08)',
-        'inner-glow-secondary': 'inset 0 0 40px rgba(249, 115, 22, 0.08)',
+        'inner-glow-primary': 'inset 0 0 60px rgba(163, 230, 53, 0.1)',
+        'inner-glow-secondary': 'inset 0 0 60px rgba(34, 211, 238, 0.1)',
       },
       backdropBlur: {
         'glass': '24px',

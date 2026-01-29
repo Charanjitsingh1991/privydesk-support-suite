@@ -142,17 +142,17 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
-      {/* Gradient Background - Light Mode */}
+      {/* Gradient Background - Dark Fintech */}
       {(variant === 'gradient' || variant === 'both') && (
         <>
-          {/* Base gradient - Light blue to light coral */}
-          <div className="absolute inset-0 bg-gradient-to-br from-bg-base-start to-bg-base-end" />
+          {/* Base gradient - Dark */}
+          <div className="absolute inset-0 bg-gradient-to-b from-bg-base-start to-bg-base-end" />
 
-          {/* Animated gradient orbs - Light Mode */}
+          {/* Animated gradient orbs - Dark Fintech with Lime Green */}
           <motion.div
             className="absolute top-0 left-0 w-[800px] h-[800px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(163, 230, 53, 0.08) 0%, transparent 70%)',
               filter: 'blur(80px)',
             }}
             animate={{
@@ -169,7 +169,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
           <motion.div
             className="absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full"
             style={{
-              background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(34, 211, 238, 0.06) 0%, transparent 70%)',
               filter: 'blur(80px)',
             }}
             animate={{
@@ -186,7 +186,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
           <motion.div
             className="absolute top-1/2 left-1/2 w-[700px] h-[700px] rounded-full -translate-x-1/2 -translate-y-1/2"
             style={{
-              background: 'radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(163, 230, 53, 0.05) 0%, transparent 70%)',
               filter: 'blur(100px)',
             }}
             animate={{

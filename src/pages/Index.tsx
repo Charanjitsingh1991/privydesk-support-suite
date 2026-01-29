@@ -1,12 +1,13 @@
 /**
- * PRIVYDESK Homepage - Premium 5D Design
- * Modern, beautiful landing page with glassmorphism and smooth animations
+ * PRIVYDESK Homepage - Dark Fintech Design
+ * Inspired by Aplio theme - dark mode with lime green accents
  */
 
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { GlassCard, StatCard } from '@/components/ui/GlassCard';
 import { GradientButton } from '@/components/ui/GradientButton';
+import { GridPattern, DottedBackground, AnimatedGrid } from '@/components/ui/GridPattern';
 import {
   Ticket,
   Shield,
@@ -29,6 +30,9 @@ import {
   Github,
   Twitter,
   Linkedin,
+  Target,
+  Layers,
+  Activity,
 } from 'lucide-react';
 import { staggerContainerVariants, staggerItemVariants, fadeInUpVariants } from '@/utils/animations';
 import { useInView } from '@/utils/scroll-animations';
@@ -39,13 +43,15 @@ const features = [
     icon: Ticket,
     title: 'AI-Powered Ticketing',
     description: 'Intelligent ticket categorization, priority detection, and automated routing with OpenAI integration.',
-    gradient: 'from-gradient-primary-start to-gradient-primary-end',
+    gradient: 'from-accent-lime to-accent-lime',
+    iconBg: 'bg-accent-lime/10',
   },
   {
     icon: MessageSquare,
     title: 'Real-Time Live Chat',
     description: 'Instant communication with customers through embedded chat widgets with typing indicators.',
-    gradient: 'from-gradient-secondary-start to-gradient-secondary-end',
+    gradient: 'from-accent-cyan to-accent-cyan',
+    iconBg: 'bg-accent-cyan/10',
   },
   {
     icon: Users,
