@@ -4,38 +4,58 @@
  */
 
 import { motion } from 'framer-motion';
-import { Mail, Ticket, UserCheck, MessageSquare, CheckCircle, Archive } from 'lucide-react';
+import { Mail, Ticket, UserCheck, MessageSquare, CheckCircle, Archive, LucideIcon } from 'lucide-react';
 
 interface Node {
   id: string;
-  icon: React.ElementType;
+  icon: LucideIcon;
   title: string;
   x: number; // percentage
   y: number; // percentage
   color: string;
 }
 
+interface IntegrationNodeProps {
+  icon: LucideIcon;
+  color: string;
+}
+
+// Standardized Integration Node Component - All nodes are pixel-identical
+function IntegrationNode({ icon: Icon, color }: IntegrationNodeProps) {
+  return (
+    <div className="w-20 h-20 rounded-full bg-white border border-white/10 flex items-center justify-center relative hover:border-white/20 transition-all shadow-xl group">
+      {/* Subtle inner ring */}
+      <div className="absolute inset-2 border border-black/5 rounded-full" />
+      {/* Icon - centered, 24px × 24px */}
+      <Icon className="w-6 h-6 relative z-10 opacity-70 group-hover:opacity-100 transition-opacity" style={{ color }} />
+    </div>
+  );
+}
+
 const nodes: Node[] = [
-  { id: 'email', icon: Mail, title: 'Email Received', x: 12, y: 15, color: '#3B82F6' },
-  { id: 'chat', icon: MessageSquare, title: 'Live Chat', x: 88, y: 15, color: '#EC4899' },
-  { id: 'ticket', icon: Ticket, title: 'Ticket Created', x: 12, y: 50, color: '#FFFC00' },
-  { id: 'resolved', icon: CheckCircle, title: 'Resolved', x: 88, y: 50, color: '#10B981' },
-  { id: 'archive', icon: Archive, title: 'Email Archive', x: 12, y: 85, color: '#8B5CF6' },
-  { id: 'assigned', icon: UserCheck, title: 'Auto-Assigned', x: 88, y: 85, color: '#F59E0B' },
+  // Left side - 3 nodes closer to center
+  { id: 'email', icon: Mail, title: 'Email', x: 20, y: 20, color: '#3B82F6' },
+  { id: 'ticket', icon: Ticket, title: 'Ticket', x: 20, y: 50, color: '#EAB308' },
+  { id: 'archive', icon: Archive, title: 'Archive', x: 20, y: 80, color: '#8B5CF6' },
+  
+  // Right side - 3 nodes closer to center
+  { id: 'chat', icon: MessageSquare, title: 'Chat', x: 80, y: 20, color: '#EC4899' },
+  { id: 'resolved', icon: CheckCircle, title: 'Resolved', x: 80, y: 50, color: '#10B981' },
+  { id: 'assigned', icon: UserCheck, title: 'Assigned', x: 80, y: 80, color: '#F59E0B' },
 ];
 
 export function WorkflowDiagram() {
-  // Path Definitions for SVG (Visual) and Animation (offset-path)
+  // Rectangular paths with rounded corners - Aplio style (nodes closer to center)
   
-  // Left Side
-  const pathTopLeft = "M 12 15 L 30 15 Q 35 15 35 20 L 35 45 Q 35 50 40 50 L 50 50";
-  const pathMidLeft = "M 12 50 L 50 50";
-  const pathBotLeft = "M 12 85 L 30 85 Q 35 85 35 80 L 35 55 Q 35 50 40 50 L 50 50";
+  // Left Side - Rectangular paths
+  const pathTopLeft = "M 20 20 L 32 20 Q 37 20 37 25 L 37 45 Q 37 50 42 50 L 50 50";
+  const pathMidLeft = "M 20 50 L 50 50";
+  const pathBotLeft = "M 20 80 L 32 80 Q 37 80 37 75 L 37 55 Q 37 50 42 50 L 50 50";
 
-  // Right Side
-  const pathTopRight = "M 88 15 L 70 15 Q 65 15 65 20 L 65 45 Q 65 50 60 50 L 50 50";
-  const pathMidRight = "M 88 50 L 50 50";
-  const pathBotRight = "M 88 85 L 70 85 Q 65 85 65 80 L 65 55 Q 65 50 60 50 L 50 50";
+  // Right Side - Rectangular paths
+  const pathTopRight = "M 80 20 L 68 20 Q 63 20 63 25 L 63 45 Q 63 50 58 50 L 50 50";
+  const pathMidRight = "M 80 50 L 50 50";
+  const pathBotRight = "M 80 80 L 68 80 Q 63 80 63 75 L 63 55 Q 63 50 58 50 L 50 50";
 
   const allPaths = [
     pathTopLeft, pathMidLeft, pathBotLeft,
@@ -43,7 +63,7 @@ export function WorkflowDiagram() {
   ];
 
   return (
-    <div className="relative w-full h-[450px]">
+    <div className="relative w-full h-[550px]">
       {/* Title Button - Solid Lime Green */}
       <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20">
         <button className="px-6 py-2.5 rounded-full bg-accent-lime text-black font-medium text-sm hover:bg-accent-lime/90 transition-colors">
@@ -58,8 +78,8 @@ export function WorkflowDiagram() {
             key={index}
             d={d}
             stroke="rgba(255, 255, 255, 0.15)"
-            strokeWidth="0.4"
-            strokeDasharray="2 2"
+            strokeWidth="0.2"
+            strokeDasharray="0.5 0.5"
             fill="none"
           />
         ))}
@@ -77,139 +97,134 @@ export function WorkflowDiagram() {
         </div>
       </div>
 
-      {/* Nodes */}
-      {nodes.map((node) => {
-        const Icon = node.icon;
-        
-        return (
-          <div key={node.id}>
-            {/* Node Circle */}
-            <div
-              className="absolute z-20"
-              style={{
-                left: `${node.x}%`,
-                top: `${node.y}%`,
-                transform: 'translate(-50%, -50%)',
-              }}
-            >
-              <div className="w-20 h-20 rounded-full bg-[#1a1a1a] border border-white/5 flex items-center justify-center relative hover:border-white/10 transition-all shadow-lg group">
-                <div className="absolute inset-2 border border-dotted border-white/5 rounded-full" />
-                <Icon className="w-8 h-8 relative z-10 opacity-80 group-hover:opacity-100 transition-opacity" style={{ color: node.color }} />
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      {/* Nodes - All use standardized IntegrationNode component */}
+      {nodes.map((node) => (
+        <div
+          key={node.id}
+          className="absolute z-20"
+          style={{
+            left: `${node.x}%`,
+            top: `${node.y}%`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <IntegrationNode icon={node.icon} color={node.color} />
+        </div>
+      ))}
 
-      {/* Animated Dots traveling along paths - No Glow */}
-      {/* Top-left path */}
+      {/* Animated Dots traveling along paths - ALL 6 START TOGETHER FROM CENTER */}
+      
+      {/* Top-left path: M 20 20 L 32 20 Q 37 20 37 25 L 37 45 Q 37 50 42 50 L 50 50 */}
       <motion.div
         className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
         style={{
           zIndex: 15,
+          offsetPath: "path('M 50 50 L 42 50 Q 37 50 37 45 L 37 25 Q 37 20 32 20 L 20 20')",
+          offsetDistance: '0%',
         }}
         animate={{
-          left: ['12%', '30%', '35%', '35%', '40%', '50%'],
-          top: ['15%', '15%', '20%', '45%', '50%', '50%'],
+          offsetDistance: ['0%', '100%'],
         }}
         transition={{
-          duration: 3.5,
+          duration: 3,
           repeat: Infinity,
           ease: 'linear',
-          times: [0, 0.3, 0.4, 0.7, 0.9, 1],
+          repeatDelay: 1,
         }}
       />
       
-      {/* Mid-left path */}
+      {/* Mid-left path: M 20 50 L 50 50 */}
       <motion.div
         className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
         style={{
           zIndex: 15,
+          offsetPath: "path('M 50 50 L 20 50')",
+          offsetDistance: '0%',
         }}
         animate={{
-          left: ['12%', '50%'],
-          top: ['50%', '50%'],
+          offsetDistance: ['0%', '100%'],
         }}
         transition={{
-          duration: 2.5,
+          duration: 3,
           repeat: Infinity,
           ease: 'linear',
-          delay: 0.5,
+          repeatDelay: 1,
         }}
       />
       
-      {/* Bottom-left path */}
+      {/* Bottom-left path: M 20 80 L 32 80 Q 37 80 37 75 L 37 55 Q 37 50 42 50 L 50 50 */}
       <motion.div
         className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
         style={{
           zIndex: 15,
+          offsetPath: "path('M 50 50 L 42 50 Q 37 50 37 55 L 37 75 Q 37 80 32 80 L 20 80')",
+          offsetDistance: '0%',
         }}
         animate={{
-          left: ['12%', '30%', '35%', '35%', '40%', '50%'],
-          top: ['85%', '85%', '80%', '55%', '50%', '50%'],
+          offsetDistance: ['0%', '100%'],
         }}
         transition={{
-          duration: 3.5,
+          duration: 3,
           repeat: Infinity,
           ease: 'linear',
-          times: [0, 0.3, 0.4, 0.7, 0.9, 1],
-          delay: 1,
+          repeatDelay: 1,
         }}
       />
       
-      {/* Top-right path */}
+      {/* Top-right path: M 80 20 L 68 20 Q 63 20 63 25 L 63 45 Q 63 50 58 50 L 50 50 */}
       <motion.div
         className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
         style={{
           zIndex: 15,
+          offsetPath: "path('M 50 50 L 58 50 Q 63 50 63 45 L 63 25 Q 63 20 68 20 L 80 20')",
+          offsetDistance: '0%',
         }}
         animate={{
-          left: ['88%', '70%', '65%', '65%', '60%', '50%'],
-          top: ['15%', '15%', '20%', '45%', '50%', '50%'],
+          offsetDistance: ['0%', '100%'],
         }}
         transition={{
-          duration: 3.5,
+          duration: 3,
           repeat: Infinity,
           ease: 'linear',
-          times: [0, 0.3, 0.4, 0.7, 0.9, 1],
-          delay: 1.5,
+          repeatDelay: 1,
         }}
       />
       
-      {/* Mid-right path */}
+      {/* Mid-right path: M 80 50 L 50 50 */}
       <motion.div
         className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
         style={{
           zIndex: 15,
+          offsetPath: "path('M 50 50 L 80 50')",
+          offsetDistance: '0%',
         }}
         animate={{
-          left: ['88%', '50%'],
-          top: ['50%', '50%'],
+          offsetDistance: ['0%', '100%'],
         }}
         transition={{
-          duration: 2.5,
+          duration: 3,
           repeat: Infinity,
           ease: 'linear',
-          delay: 2,
+          repeatDelay: 1,
         }}
       />
       
-      {/* Bottom-right path */}
+      {/* Bottom-right path: M 80 80 L 68 80 Q 63 80 63 75 L 63 55 Q 63 50 58 50 L 50 50 */}
       <motion.div
         className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
         style={{
           zIndex: 15,
+          offsetPath: "path('M 50 50 L 58 50 Q 63 50 63 55 L 63 75 Q 63 80 68 80 L 80 80')",
+          offsetDistance: '0%',
         }}
         animate={{
-          left: ['88%', '70%', '65%', '65%', '60%', '50%'],
-          top: ['85%', '85%', '80%', '55%', '50%', '50%'],
+          offsetDistance: ['0%', '100%'],
         }}
         transition={{
-          duration: 3.5,
+          duration: 3,
           repeat: Infinity,
           ease: 'linear',
-          times: [0, 0.3, 0.4, 0.7, 0.9, 1],
-          delay: 2.5,
+          repeatDelay: 1,
         }}
       />
     </div>

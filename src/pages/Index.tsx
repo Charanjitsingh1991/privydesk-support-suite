@@ -206,7 +206,7 @@ export default function Index() {
     <div className="min-h-screen relative overflow-hidden">
       {/* Premium Glass Header with Pill Navigation */}
       <motion.header
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-glass bg-black/80 border-b border-white/5"
+        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b border-white/5"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -275,49 +275,39 @@ export default function Index() {
 
       {/* Hero Section - Premium Fintech */}
       <section className="relative pt-40 pb-32 lg:pt-56 lg:pb-48 overflow-hidden">
-        {/* Subtle Grid Background */}
-        <GridPattern variant="grid" className="opacity-100" />
+        {/* Beautiful Grid Background - Aplio Style */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTAgMGg4MHY4MEgweiIvPjxwYXRoIGQ9Ik0wIDBoMXY4MEgwek00MCAwaDFWODBINDB6TTgwIDBoMXY4MEg4MHoiLz48cGF0aCBkPSJNMCAwaDgwdjFIMHpNMCA0MGg4MHYxSDB6TTAgODBoODB2MUgweiIvPjwvZz48L2c+PC9zdmc+')] opacity-100" />
+        <GridPattern variant="grid" className="opacity-50" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            className="max-w-4xl mx-auto text-center"
-            initial={{ opacity: 0, y: 40 }}
+            className="max-w-5xl mx-auto text-center"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Badge */}
+            {/* Premium Badge */}
             <motion.div
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-glass mb-12"
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8"
             >
-              <Sparkles className="w-5 h-5 text-white/70" />
-              <span className="text-base font-semibold text-white/90 tracking-wide">AI-Powered Multi-Tenant SaaS Helpdesk</span>
+              <Sparkles className="w-4 h-4 text-accent-lime" />
+              <span className="text-sm font-medium text-white/90">AI-Powered Multi-Tenant SaaS Helpdesk</span>
             </motion.div>
 
-            {/* Main Heading */}
-            <motion.h1
-              className="text-hero font-bold mb-8 leading-tight text-white"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              Make your{' '}
-              <span className="gradient-text text-glow">Finance</span>
+            {/* Hero Headline */}
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1] tracking-tight">
+              <span className="text-white">Transform </span>
+              <span className="text-accent-lime">Support</span>
               <br />
-              more efficient.
-            </motion.h1>
+              <span className="text-white">into Success.</span>
+            </h1>
 
-            {/* Subheading */}
-            <motion.p
-              className="text-xl lg:text-2xl text-white/60 mb-14 max-w-3xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              An easy way to manage your support tickets with AI-powered automation,
-              real-time analytics, and enterprise-grade security.
-            </motion.p>
+            {/* Subheadline */}
+            <p className="text-xl md:text-2xl text-white/60 mb-12 max-w-3xl mx-auto leading-relaxed">
+              Powerful multi-tenant helpdesk with AI automation, live chat, and seamless integrations. Deliver exceptional customer support at scale.
+            </p>
 
             {/* CTA Buttons */}
             <motion.div
