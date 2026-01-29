@@ -114,16 +114,13 @@ export function WorkflowDiagram() {
 
       {/* Animated Dots traveling along paths - ALL 6 START TOGETHER FROM CENTER */}
       
-      {/* Top-left path: M 20 20 L 32 20 Q 37 20 37 25 L 37 45 Q 37 50 42 50 L 50 50 */}
+      {/* Top-left path */}
       <motion.div
-        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
-        style={{
-          zIndex: 15,
-          offsetPath: "path('M 50 50 L 42 50 Q 37 50 37 45 L 37 25 Q 37 20 32 20 L 20 20')",
-          offsetDistance: '0%',
-        }}
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime -translate-x-1/2 -translate-y-1/2"
+        style={{ zIndex: 15 }}
         animate={{
-          offsetDistance: ['0%', '100%'],
+          left: ['50%', '42%', '37%', '37%', '32%', '20%'],
+          top: ['50%', '50%', '47.5%', '35%', '22.5%', '20%'],
         }}
         transition={{
           duration: 3,
@@ -133,16 +130,13 @@ export function WorkflowDiagram() {
         }}
       />
       
-      {/* Mid-left path: M 20 50 L 50 50 */}
+      {/* Mid-left path */}
       <motion.div
-        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
-        style={{
-          zIndex: 15,
-          offsetPath: "path('M 50 50 L 20 50')",
-          offsetDistance: '0%',
-        }}
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime -translate-x-1/2 -translate-y-1/2"
+        style={{ zIndex: 15 }}
         animate={{
-          offsetDistance: ['0%', '100%'],
+          left: ['50%', '20%'],
+          top: ['50%', '50%'],
         }}
         transition={{
           duration: 3,
@@ -152,16 +146,13 @@ export function WorkflowDiagram() {
         }}
       />
       
-      {/* Bottom-left path: M 20 80 L 32 80 Q 37 80 37 75 L 37 55 Q 37 50 42 50 L 50 50 */}
+      {/* Bottom-left path */}
       <motion.div
-        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
-        style={{
-          zIndex: 15,
-          offsetPath: "path('M 50 50 L 42 50 Q 37 50 37 55 L 37 75 Q 37 80 32 80 L 20 80')",
-          offsetDistance: '0%',
-        }}
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime -translate-x-1/2 -translate-y-1/2"
+        style={{ zIndex: 15 }}
         animate={{
-          offsetDistance: ['0%', '100%'],
+          left: ['50%', '42%', '37%', '37%', '32%', '20%'],
+          top: ['50%', '50%', '52.5%', '65%', '77.5%', '80%'],
         }}
         transition={{
           duration: 3,
@@ -171,16 +162,13 @@ export function WorkflowDiagram() {
         }}
       />
       
-      {/* Top-right path: M 80 20 L 68 20 Q 63 20 63 25 L 63 45 Q 63 50 58 50 L 50 50 */}
+      {/* Top-right path */}
       <motion.div
-        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
-        style={{
-          zIndex: 15,
-          offsetPath: "path('M 50 50 L 58 50 Q 63 50 63 45 L 63 25 Q 63 20 68 20 L 80 20')",
-          offsetDistance: '0%',
-        }}
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime -translate-x-1/2 -translate-y-1/2"
+        style={{ zIndex: 15 }}
         animate={{
-          offsetDistance: ['0%', '100%'],
+          left: ['50%', '58%', '63%', '63%', '68%', '80%'],
+          top: ['50%', '50%', '47.5%', '35%', '22.5%', '20%'],
         }}
         transition={{
           duration: 3,
@@ -190,16 +178,13 @@ export function WorkflowDiagram() {
         }}
       />
       
-      {/* Mid-right path: M 80 50 L 50 50 */}
+      {/* Mid-right path */}
       <motion.div
-        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
-        style={{
-          zIndex: 15,
-          offsetPath: "path('M 50 50 L 80 50')",
-          offsetDistance: '0%',
-        }}
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime -translate-x-1/2 -translate-y-1/2"
+        style={{ zIndex: 15 }}
         animate={{
-          offsetDistance: ['0%', '100%'],
+          left: ['50%', '80%'],
+          top: ['50%', '50%'],
         }}
         transition={{
           duration: 3,
@@ -209,16 +194,13 @@ export function WorkflowDiagram() {
         }}
       />
       
-      {/* Bottom-right path: M 80 80 L 68 80 Q 63 80 63 75 L 63 55 Q 63 50 58 50 L 50 50 */}
+      {/* Bottom-right path */}
       <motion.div
-        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
-        style={{
-          zIndex: 15,
-          offsetPath: "path('M 50 50 L 58 50 Q 63 50 63 55 L 63 75 Q 63 80 68 80 L 80 80')",
-          offsetDistance: '0%',
-        }}
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime -translate-x-1/2 -translate-y-1/2"
+        style={{ zIndex: 15 }}
         animate={{
-          offsetDistance: ['0%', '100%'],
+          left: ['50%', '58%', '63%', '63%', '68%', '80%'],
+          top: ['50%', '50%', '52.5%', '65%', '77.5%', '80%'],
         }}
         transition={{
           duration: 3,
