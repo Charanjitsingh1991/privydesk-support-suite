@@ -165,10 +165,17 @@
 
 ---
 
-## 🚀 Unified 6-Month Roadmap
+## 🚀 Unified 18-Month Roadmap (Extended to Exceed Competitors)
 
-### **Phase 1: Foundation & Security (Weeks 1-4)**
-**Goal:** Core infrastructure and compliance features
+**Based on competitive analysis, we need 18 months to not just match but EXCEED Zendesk and Freshdesk.**
+
+**Current Status:** 36% feature complete vs competitors  
+**Goal:** 110% feature parity + unique features by Month 18
+
+---
+
+### **PHASE 1: Foundation & Security (Months 1-2 | Weeks 1-8)**
+**Goal:** Core infrastructure, compliance, and critical missing features
 
 #### **Week 1-2: Audit Logging System** ⭐⭐⭐⭐⭐
 - [ ] Create `audit_logs` table
@@ -194,81 +201,202 @@
 **Cost Impact:** None  
 **Revenue Impact:** $5-20/month per org in overages
 
+#### **Week 5-6: SLA Management** ⭐⭐⭐⭐⭐ (CRITICAL - Missing from competitors parity)
+- [ ] Create `sla_policies` table
+- [ ] Define SLA rules (response time, resolution time)
+- [ ] SLA breach detection and alerts
+- [ ] SLA dashboard and reporting
+- [ ] Escalation workflows
+- [ ] Business hours configuration
+- [ ] Holiday schedules
+
+**Business Value:** Enterprise requirement, service quality  
+**Cost Impact:** None  
+**Revenue Impact:** Enterprise feature, competitive parity
+
+#### **Week 7-8: Ticket Templates & Canned Responses** ⭐⭐⭐⭐
+- [ ] Create `ticket_templates` table
+- [ ] Create `canned_responses` table
+- [ ] Template builder UI
+- [ ] Canned response library
+- [ ] Quick insert shortcuts
+- [ ] Variable substitution
+- [ ] Category organization
+
+**Business Value:** Agent productivity, faster responses  
+**Cost Impact:** None  
+**Revenue Impact:** Efficiency feature, competitive parity
+
 ---
 
-### **Phase 2: API & Integrations (Weeks 5-8)**
-**Goal:** Developer-friendly API and webhook system
+---
 
-#### **Week 5-6: API Versioning & Documentation** ⭐⭐⭐⭐
+### **PHASE 2: API & Collaboration (Months 3-4 | Weeks 9-16)**
+**Goal:** Developer-friendly API, webhooks, and team collaboration
+
+#### **Week 9-10: API Versioning & Documentation** ⭐⭐⭐⭐
 - [ ] Version all endpoints (`/api/v1/`)
 - [ ] Create `api_keys` table
 - [ ] API key management UI
-- [ ] Auto-generated API docs
-- [ ] API playground
+- [ ] Auto-generated API docs (OpenAPI/Swagger)
+- [ ] API playground (interactive)
 - [ ] Rate limit headers
+- [ ] OAuth 2.0 support
 
 **Business Value:** Professional API, developer trust  
 **Cost Impact:** None  
 **Revenue Impact:** Enables integrations, attracts developers
 
-#### **Week 7-8: Webhook System** ⭐⭐⭐⭐
+#### **Week 11-12: Webhook System** ⭐⭐⭐⭐
 - [ ] Create `webhooks` and `webhook_deliveries` tables
 - [ ] HMAC signature verification
 - [ ] Retry logic with exponential backoff
 - [ ] Webhook management UI
 - [ ] Delivery logs and replay
-- [ ] Event types: ticket.*, user.*, chat.*
+- [ ] Event types: ticket.*, user.*, chat.*, billing.*
 
 **Business Value:** Real-time integrations, Zapier compatibility  
 **Cost Impact:** None  
 **Revenue Impact:** Enterprise feature, competitive advantage
 
+#### **Week 13-14: Team Collaboration Features** ⭐⭐⭐⭐ (CRITICAL - Missing from parity)
+- [ ] @mentions in tickets and notes
+- [ ] Ticket followers/watchers system
+- [ ] Collision detection (prevent simultaneous edits)
+- [ ] Agent presence indicators (online/offline/away)
+- [ ] Real-time typing indicators
+- [ ] Shared views and filters
+- [ ] Team inbox improvements
+
+**Business Value:** Team productivity, prevent conflicts  
+**Cost Impact:** None  
+**Revenue Impact:** Collaboration feature, competitive parity
+
+#### **Week 15-16: Ticket Management Enhancements** ⭐⭐⭐⭐ (CRITICAL - Missing from parity)
+- [ ] Ticket merging functionality
+- [ ] Ticket splitting functionality
+- [ ] Parent-child ticket relationships
+- [ ] Ticket linking
+- [ ] Bulk operations (assign, tag, close)
+- [ ] Advanced custom fields
+- [ ] Field dependencies and conditional logic
+
+**Business Value:** Complex ticket management, enterprise workflows  
+**Cost Impact:** None  
+**Revenue Impact:** Enterprise feature, competitive parity
+
 ---
 
-### **Phase 3: IP Intelligence & Security (Weeks 9-12)**
-**Goal:** Advanced security and fraud prevention
+---
 
-#### **Week 9-10: IP Intelligence Integration** ⭐⭐⭐⭐
+### **PHASE 3: AI & Automation (Months 5-6 | Weeks 17-24)**
+**Goal:** AI-powered features and advanced automation (BIGGEST GAP - 20% complete)
+
+#### **Week 17-18: AI-Powered Ticket Routing & Assignment** ⭐⭐⭐⭐⭐ (CRITICAL - 0% complete)
+- [ ] AI ticket categorization (using Groq/OpenAI)
+- [ ] AI intent detection
+- [ ] AI sentiment analysis
+- [ ] Smart ticket routing based on content
+- [ ] Round-robin assignment
+- [ ] Load-based assignment
+- [ ] Skill-based routing
+- [ ] Priority prediction
+
+**Business Value:** Automation, faster resolution, competitive parity  
+**Cost Impact:** $2-5/month per org (AI API)  
+**Revenue Impact:** Professional tier feature
+
+#### **Week 19-20: AI Response Suggestions & Chatbot** ⭐⭐⭐⭐⭐ (CRITICAL - 0% complete)
+- [ ] AI response suggestions based on ticket content
+- [ ] AI-powered knowledge base suggestions
+- [ ] Basic chatbot for common questions
+- [ ] AI language detection
+- [ ] AI translation support
+- [ ] Response quality scoring
+
+**Business Value:** Agent productivity, 24/7 support, competitive parity  
+**Cost Impact:** $3-8/month per org (AI API)  
+**Revenue Impact:** Professional tier feature
+
+#### **Week 21-22: Advanced Workflow Automation** ⭐⭐⭐⭐⭐ (CRITICAL - 20% complete)
+- [ ] Visual workflow builder
+- [ ] Time-based triggers (e.g., auto-close after 7 days)
+- [ ] Event-based triggers (e.g., on status change)
+- [ ] Conditional logic (if/then/else)
+- [ ] Multi-step workflows
+- [ ] Workflow templates
+- [ ] Auto-responders
+- [ ] Escalation rules
+
+**Business Value:** Automation, reduce manual work, competitive parity  
+**Cost Impact:** None  
+**Revenue Impact:** Professional tier feature
+
+#### **Week 23-24: Business Hours & Scheduling** ⭐⭐⭐⭐ (CRITICAL - 0% complete)
+- [ ] Business hours configuration
+- [ ] Holiday schedules
+- [ ] Timezone support
+- [ ] Shift scheduling for agents
+- [ ] Time tracking per ticket
+- [ ] Workload management
+- [ ] Agent availability calendar
+
+**Business Value:** SLA accuracy, team management, competitive parity  
+**Cost Impact:** None  
+**Revenue Impact:** Professional tier feature
+
+---
+
+---
+
+### **PHASE 4: Analytics, Surveys & Billing (Months 7-8 | Weeks 25-32)**
+**Goal:** Advanced analytics, customer satisfaction, and automated billing
+
+#### **Week 25-26: Customer Satisfaction Surveys** ⭐⭐⭐⭐⭐ (CRITICAL - 0% complete)
+- [ ] CSAT (Customer Satisfaction Score) surveys
+- [ ] NPS (Net Promoter Score) surveys
+- [ ] CES (Customer Effort Score) surveys
+- [ ] Automated survey triggers (after ticket close)
+- [ ] Survey builder UI
+- [ ] Survey analytics and trends
+- [ ] Response tracking
+
+**Business Value:** Measure customer happiness, improve service, competitive parity  
+**Cost Impact:** None  
+**Revenue Impact:** Professional tier feature
+
+#### **Week 27-28: Advanced Analytics Dashboard** ⭐⭐⭐⭐⭐ (Expand from 40% to 90%)
+- [ ] Custom dashboards builder
+- [ ] Real-time analytics
+- [ ] Historical reports
+- [ ] Agent performance metrics (detailed)
+- [ ] Team performance metrics
+- [ ] First contact resolution tracking
+- [ ] Channel analytics
+- [ ] Predictive analytics (ticket volume forecasting)
+- [ ] Data visualization improvements
+- [ ] Report scheduling
+- [ ] Export reports (CSV, PDF, Excel)
+
+**Business Value:** Data-driven decisions, prove ROI, competitive parity  
+**Cost Impact:** None  
+**Revenue Impact:** Professional tier feature
+
+#### **Week 29-30: IP Intelligence & Security** ⭐⭐⭐⭐
 - [ ] IPinfo.io API integration
 - [ ] Create `login_attempts` table
 - [ ] IP geolocation tracking
 - [ ] VPN/Proxy detection
 - [ ] Cache IP data (24h TTL)
 - [ ] Suspicious login alerts
+- [ ] Two-factor authentication (2FA)
+- [ ] IP whitelisting
 
-**Business Value:** Security, fraud prevention  
+**Business Value:** Security, fraud prevention, competitive parity  
 **Cost Impact:** $0-99/month (shared free tier initially)  
 **Revenue Impact:** Enterprise security feature
 
-#### **Week 11-12: Enhanced RBAC** ⭐⭐⭐⭐
-- [ ] Add new roles: Analyst, Developer, Billing Admin
-- [ ] Granular permissions system
-- [ ] Feature-level access control
-- [ ] Role management UI
-- [ ] Permission matrix documentation
-
-**Business Value:** Enterprise requirement, flexible team structures  
-**Cost Impact:** None  
-**Revenue Impact:** Enables enterprise sales
-
----
-
-### **Phase 4: Analytics & Billing (Weeks 13-16)**
-**Goal:** Advanced analytics and automated billing
-
-#### **Week 13-14: Advanced Analytics Dashboard** ⭐⭐⭐⭐
-- [ ] Ticket metrics (response time, resolution time)
-- [ ] Agent performance tracking
-- [ ] Client engagement metrics
-- [ ] Usage forecasting
-- [ ] Export reports (CSV, PDF)
-- [ ] Custom report builder
-
-**Business Value:** Data-driven decisions, prove ROI  
-**Cost Impact:** None  
-**Revenue Impact:** Premium feature, upsell opportunity
-
-#### **Week 15-16: Stripe Billing Integration** ⭐⭐⭐⭐⭐
+#### **Week 31-32: Stripe Billing Integration** ⭐⭐⭐⭐⭐
 - [ ] Stripe account setup
 - [ ] Subscription management
 - [ ] Usage metering integration
@@ -276,6 +404,7 @@
 - [ ] Invoice generation
 - [ ] Customer portal
 - [ ] Plan upgrade/downgrade flow
+- [ ] Proration handling
 
 **Business Value:** Automated revenue, scalable billing  
 **Cost Impact:** Stripe fees (2.9% + $0.30)  
@@ -283,10 +412,12 @@
 
 ---
 
-### **Phase 5: Email Migration & PST Parsing (Weeks 17-20)**
-**Goal:** Complete email migration feature
+---
 
-#### **Week 17-18: PST Parser Implementation** ⭐⭐⭐⭐
+### **PHASE 5: Email Migration & Knowledge Base (Months 9-10 | Weeks 33-40)**
+**Goal:** Email migration (unique feature) and advanced knowledge base
+
+#### **Week 33-34: PST Parser Implementation** 🚀⭐⭐⭐⭐ (UNIQUE FEATURE)
 - [ ] Install `pst-extractor` package
 - [ ] Create `src/lib/email-import/pst-parser.ts`
 - [ ] PST file upload API
@@ -296,11 +427,11 @@
 - [ ] Error handling
 - [ ] Delete PST after import
 
-**Business Value:** Unique feature, client onboarding  
+**Business Value:** Unique feature, client onboarding, competitive advantage  
 **Cost Impact:** Storage costs  
-**Revenue Impact:** Competitive differentiator
+**Revenue Impact:** Unique selling point
 
-#### **Week 19-20: Email Archive Search & Forward** ⭐⭐⭐
+#### **Week 35-36: Email Archive Search & Forward** 🚀⭐⭐⭐ (UNIQUE FEATURE)
 - [ ] Full-text search implementation
 - [ ] Filter by date, sender, folder
 - [ ] Attachment preview
@@ -308,36 +439,102 @@
 - [ ] "Forward to Client" feature
 - [ ] Email → Ticket conversion
 
-**Business Value:** Historical data access  
+**Business Value:** Historical data access, unique feature  
 **Cost Impact:** None  
 **Revenue Impact:** Retention feature
 
+#### **Week 37-38: Advanced Knowledge Base** ⭐⭐⭐⭐ (Expand from 30% to 80%)
+- [ ] Multi-language support
+- [ ] Article versioning
+- [ ] Article scheduling (publish/unpublish dates)
+- [ ] Article analytics (views, helpful votes)
+- [ ] Article feedback system
+- [ ] AI-powered article search
+- [ ] FAQ builder
+- [ ] Video tutorial embedding
+- [ ] Article categories and tags
+
+**Business Value:** Self-service, reduce ticket volume, competitive parity  
+**Cost Impact:** None  
+**Revenue Impact:** Professional tier feature
+
+#### **Week 39-40: Community Forums** ⭐⭐⭐ (CRITICAL - 0% complete)
+- [ ] Forum categories and topics
+- [ ] User discussions
+- [ ] Voting system (upvote/downvote)
+- [ ] Best answer marking
+- [ ] Moderation tools
+- [ ] Forum search
+- [ ] Email notifications
+
+**Business Value:** Community engagement, peer support, competitive parity  
+**Cost Impact:** None  
+**Revenue Impact:** Professional tier feature
+
 ---
 
-### **Phase 6: Multi-Tenant Enhancements (Weeks 21-24)**
-**Goal:** Enterprise multi-tenant features
+---
 
-#### **Week 21-22: Custom Domain Support** ⭐⭐⭐
+### **PHASE 6: Enterprise & Security (Months 11-12 | Weeks 41-48)**
+**Goal:** Enterprise-grade security, compliance, and white-label
+
+#### **Week 41-42: SSO & Advanced Authentication** ⭐⭐⭐⭐⭐ (CRITICAL - 0% complete)
+- [ ] SAML 2.0 SSO integration
+- [ ] Okta integration
+- [ ] Azure AD integration
+- [ ] Google Workspace SSO
+- [ ] SSO configuration UI
+- [ ] Just-in-time (JIT) provisioning
+- [ ] Session management
+
+**Business Value:** Enterprise requirement, security, competitive parity  
+**Cost Impact:** None  
+**Revenue Impact:** Enterprise tier feature
+
+#### **Week 43-44: Enhanced RBAC & Permissions** ⭐⭐⭐⭐ (Expand from 40% to 90%)
+- [ ] Add new roles: Analyst, Developer, Billing Admin
+- [ ] Granular permissions system
+- [ ] Feature-level access control
+- [ ] Custom roles builder
+- [ ] Permission groups
+- [ ] Role management UI
+- [ ] Permission matrix documentation
+- [ ] Role-based data access
+
+**Business Value:** Enterprise requirement, flexible team structures, competitive parity  
+**Cost Impact:** None  
+**Revenue Impact:** Enterprise tier feature
+
+#### **Week 45-46: Custom Domain & White-Label** ⭐⭐⭐⭐
 - [ ] DNS verification system
 - [ ] Domain settings UI
-- [ ] SSL certificate automation
+- [ ] SSL certificate automation (Let's Encrypt)
 - [ ] Per-org domain routing
 - [ ] Domain verification status
-
-**Business Value:** Enterprise white-label  
-**Cost Impact:** SSL cert costs (Let's Encrypt free)  
-**Revenue Impact:** Enterprise feature
-
-#### **Week 23-24: White-Label Branding** ⭐⭐⭐
 - [ ] Logo upload per organization
 - [ ] Color scheme customization
 - [ ] Branded email templates
 - [ ] Custom email footer
 - [ ] Branding preview
+- [ ] Multi-brand support
 
-**Business Value:** Enterprise requirement  
-**Cost Impact:** Storage costs  
-**Revenue Impact:** Premium feature
+**Business Value:** Enterprise white-label, competitive parity  
+**Cost Impact:** SSL cert costs (Let's Encrypt free)  
+**Revenue Impact:** Enterprise tier feature
+
+#### **Week 47-48: Compliance & Data Management** ⭐⭐⭐⭐ (CRITICAL - 40% to 80%)
+- [ ] GDPR compliance tools (data export, deletion)
+- [ ] Data retention policies
+- [ ] Data residency options
+- [ ] Audit log enhancements
+- [ ] Privacy policy generator
+- [ ] Consent management
+- [ ] Data backup automation
+- [ ] Disaster recovery procedures
+
+**Business Value:** Compliance, trust, enterprise requirement  
+**Cost Impact:** None  
+**Revenue Impact:** Enterprise tier feature
 
 ---
 
