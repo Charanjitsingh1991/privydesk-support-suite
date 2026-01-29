@@ -44,11 +44,11 @@ export function WorkflowDiagram() {
 
   return (
     <div className="relative w-full h-[450px]">
-      {/* Title Button */}
+      {/* Title Button - Solid Lime Green */}
       <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20">
-        <div className="px-6 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
-          <h3 className="text-white font-medium text-sm">Start Your Journey</h3>
-        </div>
+        <button className="px-6 py-2.5 rounded-full bg-accent-lime text-black font-medium text-sm hover:bg-accent-lime/90 transition-colors">
+          Start Your Journey
+        </button>
       </div>
 
       {/* SVG for Static Dotted Lines */}
@@ -65,8 +65,12 @@ export function WorkflowDiagram() {
         ))}
       </svg>
 
-      {/* Central Hub */}
+      {/* Central Hub with Subtle Glow */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+        {/* Very subtle green glow behind center */}
+        <div className="absolute inset-0 -z-10 scale-150">
+          <div className="w-full h-full rounded-full bg-accent-lime/5 blur-3xl" />
+        </div>
         <div className="w-32 h-32 rounded-full bg-[#1a1a1a] border border-white/5 flex items-center justify-center relative shadow-2xl">
           <div className="absolute inset-2.5 border border-dotted border-white/10 rounded-full" />
           <span className="text-accent-lime text-lg font-bold relative z-10">privydesk</span>
@@ -97,28 +101,117 @@ export function WorkflowDiagram() {
         );
       })}
 
-      {/* Animated Glowing Dots traveling along paths */}
-      {allPaths.map((pathStr, index) => (
-        <motion.div
-          key={`dot-${index}`}
-          className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
-          style={{
-            offsetPath: `path('${pathStr}')`,
-            boxShadow: '0 0 15px rgba(163, 230, 53, 1), 0 0 25px rgba(163, 230, 53, 0.8)',
-            zIndex: 15,
-          } as any}
-          animate={{
-            offsetDistance: ['0%', '100%'],
-            opacity: [0, 1, 1, 0], // Fade in/out at ends
-          }}
-          transition={{
-            duration: 3 + Math.random(), // Slight variation
-            repeat: Infinity,
-            ease: 'linear',
-            delay: index * 0.5,
-          }}
-        />
-      ))}
+      {/* Animated Dots traveling along paths - No Glow */}
+      {/* Top-left path */}
+      <motion.div
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
+        style={{
+          zIndex: 15,
+        }}
+        animate={{
+          left: ['12%', '30%', '35%', '35%', '40%', '50%'],
+          top: ['15%', '15%', '20%', '45%', '50%', '50%'],
+        }}
+        transition={{
+          duration: 3.5,
+          repeat: Infinity,
+          ease: 'linear',
+          times: [0, 0.3, 0.4, 0.7, 0.9, 1],
+        }}
+      />
+      
+      {/* Mid-left path */}
+      <motion.div
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
+        style={{
+          zIndex: 15,
+        }}
+        animate={{
+          left: ['12%', '50%'],
+          top: ['50%', '50%'],
+        }}
+        transition={{
+          duration: 2.5,
+          repeat: Infinity,
+          ease: 'linear',
+          delay: 0.5,
+        }}
+      />
+      
+      {/* Bottom-left path */}
+      <motion.div
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
+        style={{
+          zIndex: 15,
+        }}
+        animate={{
+          left: ['12%', '30%', '35%', '35%', '40%', '50%'],
+          top: ['85%', '85%', '80%', '55%', '50%', '50%'],
+        }}
+        transition={{
+          duration: 3.5,
+          repeat: Infinity,
+          ease: 'linear',
+          times: [0, 0.3, 0.4, 0.7, 0.9, 1],
+          delay: 1,
+        }}
+      />
+      
+      {/* Top-right path */}
+      <motion.div
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
+        style={{
+          zIndex: 15,
+        }}
+        animate={{
+          left: ['88%', '70%', '65%', '65%', '60%', '50%'],
+          top: ['15%', '15%', '20%', '45%', '50%', '50%'],
+        }}
+        transition={{
+          duration: 3.5,
+          repeat: Infinity,
+          ease: 'linear',
+          times: [0, 0.3, 0.4, 0.7, 0.9, 1],
+          delay: 1.5,
+        }}
+      />
+      
+      {/* Mid-right path */}
+      <motion.div
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
+        style={{
+          zIndex: 15,
+        }}
+        animate={{
+          left: ['88%', '50%'],
+          top: ['50%', '50%'],
+        }}
+        transition={{
+          duration: 2.5,
+          repeat: Infinity,
+          ease: 'linear',
+          delay: 2,
+        }}
+      />
+      
+      {/* Bottom-right path */}
+      <motion.div
+        className="absolute w-2.5 h-2.5 rounded-full bg-accent-lime"
+        style={{
+          zIndex: 15,
+        }}
+        animate={{
+          left: ['88%', '70%', '65%', '65%', '60%', '50%'],
+          top: ['85%', '85%', '80%', '55%', '50%', '50%'],
+        }}
+        transition={{
+          duration: 3.5,
+          repeat: Infinity,
+          ease: 'linear',
+          times: [0, 0.3, 0.4, 0.7, 0.9, 1],
+          delay: 2.5,
+        }}
+      />
     </div>
   );
 }

@@ -456,7 +456,7 @@
   letter-spacing: -0.01em;
 }
 
-/* Premium card styling - Dark Gray with Dotted Inner Border */
+/* Premium card styling - Dark Gray with Dotted Inner Border - No Glow */
 .premium-card {
   background: #1a1a1a;
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -474,26 +474,11 @@
   pointer-events: none;
 }
 
-.premium-card::after {
-  content: '';
-  position: absolute;
-  inset: -40px;
-  background: radial-gradient(circle at center, rgba(163, 230, 53, 0.08) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  z-index: -1;
-}
-
 .premium-card:hover {
   background: #222222;
   border-color: rgba(255, 255, 255, 0.08);
   transform: translateY(-4px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-}
-
-.premium-card:hover::after {
-  opacity: 1;
 }
 
 /* Premium button */
