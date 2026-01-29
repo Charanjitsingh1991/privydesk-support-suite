@@ -2,10 +2,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute, OnboardingRoute } from "@/components/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { AnimatedBackground } from "@/components/ui/AnimatedBackground";
+import { AnimatePresence, motion } from "framer-motion";
+import { pageVariants, pageTransition } from "@/utils/animations";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -45,15 +48,13 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => (
-  <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-          <Routes>
+// Animated Routes wrapper
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
             {/* Public routes */}
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
@@ -203,10 +204,26 @@ const App = () => (
             {/* 404 fallback */}
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+    </AnimatePresence>
+  );
+};
+
+const App = () => (
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <TooltipProvider>
+          {/* Premium Animated Background */}
+          <AnimatedBackground variant="both" intensity="medium" />
+          
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AnimatedRoutes />
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   </ErrorBoundary>
 );
 

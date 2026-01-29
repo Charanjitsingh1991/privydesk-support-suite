@@ -115,7 +115,7 @@ export const GlassInput = React.forwardRef<HTMLInputElement, GlassInputProps>(
               scale: isFocused ? 1.01 : 1,
             }}
             transition={{ duration: 0.2 }}
-            {...props}
+            {...(props as any)}
           />
 
           {/* Floating Label */}
@@ -241,7 +241,7 @@ export const GlassTextarea = React.forwardRef<HTMLTextAreaElement, GlassTextarea
               onBlur?.(e);
             }}
             disabled={disabled}
-            {...props}
+            {...(props as any)}
           />
 
           {label && (

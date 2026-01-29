@@ -85,7 +85,7 @@ export const GradientButton: React.FC<GradientButtonProps> = ({
       whileHover={{ scale: disabled || loading ? 1 : 1.05 }}
       whileTap={{ scale: disabled || loading ? 1 : 0.95 }}
       transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      {...props}
+      {...(props as any)}
     >
       {/* Ripple effect */}
       {ripples.map((ripple) => (
