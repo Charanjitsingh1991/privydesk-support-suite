@@ -235,10 +235,14 @@ export default function Index() {
                 </motion.button>
               </Link>
               <Link to="/signup">
-                <GradientButton variant="primary" size="md">
+                <motion.button
+                  className="px-6 py-2.5 rounded-full bg-accent-lime text-black font-medium text-sm hover:bg-accent-lime/90 transition-colors flex items-center"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   Get Started Free
                   <ArrowRight className="ml-2 w-4 h-4" />
-                </GradientButton>
+                </motion.button>
               </Link>
             </div>
           </div>

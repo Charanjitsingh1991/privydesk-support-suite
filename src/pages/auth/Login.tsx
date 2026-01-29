@@ -88,8 +88,8 @@ export default function AuthLogin() {
   return (
     <div className="min-h-screen flex">
       {/* Left Panel - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary to-primary/80 p-12 flex-col justify-between relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAzMHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
+      <div className="hidden lg:flex lg:w-1/2 bg-black p-12 flex-col justify-between relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAzMHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
         
         <div className="relative z-10">
           <h1 className="text-4xl font-bold text-white">PRIVYDESK</h1>
@@ -124,21 +124,21 @@ export default function AuthLogin() {
       </div>
 
       {/* Right Panel - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-background">
+      <div className="flex-1 flex items-center justify-center p-8 bg-[#0a0a0a]">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center lg:text-left">
-            <h2 className="text-3xl font-bold text-foreground">Welcome back</h2>
-            <p className="text-muted-foreground mt-2">Sign in to your PRIVYDESK account</p>
+            <h2 className="text-3xl font-bold text-white">Welcome back</h2>
+            <p className="text-white/60 mt-2">Sign in to your PRIVYDESK account</p>
           </div>
 
           {/* Auth Method Toggle */}
-          <div className="flex gap-2 p-1 bg-muted rounded-lg">
+          <div className="flex gap-2 p-1 bg-white/5 rounded-lg">
             <button
               onClick={() => setAuthMethod("magic-link")}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
                 authMethod === "magic-link"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "bg-white/10 text-white shadow-sm"
+                  : "text-white/60 hover:text-white"
               }`}
             >
               <Mail className="h-4 w-4 inline mr-2" />
@@ -148,8 +148,8 @@ export default function AuthLogin() {
               onClick={() => setAuthMethod("otp")}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
                 authMethod === "otp"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "bg-white/10 text-white shadow-sm"
+                  : "text-white/60 hover:text-white"
               }`}
             >
               <KeyRound className="h-4 w-4 inline mr-2" />
@@ -159,23 +159,23 @@ export default function AuthLogin() {
 
           <form onSubmit={authMethod === "magic-link" ? handleMagicLink : handleOTP} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="email">Email address</Label>
+              <Label htmlFor="email" className="text-white">Email address</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
                 <Input
                   id="email"
                   type="email"
                   placeholder="you@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/40"
                   required
                   disabled={isLoading}
                 />
               </div>
             </div>
 
-            <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+            <Button type="submit" className="w-full bg-accent-lime hover:bg-accent-lime/90 text-black font-medium" size="lg" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -191,15 +191,15 @@ export default function AuthLogin() {
           </form>
 
           <div className="text-center">
-            <p className="text-muted-foreground">
+            <p className="text-white/60">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-primary hover:underline font-medium">
+              <Link to="/signup" className="text-accent-lime hover:underline font-medium">
                 Sign up
               </Link>
             </p>
           </div>
 
-          <p className="text-center text-xs text-muted-foreground">
+          <p className="text-center text-xs text-white/40">
             By continuing, you agree to our Terms of Service and Privacy Policy.
           </p>
         </div>
