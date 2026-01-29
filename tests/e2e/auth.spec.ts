@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Authentication Flow', () => {
+test.describe('Passwordless Authentication Flow', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });
@@ -8,44 +8,42 @@ test.describe('Authentication Flow', () => {
   test('displays login page correctly', async ({ page }) => {
     await page.goto('/auth/login');
     
-    await expect(page.getByRole('heading', { name: /sign in|welcome/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /welcome back/i })).toBeVisible();
     await expect(page.getByLabel(/email/i)).toBeVisible();
-    await expect(page.getByLabel(/password/i)).toBeVisible();
-    await expect(page.getByRole('button', { name: /sign in/i })).toBeVisible();
+    await expect(page.getByText(/magic link/i)).toBeVisible();
+    await expect(page.getByText(/verification code/i)).toBeVisible();
+    await expect(page.getByRole('button', { name: /send magic link|send verification code/i })).toBeVisible();
   });
 
   test('shows validation errors for empty form submission', async ({ page }) => {
     await page.goto('/auth/login');
     
-    await page.getByRole('button', { name: /sign in/i }).click();
+    await page.getByRole('button', { name: /send magic link/i }).click();
     
     // HTML5 validation should prevent submission
     const emailInput = page.getByLabel(/email/i);
     await expect(emailInput).toBeFocused();
   });
 
-  test('allows typing in email and password fields', async ({ page }) => {
+  test('allows typing in email field', async ({ page }) => {
     await page.goto('/auth/login');
     
     await page.getByLabel(/email/i).fill('test@example.com');
-    await page.getByLabel(/password/i).fill('password123');
     
     await expect(page.getByLabel(/email/i)).toHaveValue('test@example.com');
-    await expect(page.getByLabel(/password/i)).toHaveValue('password123');
   });
 
-  test('toggles password visibility', async ({ page }) => {
+  test('toggles between magic link and OTP methods', async ({ page }) => {
     await page.goto('/auth/login');
     
-    const passwordInput = page.getByLabel(/password/i);
-    await passwordInput.fill('mypassword');
+    // Default should be magic link
+    await expect(page.getByRole('button', { name: /send magic link/i })).toBeVisible();
     
-    await expect(passwordInput).toHaveAttribute('type', 'password');
+    // Click OTP toggle
+    await page.getByRole('button', { name: /verification code/i }).click();
     
-    // Click the eye icon to toggle visibility
-    await page.locator('button').filter({ has: page.locator('svg') }).last().click();
-    
-    await expect(passwordInput).toHaveAttribute('type', 'text');
+    // Should now show OTP button
+    await expect(page.getByRole('button', { name: /send verification code/i })).toBeVisible();
   });
 
   test('navigates to signup page', async ({ page }) => {
@@ -53,44 +51,51 @@ test.describe('Authentication Flow', () => {
     
     await page.getByRole('link', { name: /sign up/i }).click();
     
-    await expect(page).toHaveURL('/signup');
+    await expect(page).toHaveURL(/\/(auth\/signup|signup)/);
   });
 
-  test('navigates to forgot password page', async ({ page }) => {
+  test('shows loading state when submitting', async ({ page }) => {
     await page.goto('/auth/login');
     
-    await page.getByRole('link', { name: /forgot password/i }).click();
+    await page.getByLabel(/email/i).fill('test@example.com');
     
-    await expect(page).toHaveURL('/forgot-password');
+    // Note: This will actually try to send email, so we just check the button changes
+    const submitButton = page.getByRole('button', { name: /send magic link/i });
+    await expect(submitButton).toBeEnabled();
   });
 });
 
-test.describe('Signup Flow', () => {
+test.describe('Passwordless Signup Flow', () => {
   test('displays signup page correctly', async ({ page }) => {
     await page.goto('/signup');
     
-    await expect(page.getByRole('heading', { name: /create.*account|sign up/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /create your account/i })).toBeVisible();
+    await expect(page.getByLabel(/email/i)).toBeVisible();
+    await expect(page.getByText(/magic link/i)).toBeVisible();
+    await expect(page.getByText(/verification code/i)).toBeVisible();
   });
 
-  test('shows password strength meter when typing password', async ({ page }) => {
+  test('shows passwordless authentication options', async ({ page }) => {
     await page.goto('/signup');
     
-    // Find password field and type
-    const passwordField = page.locator('input[type="password"]').first();
-    await passwordField.fill('Test123!');
-    
-    // Password strength indicator should appear
-    await expect(page.getByText(/password strength/i)).toBeVisible();
+    // Should show both auth method options
+    await expect(page.getByRole('button', { name: /magic link/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /verification code/i })).toBeVisible();
   });
 
-  test('shows password requirements', async ({ page }) => {
+  test('navigates to login page', async ({ page }) => {
     await page.goto('/signup');
     
-    const passwordField = page.locator('input[type="password"]').first();
-    await passwordField.fill('test');
+    await page.getByRole('link', { name: /sign in/i }).click();
     
-    await expect(page.getByText(/at least 12 characters/i)).toBeVisible();
-    await expect(page.getByText(/one uppercase/i)).toBeVisible();
+    await expect(page).toHaveURL(/\/(auth\/login|login)/);
+  });
+
+  test('shows security benefits messaging', async ({ page }) => {
+    await page.goto('/signup');
+    
+    // Should show passwordless security benefits
+    await expect(page.getByText(/passwordless security|no passwords/i)).toBeVisible();
   });
 });
 

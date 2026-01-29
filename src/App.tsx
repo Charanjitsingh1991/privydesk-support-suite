@@ -33,6 +33,7 @@ import PrivacySettings from "./pages/PrivacySettings";
 
 // Passwordless auth pages
 import AuthLogin from "./pages/auth/Login";
+import AuthSignup from "./pages/auth/Signup";
 import VerifyOTP from "./pages/auth/VerifyOTP";
 import MagicLinkSent from "./pages/auth/MagicLinkSent";
 import AuthCallback from "./pages/auth/Callback";
@@ -61,7 +62,8 @@ const AnimatedRoutes = () => {
             {/* Passwordless auth routes (public) */}
             <Route path="/auth/login" element={<AuthLogin />} />
             <Route path="/login" element={<AuthLogin />} />
-            <Route path="/signup" element={<AuthLogin />} />
+            <Route path="/auth/signup" element={<AuthSignup />} />
+            <Route path="/signup" element={<AuthSignup />} />
             <Route path="/auth/verify-otp" element={<VerifyOTP />} />
             <Route path="/auth/magic-link-sent" element={<MagicLinkSent />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
