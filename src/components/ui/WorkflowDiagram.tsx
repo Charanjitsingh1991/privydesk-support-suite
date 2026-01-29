@@ -23,11 +23,11 @@ interface IntegrationNodeProps {
 // Standardized Integration Node Component - All nodes are pixel-identical
 function IntegrationNode({ icon: Icon, color }: IntegrationNodeProps) {
   return (
-    <div className="w-20 h-20 rounded-full bg-white border border-white/10 flex items-center justify-center relative hover:border-white/20 transition-all shadow-xl group">
+    <div className="w-20 h-20 rounded-full bg-[#1a1a1a] border border-white/10 flex items-center justify-center relative hover:border-white/20 transition-all shadow-xl group">
       {/* Subtle inner ring */}
-      <div className="absolute inset-2 border border-black/5 rounded-full" />
-      {/* Icon - centered, 24px × 24px */}
-      <Icon className="w-6 h-6 relative z-10 opacity-70 group-hover:opacity-100 transition-opacity" style={{ color }} />
+      <div className="absolute inset-2 border border-white/5 rounded-full" />
+      {/* Icon - centered, 24px × 24px, white color */}
+      <Icon className="w-6 h-6 relative z-10 text-white opacity-80 group-hover:opacity-100 transition-opacity" />
     </div>
   );
 }
