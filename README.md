@@ -34,7 +34,7 @@ A modern, feature-rich customer support platform built with React, TypeScript, a
 - Sentiment analysis
 - Smart tag extraction
 - Response suggestions
-- Powered by Lovable AI Gateway (Gemini/GPT)
+- Powered by multiple AI providers (Groq, OpenRouter, OpenAI)
 
 ### 📧 Email Integration
 - Email archive and import
@@ -255,7 +255,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Supabase](https://supabase.com/) - Backend infrastructure
 - [shadcn/ui](https://ui.shadcn.com/) - UI components
-- [Lovable AI](https://lovable.dev/) - AI capabilities
+- [Groq](https://groq.com/) - Fast AI inference
 - [Tailwind CSS](https://tailwindcss.com/) - Styling framework
 
 ---

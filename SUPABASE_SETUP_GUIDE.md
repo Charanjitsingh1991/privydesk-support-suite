@@ -98,7 +98,10 @@ Click **"Secrets"** and add the following:
   - Value: `PRIVYDESK`
 
 #### Optional: AI Integration
-- [ ] **LOVABLE_API_KEY** (optional - for AI ticket analysis)
+- [ ] **AI_PROVIDER** (optional - choose: groq, openrouter, openai)
+- [ ] **GROQ_API_KEY** (optional - for Groq AI)
+- [ ] **OPENROUTER_API_KEY** (optional - for OpenRouter)
+- [ ] **OPENAI_API_KEY** (optional - for OpenAI)
   - Only needed if using AI features
 
 ### Verify Secrets

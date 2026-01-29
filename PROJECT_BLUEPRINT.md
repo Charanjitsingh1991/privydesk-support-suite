@@ -24,7 +24,7 @@ PRIVYDESK is a multi-tenant SaaS customer support/helpdesk application built wit
 - **Realtime**: Supabase Realtime for live updates
 
 ### AI Integration
-- Uses Lovable AI Gateway (OpenAI/Google models) for:
+- Uses multiple AI providers (Groq, OpenRouter, OpenAI) for:
   - Ticket analysis and categorization
   - Sentiment detection
   - Response suggestions
@@ -324,7 +324,7 @@ Admin invites user →
 ```
 Ticket created/updated →
   Frontend calls analyze-ticket edge function →
-  Function calls Lovable AI Gateway →
+  Function calls AI Provider (Groq/OpenRouter/OpenAI) →
   Returns: category, tags, sentiment, suggested response →
   Results stored in ticket.metadata →
   Displayed in AIInsightsPanel component
@@ -391,8 +391,11 @@ SMTP_PASSWORD=your-smtp-password
 SMTP_FROM_NAME=PRIVYDESK
 SMTP_FROM_EMAIL=noreply@yourdomain.com
 
-# AI Gateway (if using Lovable AI - already configured)
-LOVABLE_API_KEY=your-lovable-api-key
+# AI Provider Configuration
+AI_PROVIDER=groq
+GROQ_API_KEY=your-groq-api-key
+OPENROUTER_API_KEY=your-openrouter-api-key
+OPENAI_API_KEY=your-openai-api-key
 ```
 
 ---
@@ -437,21 +440,24 @@ VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
 
 ## AI Integration Details
 
-### Lovable AI Gateway
-- **Endpoint**: `https://ai.gateway.lovable.dev/v1/chat/completions`
+### Supported AI Providers
+- **Groq**: Fast inference with Llama models
+- **OpenRouter**: Access to multiple models
+- **OpenAI**: GPT-3.5/GPT-4 models
 - **Compatible with**: OpenAI API format
-- **Models Available**:
-  - `google/gemini-2.5-flash` (default, balanced)
   - `google/gemini-2.5-pro` (complex reasoning)
   - `openai/gpt-5-mini` (fast, cost-effective)
 
 ### Implementation Pattern
 ```typescript
 // Always call via edge function, never from frontend
-const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+const AI_PROVIDER = Deno.env.get("AI_PROVIDER") || "groq";
+const apiKey = Deno.env.get(`${AI_PROVIDER.toUpperCase()}_API_KEY`);
+
+const response = await fetch(getProviderUrl(AI_PROVIDER), {
   method: "POST",
   headers: {
-    Authorization: `Bearer ${Deno.env.get("LOVABLE_API_KEY")}`,
+    Authorization: `Bearer ${apiKey}`,
     "Content-Type": "application/json",
   },
   body: JSON.stringify({

@@ -63,9 +63,11 @@ These secrets must be configured in **Supabase Dashboard → Settings → Edge F
 
 ## 🤖 AI Integration (Optional)
 
-### `LOVABLE_API_KEY`
-- **Value:** `your-lovable-api-key`
-- **Description:** API key for Lovable AI Gateway
+### AI Provider Configuration
+- **AI_PROVIDER** - Choose: `groq`, `openrouter`, or `openai`
+- **GROQ_API_KEY** - Groq API key (fast inference)
+- **OPENROUTER_API_KEY** - OpenRouter API key (multiple models)
+- **OPENAI_API_KEY** - OpenAI API key (GPT models)
 - **Required for:** analyze-ticket function (AI-powered ticket analysis)
 - **Optional:** Only needed if using AI features
 
@@ -101,7 +103,10 @@ SMTP_USER=noreply@yourdomain.com
 SMTP_PASSWORD=your-smtp-password
 SMTP_FROM_EMAIL=noreply@yourdomain.com
 SMTP_FROM_NAME=PRIVYDESK
-LOVABLE_API_KEY=your-lovable-api-key
+AI_PROVIDER=groq
+GROQ_API_KEY=your-groq-api-key
+OPENROUTER_API_KEY=your-openrouter-api-key
+OPENAI_API_KEY=your-openai-api-key
 ```
 
 Then run:
@@ -130,7 +135,10 @@ npx supabase secrets list
 - [ ] SMTP_PASSWORD
 - [ ] SMTP_FROM_EMAIL
 - [ ] SMTP_FROM_NAME
-- [ ] LOVABLE_API_KEY (optional)
+- [ ] AI_PROVIDER (optional)
+- [ ] GROQ_API_KEY (optional)
+- [ ] OPENROUTER_API_KEY (optional)
+- [ ] OPENAI_API_KEY (optional)
 
 ---
 
@@ -158,7 +166,7 @@ npx supabase secrets list
 
 | Function | Required Secrets |
 |----------|-----------------|
-| `analyze-ticket` | SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, LOVABLE_API_KEY |
+| `analyze-ticket` | SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, AI_PROVIDER, *_API_KEY |
 | `api-v1` | SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY |
 | `send-otp` | SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SMTP_* |
 | `verify-otp` | SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY |
@@ -186,8 +194,9 @@ npx supabase secrets list
 - Check Hostinger email sending limits
 
 ### AI features not working
-- Verify LOVABLE_API_KEY is set
-- Check API key is valid and not expired
+- Verify AI_PROVIDER is set correctly
+- Check corresponding API key is set (GROQ_API_KEY, etc.)
+- Verify API key is valid and not expired
 - Monitor API usage limits
 
 ---

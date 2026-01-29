@@ -47,8 +47,11 @@ SMTP_PASSWORD=your-smtp-password
 SMTP_FROM_NAME=PRIVYDESK
 SMTP_FROM_EMAIL=noreply@yourdomain.com
 
-# AI Gateway (Lovable AI)
-LOVABLE_API_KEY=your-lovable-api-key
+# AI Provider Configuration
+AI_PROVIDER=groq
+GROQ_API_KEY=your-groq-api-key
+OPENROUTER_API_KEY=your-openrouter-api-key
+OPENAI_API_KEY=your-openai-api-key
 ```
 
 ---

@@ -97,4 +97,4 @@ None - All changes are backward compatible.
 
 ---
 
-**Note:** Versions prior to 1.0.0 were development releases migrated from Lovable AI.
+**Note:** Versions prior to 1.0.0 were development releases.
