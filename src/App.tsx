@@ -61,6 +61,7 @@ const AnimatedRoutes = () => {
             {/* Passwordless auth routes (public) */}
             <Route path="/auth/login" element={<AuthLogin />} />
             <Route path="/login" element={<AuthLogin />} />
+            <Route path="/signup" element={<AuthLogin />} />
             <Route path="/auth/verify-otp" element={<VerifyOTP />} />
             <Route path="/auth/magic-link-sent" element={<MagicLinkSent />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
