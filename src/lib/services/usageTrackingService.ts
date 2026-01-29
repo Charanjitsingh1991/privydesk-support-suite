@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 
 export type UsageMetric = 'tickets_created' | 'emails_sent' | 'api_calls' | 'storage_used_bytes' | 'chat_messages';
 
