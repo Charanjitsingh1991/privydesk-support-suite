@@ -606,23 +606,25 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Aplio-Style Footer */}
-      <footer className="py-20 border-t border-white/5 bg-black">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-4 mb-16">
-            {/* Brand */}
-            <div>
-              <div className="mb-6">
-                <span className="font-bold text-2xl text-white">privydesk</span>
+      {/* Footer */}
+      <footer className="relative py-20 border-t border-white/5">
+        <DottedBackground />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid md:grid-cols-5 gap-12 mb-12">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-accent-lime flex items-center justify-center">
+                  <Ticket className="w-5 h-5 text-black" />
+                </div>
+                <h3 className="font-bold text-xl">PRIVYDESK</h3>
               </div>
-              <p className="text-white/50 text-sm leading-relaxed mb-6">
-                AI-powered helpdesk platform for modern support teams. Streamline your customer service.
+              <p className="text-white/60 text-sm mb-6">
+                Modern helpdesk solution for businesses of all sizes. Deliver exceptional customer support with powerful, intuitive tools.
               </p>
-            </div>
-
-            {/* Explore */}
-            <div>
-              <h4 className="font-semibold text-white mb-6 text-sm">Explore</h4>
+              <div className="flex gap-3">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+                  <span className="sr-only">Twitter</span>
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
                 </a>
                 <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
                   <span className="sr-only">GitHub</span>
@@ -640,17 +642,13 @@ export default function Index() {
                 <li><Link to="/services" className="hover:text-white transition-colors">Services</Link></li>
                 <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
                 <li><Link to="/resources" className="hover:text-white transition-colors">Resources</Link></li>
-                <li><Link to="/docs" className="hover:text-white transition-colors">Documentation</Link></li>
-                <li><Link to="/api-reference" className="hover:text-white transition-colors">API</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-white/60">
                 <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
-                <li><Link to="/blog" className="hover:text-white transition-colors">Blog</Link></li>
                 <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-                <li><Link to="/support" className="hover:text-white transition-colors">Support</Link></li>
               </ul>
             </div>
             <div>
@@ -673,4 +671,5 @@ export default function Index() {
         </div>
       </footer>
     </div>
+  );
 }
