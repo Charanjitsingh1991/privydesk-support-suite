@@ -13,6 +13,13 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Contact from "./pages/Contact";
+import Resources from "./pages/Resources";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import RefundPolicy from "./pages/RefundPolicy";
 import Tickets from "./pages/Tickets";
 import NewTicket from "./pages/NewTicket";
 import TicketDetail from "./pages/TicketDetail";
@@ -58,6 +65,13 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
             {/* Public routes */}
             <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
             
             {/* Passwordless auth routes (public) */}
             <Route path="/auth/login" element={<AuthLogin />} />
