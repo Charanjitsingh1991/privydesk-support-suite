@@ -346,7 +346,121 @@ This document tracks the differences between the original PrivyDesk blueprint an
 
 ---
 
-## 🔄 Update Log
+---
+
+## � Email Migration Feature Analysis
+
+### **Blueprint Approach: One-Time PST/IMAP Import**
+
+**What's Planned:**
+- ✅ One-time import of historical emails (no ongoing sync)
+- ✅ PST file upload (Outlook native format)
+- ✅ IMAP import (alternative method)
+- ✅ Email archive search functionality
+- ✅ Forward old emails to clients via tickets
+- ✅ No Azure, no Microsoft Graph API, no recurring costs
+
+**Database Schema Required:**
+- `email_archive` table - Store imported emails
+- `email_attachments` table - Store email attachments
+- `email_import_jobs` table - Track import progress
+- Storage buckets: `email-imports` (temp), `email-attachments` (permanent)
+
+### **Current Implementation Status:**
+
+#### **✅ Partially Implemented:**
+1. **Email Archive Page** - UI exists at `/dashboard/emails`
+2. **Email Migration Page** - UI exists at `/dashboard/settings/email-migration`
+3. **Basic Structure** - Pages created but functionality incomplete
+
+#### **❌ Missing Components:**
+
+**High Priority:**
+1. **PST Parser Implementation**
+   - [ ] Install `pst-extractor` npm package
+   - [ ] PST file upload API endpoint
+   - [ ] Background processing logic
+   - [ ] Progress tracking system
+   - [ ] Attachment extraction
+
+2. **IMAP Import (Alternative)**
+   - [ ] IMAP connection logic
+   - [ ] Credential input UI
+   - [ ] Email download and parsing
+   - [ ] Progress tracking
+
+3. **Database Tables**
+   - [ ] `email_archive` table creation
+   - [ ] `email_attachments` table creation
+   - [ ] `email_import_jobs` table creation
+   - [ ] Full-text search setup (tsvector)
+
+4. **Storage Configuration**
+   - [ ] `email-imports` bucket (temporary PST files)
+   - [ ] `email-attachments` bucket (permanent storage)
+   - [ ] Storage policies and RLS
+
+5. **Email Archive Search**
+   - [ ] Full-text search implementation
+   - [ ] Filter by date, sender, folder
+   - [ ] Attachment preview
+   - [ ] Email detail view
+
+6. **Forward to Client Feature**
+   - [ ] "Forward to Client" button
+   - [ ] Email → Ticket conversion logic
+   - [ ] Notification system
+   - [ ] Client portal display
+
+**Medium Priority:**
+7. **Export Instructions**
+   - [ ] Step-by-step Outlook export guide
+   - [ ] Screenshots/video tutorial
+   - [ ] Troubleshooting tips
+
+8. **Import Progress UI**
+   - [ ] Real-time progress bar
+   - [ ] Email count display
+   - [ ] Error handling and retry
+   - [ ] Completion notification
+
+**Low Priority:**
+9. **Advanced Features**
+   - [ ] Folder structure preservation
+   - [ ] Auto-link emails to clients
+   - [ ] Duplicate detection
+   - [ ] Bulk operations
+
+### **Implementation Estimate:**
+- **Database Setup**: 1 day
+- **PST Upload UI**: 3 days
+- **PST Parser**: 5 days
+- **Search & Forward**: 3 days
+- **Total**: ~2 weeks
+
+### **Cost Analysis:**
+- **No Azure costs** (no Microsoft Graph API)
+- **No Resend costs** (using Hostinger SMTP)
+- **Supabase storage**: ~3.2 GB for 10K emails
+- **One-time migration**: No recurring sync costs
+
+### **Advantages Over Azure Approach:**
+- ✅ **$20/month savings** per organization
+- ✅ **2 weeks vs 8 weeks** implementation time
+- ✅ **No OAuth complexity**
+- ✅ **Full data ownership**
+- ✅ **Works offline** after export
+
+---
+
+## �🔄 Update Log
+
+- **2026-01-30 03:03**: Added email migration feature analysis
+  - Confirmed one-time PST/IMAP import approach (no Azure)
+  - Identified existing UI pages (email archive, migration settings)
+  - Listed missing components: PST parser, IMAP import, database tables
+  - Estimated 2-week implementation timeline
+  - Confirmed cost savings vs Azure approach
 
 - **2026-01-30 02:58**: Added deployment checklist analysis
   - Identified Hostinger + SMTP setup (not Vercel + Resend)
