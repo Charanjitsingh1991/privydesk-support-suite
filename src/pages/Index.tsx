@@ -195,11 +195,9 @@ const stats = [
 
 export default function Index() {
   const featuresRef = useRef<HTMLDivElement>(null);
-  const pricingRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
   
   const featuresInView = useInView(featuresRef, { threshold: 0.1 });
-  const pricingInView = useInView(pricingRef, { threshold: 0.1 });
   const testimonialsInView = useInView(testimonialsRef, { threshold: 0.1 });
 
   return (
@@ -414,70 +412,6 @@ export default function Index() {
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-white">{feature.title}</h3>
                   <p className="text-white/50 leading-relaxed text-lg">{feature.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section ref={pricingRef} className="py-32 relative">
-        <DottedBackground className="opacity-20" />
-        <div className="container mx-auto px-4 max-w-7xl">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            animate={pricingInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-section-title font-bold mb-6 gradient-text">
-              Simple, Transparent Pricing
-            </h2>
-            <p className="text-xl text-white/50">
-              Choose the perfect plan for your team. No hidden fees.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="grid gap-8 lg:grid-cols-3 max-w-6xl mx-auto"
-            variants={staggerContainerVariants}
-            initial="initial"
-            animate={pricingInView ? "animate" : "initial"}
-            viewport={{ once: true }}
-          >
-            {plans.map((plan, index) => (
-              <motion.div key={index} variants={staggerItemVariants}>
-                <div className={`premium-card p-10 relative h-full ${plan.popular ? 'border-white/10' : ''}`}>
-                  {plan.popular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-white text-black text-sm font-bold">
-                      Most Popular
-                    </div>
-                  )}
-                  
-                  <div className="mb-8">
-                    <h3 className="text-3xl font-bold text-white mb-4">{plan.name}</h3>
-                    <div className="flex items-baseline gap-3 mb-3">
-                      <span className="text-6xl font-bold gradient-text">{plan.price}</span>
-                      <span className="text-white/40 text-lg">{plan.period}</span>
-                    </div>
-                    <p className="text-white/60 text-lg">{plan.description}</p>
-                  </div>
-
-                  <Link to="/signup" className="block mb-8">
-                    <button className={`premium-button w-full ${plan.popular ? 'bg-white text-black font-semibold hover:shadow-glow-primary' : 'bg-transparent text-white border border-white/20 hover:border-white/40 hover:shadow-glow-primary'}`}>
-                      {plan.cta}
-                    </button>
-                  </Link>
-
-                  <ul className="space-y-4">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-white/50 flex-shrink-0 mt-1" />
-                        <span className="text-white/70 text-lg">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </motion.div>
             ))}
