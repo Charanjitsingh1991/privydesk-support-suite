@@ -215,17 +215,17 @@ export default function Index() {
           <div className="flex items-center justify-between h-20">
             <Link to="/" className="flex items-center gap-3 group">
               <motion.div
-                className="w-12 h-12 rounded-glass-lg bg-gradient-to-br from-gradient-primary-start to-gradient-primary-end flex items-center justify-center shadow-glow-primary"
-                whileHover={{ scale: 1.1, rotate: 5 }}
+                className="w-12 h-12 rounded-xl bg-accent-lime flex items-center justify-center"
+                whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
-                <Ticket className="w-6 h-6 text-white" />
+                <Ticket className="w-6 h-6 text-black" />
               </motion.div>
-              <span className="font-bold text-2xl gradient-text">PRIVYDESK</span>
+              <span className="font-bold text-2xl text-white">PRIVYDESK</span>
             </Link>
             
             <div className="flex items-center gap-4">
-              <Link to="/login">
+              <Link to="/auth/login">
                 <motion.button
                   className="px-6 py-2.5 rounded-glass text-white/70 hover:text-white transition-colors"
                   whileHover={{ scale: 1.05 }}
@@ -234,7 +234,7 @@ export default function Index() {
                   Sign In
                 </motion.button>
               </Link>
-              <Link to="/signup">
+              <Link to="/auth/login">
                 <motion.button
                   className="px-6 py-2.5 rounded-full bg-accent-lime text-black font-medium text-sm hover:bg-accent-lime/90 transition-colors flex items-center"
                   whileHover={{ scale: 1.05 }}

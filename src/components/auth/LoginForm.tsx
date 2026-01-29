@@ -109,16 +109,16 @@ export function LoginForm() {
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email" className="text-white">Email</Label>
         <div className="relative">
-          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
           <Input
             id="email"
             type="email"
             placeholder="you@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="pl-10"
+            className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/40"
             disabled={isLocked || loading}
             required
           />
@@ -127,27 +127,27 @@ export function LoginForm() {
 
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <Label htmlFor="password">Password</Label>
-          <Link to="/forgot-password" className="text-sm text-primary hover:underline">
+          <Label htmlFor="password" className="text-white">Password</Label>
+          <Link to="/forgot-password" className="text-sm text-accent-lime hover:underline">
             Forgot password?
           </Link>
         </div>
         <div className="relative">
-          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
           <Input
             id="password"
             type={showPassword ? 'text' : 'password'}
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="pl-10 pr-10"
+            className="pl-10 pr-10 bg-white/5 border-white/10 text-white placeholder:text-white/40"
             disabled={isLocked || loading}
             required
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
             disabled={isLocked || loading}
           >
             {showPassword ? (
@@ -161,7 +161,7 @@ export function LoginForm() {
 
       <Button 
         type="submit" 
-        className="w-full" 
+        className="w-full bg-accent-lime hover:bg-accent-lime/90 text-black font-medium" 
         disabled={loading || isLocked}
       >
         {loading ? (
@@ -176,9 +176,9 @@ export function LoginForm() {
         )}
       </Button>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-center text-sm text-white/60">
         Don't have an account?{' '}
-        <Link to="/signup" className="text-primary font-medium hover:underline">
+        <Link to="/signup" className="text-accent-lime font-medium hover:underline">
           Sign up
         </Link>
       </p>

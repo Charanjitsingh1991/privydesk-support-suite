@@ -193,7 +193,7 @@ export default function AuthLogin() {
           <div className="text-center">
             <p className="text-white/60">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-accent-lime hover:underline font-medium">
+              <Link to="/auth/signup" className="text-accent-lime hover:underline font-medium">
                 Sign up
               </Link>
             </p>

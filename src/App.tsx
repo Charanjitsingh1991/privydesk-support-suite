@@ -57,11 +57,10 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
             {/* Public routes */}
             <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
             
             {/* Passwordless auth routes (public) */}
             <Route path="/auth/login" element={<AuthLogin />} />
+            <Route path="/login" element={<AuthLogin />} />
             <Route path="/auth/verify-otp" element={<VerifyOTP />} />
             <Route path="/auth/magic-link-sent" element={<MagicLinkSent />} />
             <Route path="/auth/callback" element={<AuthCallback />} />

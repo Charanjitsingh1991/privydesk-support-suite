@@ -60,55 +60,55 @@ export function SignupForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
-        <Label htmlFor="fullName">Full Name</Label>
+        <Label htmlFor="fullName" className="text-white">Full Name</Label>
         <div className="relative">
-          <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
           <Input
             id="fullName"
             type="text"
             placeholder="John Doe"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            className="pl-10"
+            className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/40"
             required
           />
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email" className="text-white">Email</Label>
         <div className="relative">
-          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
           <Input
             id="email"
             type="email"
             placeholder="you@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="pl-10"
+            className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/40"
             required
           />
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password" className="text-white">Password</Label>
         <div className="relative">
-          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
           <Input
             id="password"
             type={showPassword ? 'text' : 'password'}
             placeholder="••••••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="pl-10 pr-10"
+            className="pl-10 pr-10 bg-white/5 border-white/10 text-white placeholder:text-white/40"
             minLength={12}
             required
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
           >
             {showPassword ? (
               <EyeOff className="w-4 h-4" />
@@ -126,7 +126,7 @@ export function SignupForm() {
 
       <Button 
         type="submit" 
-        className="w-full" 
+        className="w-full bg-accent-lime hover:bg-accent-lime/90 text-black font-medium" 
         disabled={loading || !passwordValidation.isValid}
       >
         {loading ? (
@@ -139,9 +139,9 @@ export function SignupForm() {
         )}
       </Button>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-center text-sm text-white/60">
         Already have an account?{' '}
-        <Link to="/login" className="text-primary font-medium hover:underline">
+        <Link to="/login" className="text-accent-lime font-medium hover:underline">
           Sign in
         </Link>
       </p>
