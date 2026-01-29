@@ -168,11 +168,12 @@ export function UsageDashboard({ organizationId, plan }: UsageDashboardProps) {
                     </span>
                   </div>
                   <div className="relative">
-                    <Progress
-                      value={percentage}
-                      className="h-2 bg-white/5"
-                      indicatorClassName={getProgressColor(percentage)}
-                    />
+                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full transition-all duration-300 ${getProgressColor(percentage)}`}
+                        style={{ width: `${percentage}%` }}
+                      />
+                    </div>
                     <div className="absolute right-0 -top-6 text-xs text-gray-400">
                       {percentage}%
                     </div>
