@@ -213,7 +213,7 @@ export default function Index() {
             <div className="flex items-center gap-4">
               <Link to="/login">
                 <motion.button
-                  className="px-6 py-2.5 rounded-glass text-white/90 hover:text-white transition-colors"
+                  className="px-6 py-2.5 rounded-glass text-slate-700 hover:text-slate-900 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -233,9 +233,10 @@ export default function Index() {
 
       {/* Hero Section - 5D Effect */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
-        {/* Floating elements for 5D effect */}
+        {/* Floating elements for 5D effect - Light Mode */}
         <motion.div
-          className="absolute top-20 left-10 w-72 h-72 bg-gradient-primary-start/20 rounded-full blur-3xl"
+          className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl"
+          style={{ background: 'radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%)' }}
           animate={{
             scale: [1, 1.2, 1],
             x: [0, 50, 0],
@@ -244,7 +245,8 @@ export default function Index() {
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-primary-end/20 rounded-full blur-3xl"
+          className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl"
+          style={{ background: 'radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, transparent 70%)' }}
           animate={{
             scale: [1, 1.3, 1],
             x: [0, -50, 0],
@@ -268,7 +270,7 @@ export default function Index() {
               transition={{ delay: 0.2 }}
             >
               <Sparkles className="w-4 h-4 text-gradient-primary-start" />
-              <span className="text-sm font-medium text-white/90">AI-Powered Multi-Tenant SaaS Helpdesk</span>
+              <span className="text-sm font-medium text-slate-700">AI-Powered Multi-Tenant SaaS Helpdesk</span>
             </motion.div>
 
             {/* Main Heading */}
@@ -284,7 +286,7 @@ export default function Index() {
 
             {/* Subheading */}
             <motion.p
-              className="text-xl lg:text-2xl text-white/70 mb-10 max-w-3xl mx-auto leading-relaxed"
+              className="text-xl lg:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -316,7 +318,7 @@ export default function Index() {
 
             {/* Trust Indicators */}
             <motion.div
-              className="mt-16 flex flex-wrap justify-center items-center gap-8 text-white/60 text-sm"
+              className="mt-16 flex flex-wrap justify-center items-center gap-8 text-slate-500 text-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
@@ -357,7 +359,7 @@ export default function Index() {
                     </div>
                   </div>
                   <div className="text-4xl font-bold gradient-text mb-2">{stat.value}</div>
-                  <div className="text-white/60">{stat.label}</div>
+                  <div className="text-slate-600">{stat.label}</div>
                 </StatCard>
               </motion.div>
             ))}
@@ -377,7 +379,7 @@ export default function Index() {
             <h2 className="text-4xl lg:text-5xl font-bold mb-4 gradient-text">
               Everything You Need to Succeed
             </h2>
-            <p className="text-xl text-white/70 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
               Powerful features designed to help your team deliver exceptional customer experiences
             </p>
           </motion.div>
@@ -395,8 +397,8 @@ export default function Index() {
                   <div className={`w-14 h-14 rounded-glass-lg bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-4 shadow-glow-primary`}>
                     <feature.icon className="w-7 h-7 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 text-white">{feature.title}</h3>
-                  <p className="text-white/70 leading-relaxed">{feature.description}</p>
+                  <h3 className="text-xl font-semibold mb-3 text-slate-800">{feature.title}</h3>
+                  <p className="text-slate-600 leading-relaxed">{feature.description}</p>
                 </GlassCard>
               </motion.div>
             ))}
@@ -416,7 +418,7 @@ export default function Index() {
             <h2 className="text-4xl lg:text-5xl font-bold mb-4 gradient-text">
               Simple, Transparent Pricing
             </h2>
-            <p className="text-xl text-white/70">
+            <p className="text-xl text-slate-600">
               Choose the perfect plan for your team. No hidden fees.
             </p>
           </motion.div>
@@ -447,12 +449,12 @@ export default function Index() {
                   )}
                   
                   <div className="mb-6">
-                    <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
+                    <h3 className="text-2xl font-bold text-slate-800 mb-2">{plan.name}</h3>
                     <div className="flex items-baseline gap-2 mb-2">
                       <span className="text-5xl font-bold gradient-text">{plan.price}</span>
-                      <span className="text-white/60">{plan.period}</span>
+                      <span className="text-slate-500">{plan.period}</span>
                     </div>
-                    <p className="text-white/70">{plan.description}</p>
+                    <p className="text-slate-600">{plan.description}</p>
                   </div>
 
                   <Link to="/signup" className="block mb-6">
@@ -469,7 +471,7 @@ export default function Index() {
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-3">
                         <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
-                        <span className="text-white/80">{feature}</span>
+                        <span className="text-slate-700">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -492,7 +494,7 @@ export default function Index() {
             <h2 className="text-4xl lg:text-5xl font-bold mb-4 gradient-text">
               Loved by Support Teams Worldwide
             </h2>
-            <p className="text-xl text-white/70">
+            <p className="text-xl text-slate-600">
               See what our customers have to say about PRIVYDESK
             </p>
           </motion.div>
@@ -512,7 +514,7 @@ export default function Index() {
                       <Star key={i} className="w-5 h-5 fill-warning text-warning" />
                     ))}
                   </div>
-                  <p className="text-white/80 mb-6 leading-relaxed italic">
+                  <p className="text-slate-700 mb-6 leading-relaxed italic">
                     "{testimonial.content}"
                   </p>
                   <div className="flex items-center gap-3">
@@ -520,8 +522,8 @@ export default function Index() {
                       {testimonial.avatar}
                     </div>
                     <div>
-                      <div className="font-semibold text-white">{testimonial.name}</div>
-                      <div className="text-sm text-white/60">{testimonial.role}</div>
+                      <div className="font-semibold text-slate-800">{testimonial.name}</div>
+                      <div className="text-sm text-slate-500">{testimonial.role}</div>
                     </div>
                   </div>
                 </GlassCard>
@@ -544,7 +546,7 @@ export default function Index() {
               <h2 className="text-4xl lg:text-5xl font-bold mb-6 gradient-text">
                 Ready to Transform Your Support?
               </h2>
-              <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto">
+              <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto">
                 Join thousands of teams already using PRIVYDESK to deliver exceptional customer experiences.
                 Start your free 14-day trial today.
               </p>
@@ -579,57 +581,57 @@ export default function Index() {
                 </div>
                 <span className="font-bold text-xl gradient-text">PRIVYDESK</span>
               </div>
-              <p className="text-white/60 mb-4">
+              <p className="text-slate-600 mb-4">
                 AI-powered helpdesk platform for modern support teams.
               </p>
               <div className="flex gap-3">
                 <a href="#" className="w-10 h-10 rounded-full bg-glass-base border border-glass-border flex items-center justify-center hover:bg-glass-hover transition-colors">
-                  <Twitter className="w-5 h-5 text-white/70" />
+                  <Twitter className="w-5 h-5 text-slate-600" />
                 </a>
                 <a href="#" className="w-10 h-10 rounded-full bg-glass-base border border-glass-border flex items-center justify-center hover:bg-glass-hover transition-colors">
-                  <Github className="w-5 h-5 text-white/70" />
+                  <Github className="w-5 h-5 text-slate-600" />
                 </a>
                 <a href="#" className="w-10 h-10 rounded-full bg-glass-base border border-glass-border flex items-center justify-center hover:bg-glass-hover transition-colors">
-                  <Linkedin className="w-5 h-5 text-white/70" />
+                  <Linkedin className="w-5 h-5 text-slate-600" />
                 </a>
               </div>
             </div>
 
             {/* Product */}
             <div>
-              <h4 className="font-semibold text-white mb-4">Product</h4>
-              <ul className="space-y-2 text-white/60">
-                <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">API</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Integrations</a></li>
+              <h4 className="font-semibold text-slate-800 mb-4">Product</h4>
+              <ul className="space-y-2 text-slate-600">
+                <li><a href="#" className="hover:text-slate-900 transition-colors">Features</a></li>
+                <li><a href="#" className="hover:text-slate-900 transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-slate-900 transition-colors">API</a></li>
+                <li><a href="#" className="hover:text-slate-900 transition-colors">Integrations</a></li>
               </ul>
             </div>
 
             {/* Company */}
             <div>
-              <h4 className="font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-white/60">
-                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+              <h4 className="font-semibold text-slate-800 mb-4">Company</h4>
+              <ul className="space-y-2 text-slate-600">
+                <li><a href="#" className="hover:text-slate-900 transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-slate-900 transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-slate-900 transition-colors">Careers</a></li>
+                <li><a href="#" className="hover:text-slate-900 transition-colors">Contact</a></li>
               </ul>
             </div>
 
             {/* Legal */}
             <div>
-              <h4 className="font-semibold text-white mb-4">Legal</h4>
-              <ul className="space-y-2 text-white/60">
-                <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Compliance</a></li>
+              <h4 className="font-semibold text-slate-800 mb-4">Legal</h4>
+              <ul className="space-y-2 text-slate-600">
+                <li><a href="#" className="hover:text-slate-900 transition-colors">Privacy</a></li>
+                <li><a href="#" className="hover:text-slate-900 transition-colors">Terms</a></li>
+                <li><a href="#" className="hover:text-slate-900 transition-colors">Security</a></li>
+                <li><a href="#" className="hover:text-slate-900 transition-colors">Compliance</a></li>
               </ul>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-glass-border text-center text-white/60">
+          <div className="pt-8 border-t border-glass-border text-center text-slate-500">
             <p>© 2024 PRIVYDESK. All rights reserved. Built with ❤️ for support teams worldwide.</p>
           </div>
         </div>

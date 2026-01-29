@@ -25,53 +25,53 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         
-        // Premium Design System Colors
-        'bg-base-start': '#0a0a0f',
-        'bg-base-end': '#1a0b2e',
+        // Premium Design System Colors - Light Mode
+        'bg-base-start': '#f0f9ff',
+        'bg-base-end': '#fef3f2',
         
-        // Glass surfaces
+        // Glass surfaces - Light
         glass: {
-          base: 'rgba(255, 255, 255, 0.03)',
-          hover: 'rgba(255, 255, 255, 0.05)',
-          active: 'rgba(255, 255, 255, 0.08)',
-          border: 'rgba(255, 255, 255, 0.1)',
-          'border-hover': 'rgba(255, 255, 255, 0.2)',
+          base: 'rgba(255, 255, 255, 0.7)',
+          hover: 'rgba(255, 255, 255, 0.85)',
+          active: 'rgba(255, 255, 255, 0.95)',
+          border: 'rgba(14, 165, 233, 0.15)',
+          'border-hover': 'rgba(14, 165, 233, 0.3)',
         },
         
-        // Gradient colors
-        'gradient-primary-start': '#8b5cf6',
+        // Gradient colors - Teal/Coral
+        'gradient-primary-start': '#0ea5e9',
         'gradient-primary-end': '#06b6d4',
-        'gradient-secondary-start': '#f43f5e',
-        'gradient-secondary-end': '#f97316',
+        'gradient-secondary-start': '#f97316',
+        'gradient-secondary-end': '#fb923c',
         
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          violet: '#8b5cf6',
+          sky: '#0ea5e9',
           cyan: '#06b6d4',
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
-          rose: '#f43f5e',
           orange: '#f97316',
+          coral: '#fb923c',
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
         success: {
-          DEFAULT: '#10b981',
+          DEFAULT: '#059669',
           foreground: '#ffffff',
           light: '#34d399',
         },
         warning: {
-          DEFAULT: '#f59e0b',
+          DEFAULT: '#d97706',
           foreground: '#ffffff',
           light: '#fbbf24',
         },
         error: {
-          DEFAULT: '#ef4444',
+          DEFAULT: '#dc2626',
           foreground: '#ffffff',
           light: '#f87171',
         },
@@ -102,17 +102,17 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         status: {
-          open: '#06b6d4',
-          'in-progress': '#8b5cf6',
-          waiting: '#f59e0b',
-          resolved: '#10b981',
-          closed: '#6b7280',
+          open: '#0284c7',
+          'in-progress': '#7c3aed',
+          waiting: '#d97706',
+          resolved: '#059669',
+          closed: '#64748b',
         },
         priority: {
-          low: '#10b981',
-          medium: '#f59e0b',
-          high: '#f97316',
-          urgent: '#ef4444',
+          low: '#059669',
+          medium: '#d97706',
+          high: '#ea580c',
+          urgent: '#dc2626',
         },
       },
       borderRadius: {
@@ -125,20 +125,20 @@ export default {
       },
       boxShadow: {
         glow: "var(--shadow-glow)",
-        // Card shadows
-        'card': '0 20px 60px rgba(0, 0, 0, 0.3)',
-        'card-hover': '0 30px 90px rgba(0, 0, 0, 0.4)',
-        'card-active': '0 10px 40px rgba(0, 0, 0, 0.25)',
+        // Card shadows - Light mode
+        'card': '0 10px 40px rgba(14, 165, 233, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05)',
+        'card-hover': '0 20px 60px rgba(14, 165, 233, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08)',
+        'card-active': '0 5px 20px rgba(14, 165, 233, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04)',
         // Glow effects
-        'glow-primary': '0 0 40px rgba(139, 92, 246, 0.3)',
-        'glow-primary-strong': '0 0 60px rgba(139, 92, 246, 0.5)',
-        'glow-secondary': '0 0 40px rgba(244, 63, 94, 0.3)',
-        'glow-success': '0 0 40px rgba(16, 185, 129, 0.3)',
-        'glow-warning': '0 0 40px rgba(245, 158, 11, 0.3)',
-        'glow-error': '0 0 40px rgba(239, 68, 68, 0.3)',
+        'glow-primary': '0 0 30px rgba(14, 165, 233, 0.25)',
+        'glow-primary-strong': '0 0 50px rgba(14, 165, 233, 0.4)',
+        'glow-secondary': '0 0 30px rgba(249, 115, 22, 0.25)',
+        'glow-success': '0 0 30px rgba(5, 150, 105, 0.25)',
+        'glow-warning': '0 0 30px rgba(217, 119, 6, 0.25)',
+        'glow-error': '0 0 30px rgba(220, 38, 38, 0.25)',
         // Inner glow
-        'inner-glow-primary': 'inset 0 0 60px rgba(139, 92, 246, 0.1)',
-        'inner-glow-secondary': 'inset 0 0 60px rgba(244, 63, 94, 0.1)',
+        'inner-glow-primary': 'inset 0 0 40px rgba(14, 165, 233, 0.08)',
+        'inner-glow-secondary': 'inset 0 0 40px rgba(249, 115, 22, 0.08)',
       },
       backdropBlur: {
         'glass': '24px',

@@ -6,71 +6,71 @@
 
 export const designTokens = {
   // ============================================
-  // COLOR PALETTE
+  // COLOR PALETTE - LIGHT MODE
   // ============================================
   colors: {
-    // Background
+    // Background - Light & Fresh
     background: {
-      base: 'linear-gradient(135deg, #0a0a0f 0%, #1a0b2e 100%)',
-      baseStart: '#0a0a0f',
-      baseEnd: '#1a0b2e',
-      overlay: 'rgba(10, 10, 15, 0.8)',
+      base: 'linear-gradient(135deg, #f0f9ff 0%, #fef3f2 100%)',
+      baseStart: '#f0f9ff',
+      baseEnd: '#fef3f2',
+      overlay: 'rgba(255, 255, 255, 0.95)',
     },
 
-    // Glass Surfaces
+    // Glass Surfaces - Light Glass
     glass: {
-      base: 'rgba(255, 255, 255, 0.03)',
-      hover: 'rgba(255, 255, 255, 0.05)',
-      active: 'rgba(255, 255, 255, 0.08)',
-      border: 'rgba(255, 255, 255, 0.1)',
-      borderHover: 'rgba(255, 255, 255, 0.2)',
+      base: 'rgba(255, 255, 255, 0.7)',
+      hover: 'rgba(255, 255, 255, 0.85)',
+      active: 'rgba(255, 255, 255, 0.95)',
+      border: 'rgba(14, 165, 233, 0.15)',
+      borderHover: 'rgba(14, 165, 233, 0.3)',
     },
 
-    // Gradient Accents
+    // Gradient Accents - Teal/Coral/Purple
     gradient: {
-      primary: 'linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%)',
-      primaryStart: '#8b5cf6',
+      primary: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)',
+      primaryStart: '#0ea5e9',
       primaryEnd: '#06b6d4',
-      secondary: 'linear-gradient(135deg, #f43f5e 0%, #f97316 100%)',
-      secondaryStart: '#f43f5e',
-      secondaryEnd: '#f97316',
+      secondary: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+      secondaryStart: '#f97316',
+      secondaryEnd: '#fb923c',
       success: 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
       warning: 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)',
       error: 'linear-gradient(135deg, #ef4444 0%, #f87171 100%)',
     },
 
-    // Text
+    // Text - Dark on Light
     text: {
-      primary: '#ffffff',
-      secondary: 'rgba(229, 231, 235, 0.85)',
-      tertiary: 'rgba(229, 231, 235, 0.6)',
-      disabled: 'rgba(229, 231, 235, 0.4)',
-      gradient: 'linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%)',
+      primary: '#0f172a',
+      secondary: 'rgba(15, 23, 42, 0.75)',
+      tertiary: 'rgba(15, 23, 42, 0.55)',
+      disabled: 'rgba(15, 23, 42, 0.35)',
+      gradient: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)',
     },
 
     // Status Colors
     status: {
-      success: '#10b981',
-      warning: '#f59e0b',
-      error: '#ef4444',
-      info: '#06b6d4',
+      success: '#059669',
+      warning: '#d97706',
+      error: '#dc2626',
+      info: '#0284c7',
     },
 
     // Priority Colors
     priority: {
-      low: '#10b981',
-      medium: '#f59e0b',
-      high: '#f97316',
-      urgent: '#ef4444',
+      low: '#059669',
+      medium: '#d97706',
+      high: '#ea580c',
+      urgent: '#dc2626',
     },
 
     // Ticket Status
     ticketStatus: {
-      open: '#06b6d4',
-      in_progress: '#8b5cf6',
-      waiting_customer: '#f59e0b',
-      resolved: '#10b981',
-      closed: '#6b7280',
+      open: '#0284c7',
+      in_progress: '#7c3aed',
+      waiting_customer: '#d97706',
+      resolved: '#059669',
+      closed: '#64748b',
     },
   },
 
@@ -147,36 +147,36 @@ export const designTokens = {
   },
 
   // ============================================
-  // SHADOWS & DEPTH
+  // SHADOWS & DEPTH - LIGHT MODE
   // ============================================
   shadows: {
     // Card Shadows
     card: {
-      base: '0 20px 60px rgba(0, 0, 0, 0.3)',
-      hover: '0 30px 90px rgba(0, 0, 0, 0.4)',
-      active: '0 10px 40px rgba(0, 0, 0, 0.25)',
+      base: '0 10px 40px rgba(14, 165, 233, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05)',
+      hover: '0 20px 60px rgba(14, 165, 233, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08)',
+      active: '0 5px 20px rgba(14, 165, 233, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04)',
     },
 
     // Glow Effects
     glow: {
-      primary: '0 0 40px rgba(139, 92, 246, 0.3)',
-      primaryStrong: '0 0 60px rgba(139, 92, 246, 0.5)',
-      secondary: '0 0 40px rgba(244, 63, 94, 0.3)',
-      success: '0 0 40px rgba(16, 185, 129, 0.3)',
-      warning: '0 0 40px rgba(245, 158, 11, 0.3)',
-      error: '0 0 40px rgba(239, 68, 68, 0.3)',
+      primary: '0 0 30px rgba(14, 165, 233, 0.25)',
+      primaryStrong: '0 0 50px rgba(14, 165, 233, 0.4)',
+      secondary: '0 0 30px rgba(249, 115, 22, 0.25)',
+      success: '0 0 30px rgba(16, 185, 129, 0.25)',
+      warning: '0 0 30px rgba(245, 158, 11, 0.25)',
+      error: '0 0 30px rgba(239, 68, 68, 0.25)',
     },
 
     // Inner Glow
     innerGlow: {
-      primary: 'inset 0 0 60px rgba(139, 92, 246, 0.1)',
-      secondary: 'inset 0 0 60px rgba(244, 63, 94, 0.1)',
+      primary: 'inset 0 0 40px rgba(14, 165, 233, 0.08)',
+      secondary: 'inset 0 0 40px rgba(249, 115, 22, 0.08)',
     },
 
     // Text Glow
     textGlow: {
-      primary: '0 0 20px rgba(139, 92, 246, 0.5)',
-      white: '0 0 20px rgba(255, 255, 255, 0.3)',
+      primary: '0 2px 20px rgba(14, 165, 233, 0.3)',
+      white: '0 2px 20px rgba(255, 255, 255, 0.5)',
     },
   },
 
