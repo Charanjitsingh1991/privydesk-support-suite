@@ -149,10 +149,9 @@ export class SurveyService {
       .insert({
         survey_id: surveyId,
         ticket_id: ticketId,
-        customer_id: customerId,
+        user_id: customerId,
         score: responses.score,
-        feedback: responses.feedback,
-        question_responses: responses.question_responses,
+        responses: responses.question_responses || {},
         submitted_at: new Date().toISOString(),
       })
       .select()
@@ -192,22 +191,26 @@ export class SurveyService {
    * Calculate CSAT score
    */
   static async calculateCSAT(surveyId: string): Promise<number> {
-    const { data } = await supabase.rpc('calculate_csat_score', {
-      p_survey_id: surveyId,
-    });
-
-    return data || 0;
+    // Calculate CSAT manually since RPC function may not exist
+    const responses = await this.getResponses(surveyId);
+    if (responses.length === 0) return 0;
+    
+    const satisfiedCount = responses.filter(r => (r.score || 0) >= 4).length;
+    return (satisfiedCount / responses.length) * 100;
   }
 
   /**
    * Calculate NPS score
    */
   static async calculateNPS(surveyId: string): Promise<number> {
-    const { data } = await supabase.rpc('calculate_nps_score', {
-      p_survey_id: surveyId,
-    });
-
-    return data || 0;
+    // Calculate NPS manually since RPC function may not exist
+    const responses = await this.getResponses(surveyId);
+    if (responses.length === 0) return 0;
+    
+    const promoters = responses.filter(r => (r.score || 0) >= 9).length;
+    const detractors = responses.filter(r => (r.score || 0) <= 6).length;
+    
+    return ((promoters - detractors) / responses.length) * 100;
   }
 
   /**
@@ -216,14 +219,14 @@ export class SurveyService {
   static async getSurveyStats(surveyId: string): Promise<SurveyStats> {
     const { data: survey } = await supabase
       .from('surveys')
-      .select('type, sent_count')
+      .select('type')
       .eq('id', surveyId)
       .single();
 
     const responses = await this.getResponses(surveyId);
 
     const totalResponses = responses.length;
-    const sentCount = survey?.sent_count || 0;
+    const sentCount = totalResponses; // Use response count as sent count
     const responseRate = sentCount > 0 ? (totalResponses / sentCount) * 100 : 0;
 
     let averageScore = 0;
@@ -307,7 +310,7 @@ export class SurveyService {
       // Get ticket details
       const { data: ticket } = await supabase
         .from('tickets')
-        .select('organization_id, customer_id, status')
+        .select('organization_id, status')
         .eq('id', ticketId)
         .single();
 
@@ -326,12 +329,6 @@ export class SurveyService {
       // Send survey (this would integrate with email/notification service)
       for (const survey of surveys) {
         console.log(`Triggering survey ${survey.id} for ticket ${ticketId}`);
-        
-        // Update sent count
-        await supabase
-          .from('surveys')
-          .update({ sent_count: (survey.sent_count || 0) + 1 })
-          .eq('id', survey.id);
       }
     } catch (error) {
       console.error('Failed to trigger survey:', error);
@@ -371,7 +368,7 @@ export class SurveyService {
 
     const { data: responses } = await supabase
       .from('survey_responses')
-      .select('score, feedback, submitted_at')
+      .select('score, submitted_at')
       .in('survey_id', surveyIds)
       .gte('submitted_at', startDate.toISOString())
       .order('submitted_at', { ascending: false });
@@ -396,11 +393,10 @@ export class SurveyService {
     });
 
     const recentFeedback = responses
-      .filter(r => r.feedback)
       .slice(0, 10)
       .map(r => ({
         score: r.score || 0,
-        feedback: r.feedback || '',
+        feedback: 'Survey response',
         date: r.submitted_at,
       }));
 

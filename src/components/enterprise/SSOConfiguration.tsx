@@ -3,10 +3,11 @@ import { Shield, Check, X, TestTube } from 'lucide-react';
 import { SSOService, type SSOConfiguration } from '@/lib/services/ssoService';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 type SSOConfig = SSOConfiguration;
 
@@ -80,21 +81,22 @@ export function SSOConfiguration({ organizationId }: { organizationId: string })
                 <div>
                   <label className="text-sm font-medium">Provider Name</label>
                   <Input
+                    id="provider"
                     value={formData.provider}
                     onChange={(e) => setFormData({ ...formData, provider: e.target.value })}
                     placeholder="Okta, Azure AD, etc."
                     required
                   />
                 </div>
-                <div>
-                  <label className="text-sm font-medium">SSO Type</label>
-                  <Select value={formData.sso_type} onValueChange={(v) => setFormData({ ...formData, sso_type: v })}>
+                <div className="space-y-2">
+                  <Label htmlFor="ssoType">SSO Type</Label>
+                  <Select value={formData.provider} onValueChange={(value) => setFormData({ ...formData, provider: value })}>
                     <SelectTrigger>
-                      <SelectValue />
+                      <SelectValue placeholder="Select SSO type" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="saml">SAML 2.0</SelectItem>
-                      <SelectItem value="oauth2">OAuth 2.0</SelectItem>
+                      <SelectItem value="oauth">OAuth 2.0</SelectItem>
                       <SelectItem value="oidc">OpenID Connect</SelectItem>
                     </SelectContent>
                   </Select>
@@ -102,22 +104,20 @@ export function SSOConfiguration({ organizationId }: { organizationId: string })
               </div>
 
               <div>
-                <label className="text-sm font-medium">Entity ID / Client ID</label>
+                <label className="text-sm font-medium">Entity ID</label>
                 <Input
                   value={formData.entity_id}
                   onChange={(e) => setFormData({ ...formData, entity_id: e.target.value })}
-                  placeholder="https://your-org.okta.com"
-                  required
+                  placeholder="https://your-idp.com/entity"
                 />
               </div>
 
               <div>
-                <label className="text-sm font-medium">SSO URL / Authorization Endpoint</label>
+                <label className="text-sm font-medium">SSO URL</label>
                 <Input
                   value={formData.sso_url}
                   onChange={(e) => setFormData({ ...formData, sso_url: e.target.value })}
-                  placeholder="https://your-org.okta.com/sso"
-                  required
+                  placeholder="https://your-idp.com/sso"
                 />
               </div>
 
@@ -159,7 +159,7 @@ export function SSOConfiguration({ organizationId }: { organizationId: string })
                       {config.provider}
                     </CardTitle>
                     <CardDescription className="uppercase text-xs mt-1">
-                      {config.sso_type}
+                      {config.provider}
                     </CardDescription>
                   </div>
                   <Badge variant={config.is_active ? 'default' : 'secondary'}>
@@ -174,12 +174,12 @@ export function SSOConfiguration({ organizationId }: { organizationId: string })
               <CardContent>
                 <div className="space-y-3">
                   <div className="text-sm">
-                    <p className="text-muted-foreground">Entity ID</p>
-                    <p className="font-mono text-xs truncate">{config.entity_id}</p>
+                    <p className="text-muted-foreground">Provider</p>
+                    <p className="font-mono text-xs truncate">{config.provider}</p>
                   </div>
                   <div className="text-sm">
-                    <p className="text-muted-foreground">SSO URL</p>
-                    <p className="font-mono text-xs truncate">{config.sso_url}</p>
+                    <p className="text-muted-foreground">Status</p>
+                    <p className="font-mono text-xs truncate">{config.is_active ? 'Active' : 'Inactive'}</p>
                   </div>
                   <div className="flex gap-2">
                     <Button

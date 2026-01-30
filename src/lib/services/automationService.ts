@@ -211,9 +211,10 @@ export class AutomationService {
           if (!value.includes(ticketValue)) return false;
         } else if (typeof value === 'object' && value !== null) {
           // Handle operators like { $gt: 5, $lt: 10 }
-          if (value.$gt !== undefined && ticketValue <= value.$gt) return false;
-          if (value.$lt !== undefined && ticketValue >= value.$lt) return false;
-          if (value.$eq !== undefined && ticketValue !== value.$eq) return false;
+          const operators = value as Record<string, any>;
+          if (operators.$gt !== undefined && ticketValue <= operators.$gt) return false;
+          if (operators.$lt !== undefined && ticketValue >= operators.$lt) return false;
+          if (operators.$eq !== undefined && ticketValue !== operators.$eq) return false;
         } else {
           // Direct equality check
           if (ticketValue !== value) return false;
@@ -246,7 +247,7 @@ export class AutomationService {
 
       // Log automation execution
       await supabase.from('automation_logs').insert({
-        rule_id: ruleId,
+        automation_rule_id: ruleId,
         ticket_id: ticketId,
         executed_at: new Date().toISOString(),
         status: 'success',
@@ -256,7 +257,7 @@ export class AutomationService {
       
       // Log failure
       await supabase.from('automation_logs').insert({
-        rule_id: ruleId,
+        automation_rule_id: ruleId,
         ticket_id: ticketId,
         executed_at: new Date().toISOString(),
         status: 'failed',
