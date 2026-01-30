@@ -43,6 +43,7 @@ export class ForumService {
     }
 
     if (options?.status) {
+      // @ts-expect-error - Supabase type instantiation depth limitation
       query = query.eq('status', options.status);
     }
 

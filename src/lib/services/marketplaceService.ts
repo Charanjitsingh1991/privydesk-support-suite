@@ -18,6 +18,7 @@ export class MarketplaceService {
     featured?: boolean;
     limit?: number;
   }): Promise<MarketplaceApp[]> {
+    // @ts-expect-error - Supabase type instantiation depth limitation
     let query = supabase
       .from('marketplace_apps')
       .select('*')
