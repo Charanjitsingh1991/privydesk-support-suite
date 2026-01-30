@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { GlassCard, StatCard } from '@/components/ui/GlassCard';
 import { GradientButton } from '@/components/ui/GradientButton';
 import { GridPattern, DottedBackground, AnimatedGrid } from '@/components/ui/GridPattern';
-import { WorkflowDiagram } from '@/components/ui/WorkflowDiagram';
+import { ProfessionalWorkflow } from '@/components/ui/ProfessionalWorkflow';
 import {
   Ticket,
   Shield,

@@ -130,3 +130,5 @@ export function ProfessionalWorkflow() {
     </div>
   );
 }
+
+export default ProfessionalWorkflow;
