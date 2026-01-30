@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Ticket, ArrowRight, HelpCircle, MessageSquare, Book, Video } from "lucide-react";
+import { HelpCircle, MessageSquare, Book, Video } from "lucide-react";
 import { GridPattern } from "@/components/ui/GridPattern";
+import { Header } from "@/components/layout/Header";
 
 export default function Support() {
   const faqs = [
@@ -33,35 +34,7 @@ export default function Support() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <motion.header
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-glass bg-black/80 border-b border-white/5"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-      >
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-accent-lime flex items-center justify-center">
-                <Ticket className="w-6 h-6 text-black" />
-              </div>
-              <span className="font-bold text-2xl">PRIVYDESK</span>
-            </Link>
-            
-            <nav className="hidden lg:flex items-center gap-1 px-2 py-2 rounded-full bg-white/5 border border-white/10">
-              <Link to="/" className="px-4 py-2 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">Home</Link>
-              <Link to="/resources" className="px-4 py-2 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">Resources</Link>
-              <Link to="/support" className="px-4 py-2 rounded-full text-sm font-medium text-white bg-white/10 transition-colors">Support</Link>
-            </nav>
-            
-            <Link to="/auth/signup">
-              <button className="px-6 py-2.5 rounded-full bg-accent-lime text-black font-medium text-sm hover:bg-accent-lime/90 transition-colors flex items-center">
-                Get Started
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </button>
-            </Link>
-          </div>
-        </div>
-      </motion.header>
+      <Header />
 
       <section className="relative pt-32 pb-20 overflow-hidden">
         <GridPattern variant="grid" className="opacity-100" />
