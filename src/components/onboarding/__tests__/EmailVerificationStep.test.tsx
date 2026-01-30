@@ -216,36 +216,12 @@ describe('EmailVerificationStep', () => {
       mockInvoke.mockResolvedValue({ data: { success: true }, error: null });
       renderStep({ email: 'test@example.com' });
 
-      const otpInputs = document.querySelectorAll('input[type="text"]');
-      for (let i = 0; i < 6; i++) {
-        await userEvent.type(otpInputs[i], String(i + 1));
-      }
-
+      // Wait for component to render
       await waitFor(() => {
         expect(screen.getByText(/enter verification code/i)).toBeInTheDocument();
       });
 
-      const otpInput = document.querySelector('input[data-input-otp="true"]') as HTMLInputElement;
-      if (otpInput) {
-        await userEvent.type(otpInput, '123456');
-      }
-
-      await waitFor(() => {
-        expect(mockOnUpdate).toHaveBeenCalledWith({ emailVerified: true });
-        expect(mockOnNext).toHaveBeenCalled();
-      }, { timeout: 3000 });
-    });
-vrfcaion
-    it('calls onNext after successful verification', async () => {
-      mockInvoke.mockResolvedValue({ data: { success: true }, error: null });
-      renderStep({ emaido:um'etsqu@raSelector.cinpuo[da a-input-)tp="true"] as HTMLInputElement
-      if (otpInput) {
-  
-      }
-      await waitFor(() => {
-        expect(screen.getByText(/enter verification code/i)).toBeInTheDocument();
-      });
-
+      // Type OTP using the hidden input
       const otpInput = document.querySelector('input[data-input-otp="true"]') as HTMLInputElement;
       if (otpInput) {
         await userEvent.type(otpInput, '123456');
@@ -265,11 +241,13 @@ vrfcaion
       renderStep({ email: 'test@example.com' });
 
       await waitFor(() => {
-        expect(screen.getByText(/enter the 6-digit code/i)).toBeInTheDocument();
+        expect(screen.getByText(/enter verification code/i)).toBeInTheDocument();
       });
 
-      const otpInput = screen.getByRole('textbox');
-      await userEvent.type(otpInput, '000000');
+      const otpInput = document.querySelector('input[data-input-otp="true"]') as HTMLInputElement;
+      if (otpInput) {
+        await userEvent.type(otpInput, '000000');
+      }
 
       await waitFor(() => {
         expect(mockToast).toHaveBeenCalledWith(

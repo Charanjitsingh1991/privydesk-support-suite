@@ -65,10 +65,11 @@ export function RolesManagement({ organizationId }: { organizationId: string }) 
 
   const handleEdit = (role: Role) => {
     setEditingRole(role);
+    const perms = Array.isArray(role.permissions) ? (role.permissions as unknown as string[]) : [];
     setFormData({
       name: role.name,
-      description: role.description,
-      permissions: role.permissions,
+      description: role.description || '',
+      permissions: perms,
     });
     setShowForm(true);
   };
@@ -197,22 +198,14 @@ export function RolesManagement({ organizationId }: { organizationId: string }) 
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Users className="h-4 w-4" />
-                    {role.user_count || 0} users
-                  </div>
-                  <div className="flex flex-wrap gap-1">
-                    {role.permissions.slice(0, 3).map((perm) => (
-                      <Badge key={perm} variant="secondary" className="text-xs">
-                        {perm.split('.')[1]}
-                      </Badge>
-                    ))}
-                    {role.permissions.length > 3 && (
-                      <Badge variant="secondary" className="text-xs">
-                        +{role.permissions.length - 3} more
-                      </Badge>
-                    )}
-                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {Array.isArray(role.permissions) 
+                      ? (role.permissions as unknown as string[]).slice(0, 3).join(', ') 
+                      : 'No permissions'}
+                    {Array.isArray(role.permissions) && 
+                      (role.permissions as unknown as string[]).length > 3 && 
+                      ` +${(role.permissions as unknown as string[]).length - 3} more`}
+                  </p>
                   <div className="flex gap-2 pt-2">
                     <Button
                       size="sm"
