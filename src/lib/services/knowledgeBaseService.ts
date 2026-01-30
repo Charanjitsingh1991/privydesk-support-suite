@@ -203,10 +203,7 @@ export class KnowledgeBaseService {
    */
   static async incrementViewCount(articleId: string): Promise<boolean> {
     const { error } = await supabase.rpc('increment_article_views', { article_id: articleId });
-    return !error;
-        .update({ view_count: (article.view_count || 0) + 1 })
-        .eq('id', articleId);
-    }
+    return error === null;
   }
 
   /**

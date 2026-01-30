@@ -186,12 +186,17 @@ describe('EmailVerificationStep', () => {
       expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
     });
 
-    it('auto-verifies when 6 digits are entered', async () => {
+    it('verifies OTP when all digits are entered', async () => {
       mockInvoke.mockResolvedValue({ data: { success: true }, error: null });
       renderStep({ email: 'test@example.com' });
 
-      // Type OTP digits
-      const otpInputs = document.querySelectorAll('input[type="text"]');
+      // Wait for OTP inputs to be rendered
+      await waitFor(() => {
+        expect(screen.getByText(/enter the 6-digit code/i)).toBeInTheDocument();
+      });
+
+      // Type complete OTP code
+      const otpInputs = screen.getAllByRole('textbox');
       for (let i = 0; i < 6; i++) {
         await userEvent.type(otpInputs[i], String(i + 1));
       }
@@ -229,10 +234,12 @@ describe('EmailVerificationStep', () => {
       });
       renderStep({ email: 'test@example.com' });
 
-      const otpInputs = document.querySelectorAll('input[type="text"]');
-      for (let i = 0; i < 6; i++) {
-        await userEvent.type(otpInputs[i], '0');
-      }
+      await waitFor(() => {
+        expect(screen.getByText(/enter the 6-digit code/i)).toBeInTheDocument();
+      });
+
+      const otpInput = screen.getByRole('textbox');
+      await userEvent.type(otpInput, '000000');
 
       await waitFor(() => {
         expect(mockToast).toHaveBeenCalledWith(

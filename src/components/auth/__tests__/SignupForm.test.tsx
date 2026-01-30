@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { screen, fireEvent, waitFor, render } from '@/test/test-utils';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { screen, fireEvent, waitFor, render, cleanup } from '@/test/test-utils';
 import userEvent from '@testing-library/user-event';
 import { SignupForm } from '../SignupForm';
 import { AuthProvider } from '@/contexts/AuthContext';
