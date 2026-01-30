@@ -55,9 +55,13 @@ export function CannedResponses({ organizationId }: CannedResponsesProps) {
       await navigator.clipboard.writeText(content);
       
       // Increment usage count
-      await supabase.rpc('increment_canned_response_usage', {
-        p_response_id: responseId,
-      });
+      const response = responses.find(r => r.id === responseId);
+      if (response) {
+        await supabase
+          .from('canned_responses')
+          .update({ usage_count: (response.usage_count || 0) + 1 })
+          .eq('id', responseId);
+      }
 
       toast({
         title: 'Copied',

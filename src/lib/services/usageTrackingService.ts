@@ -29,11 +29,30 @@ export class UsageTrackingService {
     amount: number = 1
   ): Promise<void> {
     try {
-      const { error } = await supabase.rpc('increment_usage', {
-        p_organization_id: organizationId,
-        p_metric: metric,
-        p_amount: amount,
-      });
+      const today = new Date().toISOString().split('T')[0];
+      
+      // Get current usage
+      const { data: existing } = await supabase
+        .from('usage_daily')
+        .select('*')
+        .eq('organization_id', organizationId)
+        .eq('date', today)
+        .single();
+
+      const updates: any = {
+        organization_id: organizationId,
+        date: today,
+      };
+
+      if (existing) {
+        updates[metric] = (existing[metric] || 0) + amount;
+      } else {
+        updates[metric] = amount;
+      }
+
+      const { error } = await supabase
+        .from('usage_daily')
+        .upsert(updates, { onConflict: 'organization_id,date' });
 
       if (error) {
         console.error('Failed to increment usage:', error);

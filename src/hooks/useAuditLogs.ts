@@ -1,20 +1,12 @@
 import { useState, useEffect } from 'react';
 import { AuditLogService } from '@/lib/services/auditLogService';
 import { useToast } from '@/hooks/use-toast';
+import type { Database } from '@/integrations/supabase/types';
 
-export interface AuditLog {
-  id: string;
-  organization_id: string;
-  user_id: string | null;
-  action: string;
-  resource_type: string | null;
-  resource_id: string | null;
-  before_snapshot: any;
-  after_snapshot: any;
+type AuditLogRow = Database['public']['Tables']['audit_logs']['Row'];
+
+export interface AuditLog extends Omit<AuditLogRow, 'metadata'> {
   metadata: Record<string, any>;
-  ip_address: string | null;
-  user_agent: string | null;
-  created_at: string;
   user?: {
     email: string;
     full_name: string;

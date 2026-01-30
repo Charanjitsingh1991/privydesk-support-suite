@@ -1,34 +1,12 @@
 import { supabase } from '@/integrations/supabase/client';
 import crypto from 'crypto';
+import type { Database } from '@/integrations/supabase/types';
 
-export interface Webhook {
-  id: string;
-  organization_id: string;
-  url: string;
-  description: string | null;
-  events: string[];
-  is_active: boolean;
-  retry_enabled: boolean;
-  max_retries: number;
-  timeout_seconds: number;
-  created_at: string;
-}
+type WebhookRow = Database['public']['Tables']['webhooks']['Row'];
+type WebhookDeliveryRow = Database['public']['Tables']['webhook_deliveries']['Row'];
 
-export interface WebhookDelivery {
-  id: string;
-  webhook_id: string;
-  event_type: string;
-  payload: any;
-  status: 'pending' | 'success' | 'failed';
-  attempts: number;
-  response_code: number | null;
-  response_body: string | null;
-  error_message: string | null;
-  last_attempt_at: string | null;
-  next_retry_at: string | null;
-  delivered_at: string | null;
-  created_at: string;
-}
+export interface Webhook extends WebhookRow {}
+export interface WebhookDelivery extends WebhookDeliveryRow {}
 
 export class WebhookService {
   /**
@@ -140,11 +118,14 @@ export class WebhookService {
 
     // Create delivery records for each webhook
     for (const webhook of webhooks) {
-      await supabase.rpc('create_webhook_delivery', {
-        p_webhook_id: webhook.id,
-        p_event_type: eventType,
-        p_payload: payload,
-      });
+      await supabase
+        .from('webhook_deliveries')
+        .insert({
+          webhook_id: webhook.id,
+          event_type: eventType,
+          payload: payload,
+          status: 'pending',
+        });
     }
   }
 

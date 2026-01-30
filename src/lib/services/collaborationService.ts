@@ -1,34 +1,13 @@
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 
-export interface TicketFollower {
-  id: string;
-  ticket_id: string;
-  user_id: string;
-  notify_on_update: boolean;
-  notify_on_comment: boolean;
-  notify_on_status_change: boolean;
-  created_at: string;
-}
+type TicketFollowerRow = Database['public']['Tables']['ticket_followers']['Row'];
+type TicketMentionRow = Database['public']['Tables']['ticket_mentions']['Row'];
+type TicketRelationshipRow = Database['public']['Tables']['ticket_relationships']['Row'];
 
-export interface TicketMention {
-  id: string;
-  ticket_id: string;
-  message_id: string | null;
-  mentioned_user_id: string;
-  mentioned_by_user_id: string;
-  is_read: boolean;
-  read_at: string | null;
-  created_at: string;
-}
-
-export interface TicketRelationship {
-  id: string;
-  parent_ticket_id: string;
-  child_ticket_id: string;
-  relationship_type: 'parent_child' | 'related' | 'duplicate' | 'blocks';
-  created_at: string;
-  created_by: string | null;
-}
+export interface TicketFollower extends TicketFollowerRow {}
+export interface TicketMention extends TicketMentionRow {}
+export interface TicketRelationship extends TicketRelationshipRow {}
 
 export class CollaborationService {
   /**
@@ -219,27 +198,45 @@ export class CollaborationService {
    * Acquire edit lock
    */
   static async acquireEditLock(ticketId: string, userId: string): Promise<boolean> {
-    const { data, error } = await supabase.rpc('acquire_ticket_edit_lock', {
-      p_ticket_id: ticketId,
-      p_user_id: userId,
-    });
+    // Check if lock exists and is not expired
+    const { data: existingLock } = await supabase
+      .from('ticket_edit_locks')
+      .select('*')
+      .eq('ticket_id', ticketId)
+      .gt('expires_at', new Date().toISOString())
+      .single();
+
+    if (existingLock && existingLock.user_id !== userId) {
+      return false; // Lock held by another user
+    }
+
+    // Upsert lock
+    const { error } = await supabase
+      .from('ticket_edit_locks')
+      .upsert({
+        ticket_id: ticketId,
+        user_id: userId,
+        locked_at: new Date().toISOString(),
+        expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(), // 5 minutes
+      }, { onConflict: 'ticket_id' });
 
     if (error) {
       console.error('Failed to acquire edit lock:', error);
       return false;
     }
 
-    return data === true;
+    return true;
   }
 
   /**
    * Release edit lock
    */
   static async releaseEditLock(ticketId: string, userId: string): Promise<void> {
-    await supabase.rpc('release_ticket_edit_lock', {
-      p_ticket_id: ticketId,
-      p_user_id: userId,
-    });
+    await supabase
+      .from('ticket_edit_locks')
+      .delete()
+      .eq('ticket_id', ticketId)
+      .eq('user_id', userId);
   }
 
   /**

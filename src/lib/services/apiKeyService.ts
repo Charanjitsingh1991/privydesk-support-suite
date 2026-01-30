@@ -1,19 +1,11 @@
 import { supabase } from '@/integrations/supabase/client';
 import crypto from 'crypto';
 
-export interface ApiKey {
-  id: string;
-  organization_id: string;
-  name: string;
-  key_prefix: string;
-  scopes: string[];
-  rate_limit_per_minute: number;
-  rate_limit_per_hour: number;
-  is_active: boolean;
-  last_used_at: string | null;
-  expires_at: string | null;
-  created_at: string;
-}
+import type { Database } from '@/integrations/supabase/types';
+
+type ApiKeyRow = Database['public']['Tables']['api_keys']['Row'];
+
+export interface ApiKey extends ApiKeyRow {}
 
 export class ApiKeyService {
   /**
@@ -141,7 +133,10 @@ export class ApiKeyService {
     }
 
     // Update last_used_at
-    await supabase.rpc('update_api_key_last_used', { p_key_hash: hash });
+    await supabase
+      .from('api_keys')
+      .update({ last_used_at: new Date().toISOString() })
+      .eq('key_hash', hash);
 
     return data;
   }
@@ -150,7 +145,8 @@ export class ApiKeyService {
    * Check if API key has required scope
    */
   static hasScope(apiKey: ApiKey, requiredScope: string): boolean {
-    if (apiKey.scopes.includes('*')) return true;
-    return apiKey.scopes.includes(requiredScope);
+    if (!apiKey.permissions) return false;
+    if (apiKey.permissions.includes('*')) return true;
+    return apiKey.permissions.includes(requiredScope);
   }
 }
