@@ -225,15 +225,15 @@ export class KnowledgeBaseService {
   ): Promise<boolean> {
     const { data: article } = await supabase
       .from('kb_articles')
-      .select('upvotes, downvotes')
+      .select('helpful_count, not_helpful_count')
       .eq('id', articleId)
       .single();
 
     if (!article) return false;
 
     const updates = helpful
-      ? { upvotes: (article.upvotes || 0) + 1 }
-      : { downvotes: (article.downvotes || 0) + 1 };
+      ? { helpful_count: (article.helpful_count || 0) + 1 }
+      : { not_helpful_count: (article.not_helpful_count || 0) + 1 };
 
     const { error } = await supabase
       .from('kb_articles')
@@ -372,8 +372,8 @@ export class KnowledgeBaseService {
     }
 
     const totalViews = data.reduce((sum, article) => sum + (article.view_count || 0), 0);
-    const totalUpvotes = data.reduce((sum, article) => sum + (article.upvotes || 0), 0);
-    const totalDownvotes = data.reduce((sum, article) => sum + (article.downvotes || 0), 0);
+    const totalHelpful = data.reduce((sum, article) => sum + (article.helpful_count || 0), 0);
+    const totalNotHelpful = data.reduce((sum, article) => sum + (article.not_helpful_count || 0), 0);
 
     const topArticles = [...data]
       .sort((a, b) => (b.view_count || 0) - (a.view_count || 0))
@@ -382,8 +382,8 @@ export class KnowledgeBaseService {
     return {
       totalArticles: data.length,
       totalViews,
-      totalUpvotes,
-      totalDownvotes,
+      totalHelpful,
+      totalNotHelpful,
       topArticles,
     };
   }
