@@ -99,23 +99,25 @@ export default function Pricing() {
               <span className="text-2xl font-bold text-white">PrivyDesk</span>
             </Link>
 
-            <div className="flex items-center gap-4">
-              <Link to="/login">
-                <button className="px-6 py-2.5 text-white hover:text-accent-lime transition-colors">
-                  Sign In
-                </button>
-              </Link>
-              <Link to="/signup">
-                <motion.button
-                  className="px-6 py-2.5 rounded-full bg-accent-lime text-black font-medium hover:bg-accent-lime/90 transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Get Started
-                  <ArrowRight className="ml-2 w-4 h-4 inline" />
-                </motion.button>
-              </Link>
-            </div>
+            <nav className="hidden lg:flex items-center gap-1 px-2 py-2 rounded-full bg-white/5 border border-white/10">
+              <Link to="/" className="px-4 py-2 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">Home</Link>
+              <Link to="/about" className="px-4 py-2 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">About</Link>
+              <Link to="/services" className="px-4 py-2 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">Services</Link>
+              <Link to="/pricing" className="px-4 py-2 rounded-full text-sm font-medium text-white bg-white/10 transition-colors">Pricing</Link>
+              <Link to="/resources" className="px-4 py-2 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">Resources</Link>
+              <Link to="/contact" className="px-4 py-2 rounded-full text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors">Contact</Link>
+            </nav>
+
+            <Link to="/auth/signup">
+              <motion.button
+                className="px-6 py-2.5 rounded-full bg-accent-lime text-black font-medium hover:bg-accent-lime/90 transition-colors flex items-center"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get Started
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </motion.button>
+            </Link>
           </div>
         </div>
       </motion.header>

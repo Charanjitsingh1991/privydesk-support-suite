@@ -438,7 +438,7 @@ export default function Index() {
             </p>
           </motion.div>
 
-          <WorkflowDiagram />
+          <ProfessionalWorkflow />
         </div>
       </section>
 

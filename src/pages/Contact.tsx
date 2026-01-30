@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Ticket, ArrowRight, Mail, Phone, MapPin, Send } from "lucide-react";
+import { Ticket, ArrowRight, Mail, Send } from "lucide-react";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -170,26 +170,18 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="premium-card p-6 flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-accent-lime/10 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-accent-lime" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Phone</h3>
-                    <p className="text-white/60">+1 (555) 123-4567</p>
-                    <p className="text-sm text-white/40">Mon-Fri, 9am-6pm EST</p>
-                  </div>
-                </div>
-
-                <div className="premium-card p-6 flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-accent-lime/10 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-accent-lime" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1">Office</h3>
-                    <p className="text-white/60">123 Business Street</p>
-                    <p className="text-white/60">San Francisco, CA 94105</p>
-                  </div>
+                <div className="premium-card p-2 overflow-hidden">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.086076891597!2d-122.41941708468197!3d37.77492977975903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c6c8f4459%3A0xb10ed6d9b5050fa5!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                    width="100%"
+                    height="400"
+                    style={{ border: 0, borderRadius: '8px' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full"
+                    title="PrivyDesk Office Location"
+                  />
                 </div>
               </div>
             </motion.div>
