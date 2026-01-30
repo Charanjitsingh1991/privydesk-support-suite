@@ -106,19 +106,24 @@ export class MobileService {
    */
   static async sendPushNotification(
     userId: string,
+    organizationId: string,
     notification: {
       title: string;
       body: string;
       data?: any;
-      action_url?: string;
+      notification_type?: string;
     }
   ): Promise<PushNotification | null> {
     const { data, error } = await supabase
       .from('push_notifications')
       .insert({
         user_id: userId,
+        organization_id: organizationId,
+        title: notification.title,
+        body: notification.body,
+        data: notification.data,
+        notification_type: notification.notification_type,
         status: 'pending',
-        ...notification,
       })
       .select()
       .single();
@@ -174,12 +179,12 @@ export class MobileService {
   /**
    * Mark notification as read
    */
-  static async markNotificationRead(notificationId: string): Promise<boolean> {
+  static async markNotificationDelivered(notificationId: string): Promise<boolean> {
     const { error } = await supabase
       .from('push_notifications')
       .update({ 
-        is_read: true,
-        read_at: new Date().toISOString(),
+        status: 'delivered',
+        delivered_at: new Date().toISOString(),
       })
       .eq('id', notificationId);
 
@@ -193,11 +198,14 @@ export class MobileService {
     userId: string,
     deviceId: string
   ): Promise<MobileAppSession | null> {
+    const sessionToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    
     const { data, error } = await supabase
       .from('mobile_app_sessions')
       .insert({
         user_id: userId,
         device_id: deviceId,
+        session_token: sessionToken,
         started_at: new Date().toISOString(),
       })
       .select()
@@ -246,9 +254,9 @@ export class MobileService {
     deviceId: string,
     action: {
       action_type: string;
-      entity_type: string;
-      entity_id?: string;
-      data: any;
+      resource_type: string;
+      resource_id?: string;
+      payload: any;
     }
   ): Promise<OfflineSyncQueue | null> {
     const { data, error } = await supabase
@@ -256,8 +264,11 @@ export class MobileService {
       .insert({
         user_id: userId,
         device_id: deviceId,
+        action_type: action.action_type,
+        resource_type: action.resource_type,
+        resource_id: action.resource_id,
+        payload: action.payload,
         status: 'pending',
-        ...action,
       })
       .select()
       .single();
