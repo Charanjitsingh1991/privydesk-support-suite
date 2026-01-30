@@ -396,7 +396,6 @@ export class ForumService {
     organizationId: string,
     searchQuery: string
   ): Promise<ForumTopic[]> {
-    // @ts-expect-error - Supabase type instantiation depth limitation
     const { data, error } = await supabase
       .from('forum_topics')
       .select(`
@@ -409,6 +408,7 @@ export class ForumService {
       .order('created_at', { ascending: false });
 
     if (error) {
+      // @ts-expect-error - Supabase type instantiation depth limitation
       console.error('Failed to search topics:', error);
       return [];
     }

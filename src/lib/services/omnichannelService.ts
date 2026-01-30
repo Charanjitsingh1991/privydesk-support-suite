@@ -117,6 +117,7 @@ export class OmnichannelService {
     message: string,
     mediaUrl?: string
   ): Promise<WhatsAppMessage | null> {
+    // @ts-expect-error - Supabase type instantiation depth limitation
     const { data, error } = await supabase
       .from('whatsapp_messages')
       .insert({
@@ -160,7 +161,8 @@ export class OmnichannelService {
       conversationId?: string;
       limit?: number;
     }
-  ): Promise<WhatsAppMessage[]> {
+  ): Promise<any[]> {
+    // @ts-expect-error - Supabase type instantiation depth limitation
     let query = supabase
       .from('whatsapp_messages')
       .select('*')
@@ -416,7 +418,8 @@ export class OmnichannelService {
       assignedTo?: string;
       limit?: number;
     }
-  ): Promise<OmnichannelConversation[]> {
+  ): Promise<any[]> {
+    // @ts-expect-error - Supabase type instantiation depth limitation
     let query = supabase
       .from('omnichannel_conversations')
       .select('*')

@@ -18,7 +18,6 @@ export class MarketplaceService {
     featured?: boolean;
     limit?: number;
   }): Promise<MarketplaceApp[]> {
-    // @ts-expect-error - Supabase type instantiation depth limitation
     let query = supabase
       .from('marketplace_apps')
       .select('*')
@@ -51,7 +50,6 @@ export class MarketplaceService {
    * Get app by ID
    */
   static async getAppById(appId: string): Promise<MarketplaceApp | null> {
-    // @ts-expect-error - Supabase type instantiation depth limitation
     const { data, error } = await supabase
       .from('marketplace_apps')
       .select('*')
