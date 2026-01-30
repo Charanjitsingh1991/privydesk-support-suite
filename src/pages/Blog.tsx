@@ -3,9 +3,25 @@ import { Link } from "react-router-dom";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { Header } from "@/components/layout/Header";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function Blog() {
-  const posts = [
+  const { data: posts = [], isLoading } = useQuery({
+    queryKey: ['blog-posts'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('status', 'published')
+        .order('published_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const fallbackPosts = [
     {
       title: "Introducing PrivyDesk: The Future of Customer Support",
       excerpt: "We're excited to announce the launch of PrivyDesk, a modern customer support platform built for the AI era.",
@@ -62,6 +78,17 @@ export default function Blog() {
     },
   ];
 
+  const displayPosts = posts.length > 0 ? posts.map(post => ({
+    title: post.title,
+    excerpt: post.excerpt,
+    author: post.author,
+    date: new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    readTime: post.read_time,
+    category: post.category,
+    image: post.featured_image,
+    slug: post.slug,
+  })) : fallbackPosts;
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Header />
@@ -82,8 +109,14 @@ export default function Blog() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {posts.map((post, index) => (
+          {isLoading ? (
+            <div className="text-center py-20">
+              <div className="inline-block w-12 h-12 border-4 border-accent-lime border-t-transparent rounded-full animate-spin"></div>
+              <p className="mt-4 text-white/60">Loading blog posts...</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+              {displayPosts.map((post, index) => (
               <motion.article
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -122,7 +155,7 @@ export default function Blog() {
                       {post.readTime}
                     </div>
                     <Link
-                      to={`/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`}
+                      to={`/blog/${post.slug || post.title.toLowerCase().replace(/\s+/g, '-')}`}
                       className="text-accent-lime text-sm font-medium hover:underline flex items-center gap-1"
                     >
                       Read more <ArrowRight className="w-3 h-3" />
@@ -130,8 +163,9 @@ export default function Blog() {
                   </div>
                 </div>
               </motion.article>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>
