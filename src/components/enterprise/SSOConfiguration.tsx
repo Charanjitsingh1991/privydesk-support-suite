@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Shield, Check, X, TestTube } from 'lucide-react';
-import { SSOService } from '@/lib/services/ssoService';
+import { SSOService, type SSOConfiguration } from '@/lib/services/ssoService';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
