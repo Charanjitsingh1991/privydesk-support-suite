@@ -491,8 +491,7 @@ export class OmnichannelService {
     const { error } = await supabase
       .from('omnichannel_conversations')
       .update({ 
-        assigned_to: agentId,
-        assigned_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       })
       .eq('id', conversationId);
 
