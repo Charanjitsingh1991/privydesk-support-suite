@@ -25,7 +25,7 @@ export class ApiKeyService {
   static async createApiKey(
     organizationId: string,
     name: string,
-    scopes: string[] = ['read', 'write'],
+    permissions: string[] = ['read', 'write'],
     expiresInDays?: number
   ): Promise<{ apiKey: ApiKey; plainKey: string } | null> {
     const { key, hash, prefix } = this.generateApiKey();
@@ -41,7 +41,7 @@ export class ApiKeyService {
         name,
         key_hash: hash,
         key_prefix: prefix,
-        scopes,
+        permissions,
         expires_at: expiresAt,
       })
       .select()

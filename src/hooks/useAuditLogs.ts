@@ -31,7 +31,12 @@ export function useAuditLogs(organizationId: string) {
       setLoading(true);
       setError(null);
       const data = await AuditLogService.getLogs(organizationId, options);
-      setLogs(data);
+      // Cast metadata from Json to Record<string, any>
+      const typedLogs = data.map(log => ({
+        ...log,
+        metadata: (log.metadata as any) || {},
+      })) as AuditLog[];
+      setLogs(typedLogs);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to fetch audit logs';
       setError(message);
