@@ -202,8 +202,9 @@ export class KnowledgeBaseService {
    * Increment article view count
    */
   static async incrementViewCount(articleId: string): Promise<boolean> {
+    // @ts-expect-error - Custom RPC function not in generated types
     const { error } = await supabase.rpc('increment_article_views', { article_id: articleId });
-    return error === null;
+    return !error;
   }
 
   /**

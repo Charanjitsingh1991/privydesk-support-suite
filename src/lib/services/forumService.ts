@@ -396,9 +396,14 @@ export class ForumService {
     organizationId: string,
     searchQuery: string
   ): Promise<ForumTopic[]> {
+    // @ts-expect-error - Supabase type instantiation depth limitation
     const { data, error } = await supabase
       .from('forum_topics')
-      .select('*, author:profiles!created_by(full_name, email)')
+      .select(`
+        *,
+        profiles:created_by(full_name, avatar_url),
+        forum_replies(count)
+      `)
       .eq('organization_id', organizationId)
       .or(`title.ilike.%${searchQuery}%,content.ilike.%${searchQuery}%`)
       .order('created_at', { ascending: false });

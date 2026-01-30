@@ -317,6 +317,7 @@ export class SurveyService {
       if (!ticket || ticket.status !== 'closed') return;
 
       // Get active surveys for this organization
+      // @ts-expect-error - Supabase type instantiation depth limitation
       const { data: surveys } = await supabase
         .from('surveys')
         .select('*')
