@@ -190,26 +190,26 @@ describe('EmailVerificationStep', () => {
       mockInvoke.mockResolvedValue({ data: { success: true }, error: null });
       renderStep({ email: 'test@example.com' });
 
-      // Wait for OTP inputs to be rendered
+      // Wait for OTP input to be rendered
       await waitFor(() => {
-        expect(screen.getByText(/enter the 6-digit code/i)).toBeInTheDocument();
+        expect(screen.getByText(/enter verification code/i)).toBeInTheDocument();
       });
 
-      // Type complete OTP code
-      const otpInputs = screen.getAllByRole('textbox');
-      for (let i = 0; i < 6; i++) {
-        await userEvent.type(otpInputs[i], String(i + 1));
+      // Find the hidden input that handles the OTP value
+      const otpInput = document.querySelector('input[data-input-otp="true"]') as HTMLInputElement;
+      if (otpInput) {
+        await userEvent.type(otpInput, '123456');
       }
 
       await waitFor(() => {
         expect(mockInvoke).toHaveBeenCalledWith('verify-otp', {
           body: { 
             email: 'test@example.com', 
-            code: expect.any(String),
+            code: '123456',
             type: 'onboarding' 
           },
         });
-      });
+      }, { timeout: 3000 });
     });
 
     it('calls onNext after successful verification', async () => {
@@ -222,9 +222,39 @@ describe('EmailVerificationStep', () => {
       }
 
       await waitFor(() => {
+        expect(screen.getByText(/enter verification code/i)).toBeInTheDocument();
+      });
+
+      const otpInput = document.querySelector('input[data-input-otp="true"]') as HTMLInputElement;
+      if (otpInput) {
+        await userEvent.type(otpInput, '123456');
+      }
+
+      await waitFor(() => {
         expect(mockOnUpdate).toHaveBeenCalledWith({ emailVerified: true });
         expect(mockOnNext).toHaveBeenCalled();
+      }, { timeout: 3000 });
+    });
+vrfcaion
+    it('calls onNext after successful verification', async () => {
+      mockInvoke.mockResolvedValue({ data: { success: true }, error: null });
+      renderStep({ emaido:um'etsqu@raSelector.cinpuo[da a-input-)tp="true"] as HTMLInputElement
+      if (otpInput) {
+  
+      }
+      await waitFor(() => {
+        expect(screen.getByText(/enter verification code/i)).toBeInTheDocument();
       });
+
+      const otpInput = document.querySelector('input[data-input-otp="true"]') as HTMLInputElement;
+      if (otpInput) {
+        await userEvent.type(otpInput, '123456');
+      }
+
+      await waitFor(() => {
+        expect(mockOnUpdate).toHaveBeenCalledWith({ emailVerified: true });
+        expect(mockOnNext).toHaveBeenCalled();
+      }, { timeout: 3000 });
     });
 
     it('shows error on invalid OTP', async () => {

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -38,23 +38,27 @@ export function SignupForm() {
     
     setLoading(true);
 
-    const { error } = await signUp(email, password, fullName);
+    try {
+      const { error } = await signUp(email, password, fullName);
 
-    if (error) {
-      toast({
-        title: 'Error signing up',
-        description: error.message,
-        variant: 'destructive',
-      });
-    } else {
+      if (error) {
+        throw error;
+      }
+
       toast({
         title: 'Account created',
         description: 'Welcome to PRIVYDESK! Redirecting to dashboard...',
       });
       navigate('/dashboard');
+    } catch (error: any) {
+      toast({
+        title: 'Error signing up',
+        description: error.message || 'Failed to create account',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (

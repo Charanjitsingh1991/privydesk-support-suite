@@ -17,6 +17,7 @@ vi.mock('@/integrations/supabase/client', () => ({
       gte: vi.fn().mockReturnThis(),
       lte: vi.fn().mockReturnThis(),
     })),
+    rpc: vi.fn().mockResolvedValue({ data: null, error: null }),
   },
 }));
 
