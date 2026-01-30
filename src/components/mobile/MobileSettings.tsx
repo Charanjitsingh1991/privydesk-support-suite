@@ -55,7 +55,7 @@ export function MobileSettings({ organizationId, userId }: { organizationId: str
       return;
     }
     
-    await MobileService.sendPushNotification(userId, {
+    await MobileService.sendPushNotification(userId, organizationId, {
       title: 'Test Notification',
       body: 'This is a test notification from PrivyDesk',
       notification_type: 'test',

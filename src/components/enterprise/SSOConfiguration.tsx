@@ -8,18 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 
-interface SSOConfig {
-  id: string;
-  provider: string;
-  entity_id: string | null;
-  sso_url: string | null;
-  certificate: string | null;
-  is_active: boolean;
-  organization_id: string;
-  created_by: string;
-  created_at: string;
-  updated_at: string;
-}
+type SSOConfig = SSOConfiguration;
 
 export function SSOConfiguration({ organizationId }: { organizationId: string }) {
   const [configs, setConfigs] = useState<SSOConfig[]>([]);

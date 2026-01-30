@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Shield, Plus, Edit, Trash2, Users } from 'lucide-react';
-import { RBACService } from '@/lib/services/rbacService';
+import { RBACService, type CustomRole } from '@/lib/services/rbacService';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,16 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 
-interface Role {
-  id: string;
-  name: string;
-  description: string | null;
-  permissions: any;
-  organization_id: string;
-  created_by: string;
-  created_at: string;
-  updated_at: string;
-}
+type Role = CustomRole;
 
 const AVAILABLE_PERMISSIONS = [
   { id: 'tickets.view', label: 'View Tickets', category: 'Tickets' },
@@ -64,7 +55,7 @@ export function RolesManagement({ organizationId }: { organizationId: string }) 
     if (editingRole) {
       await RBACService.updateRole(editingRole.id, formData);
     } else {
-      await RBACService.createRole(organizationId, formData);
+      await RBACService.createRole(organizationId, 'current-user-id', formData);
     }
     setShowForm(false);
     setEditingRole(null);
