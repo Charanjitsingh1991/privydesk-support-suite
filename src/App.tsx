@@ -21,6 +21,13 @@ import Resources from "./pages/Resources";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import RefundPolicy from "./pages/RefundPolicy";
+import ShippingPolicy from "./pages/ShippingPolicy";
+import CookiePolicy from "./pages/CookiePolicy";
+import GDPRCompliance from "./pages/GDPRCompliance";
+import Documentation from "./pages/Documentation";
+import APIReference from "./pages/APIReference";
+import Blog from "./pages/Blog";
+import Support from "./pages/Support";
 import Tickets from "./pages/Tickets";
 import NewTicket from "./pages/NewTicket";
 import TicketDetail from "./pages/TicketDetail";
@@ -74,6 +81,13 @@ const AnimatedRoutes = () => {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/shipping-policy" element={<ShippingPolicy />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/gdpr-compliance" element={<GDPRCompliance />} />
+            <Route path="/docs" element={<Documentation />} />
+            <Route path="/api-reference" element={<APIReference />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/support" element={<Support />} />
             
             {/* Passwordless auth routes (public) */}
             <Route path="/auth/login" element={<AuthLogin />} />
