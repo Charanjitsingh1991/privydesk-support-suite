@@ -15,6 +15,10 @@ export interface VoiceCall extends VoiceCallRow {}
 export interface SocialMediaMessage extends SocialMediaMessageRow {}
 export interface OmnichannelConversation extends OmnichannelConversationRow {}
 
+// Alias for compatibility
+export type OmnichannelMessage = SocialMediaMessage;
+export type Conversation = OmnichannelConversation;
+
 export class OmnichannelService {
   /**
    * Get channel configurations
@@ -327,25 +331,29 @@ export class OmnichannelService {
   }
 
   /**
-   * Send social media message
+   * Send social media message (unified method)
    */
   static async sendMessage(
-    conversationId: string,
-    fromUserId: string,
+    organizationId: string,
+    channelConfigId: string,
+    platform: string,
+    recipientId: string,
     content: string,
-    channelType: string,
-    channelConfigId: string
-  ): Promise<OmnichannelMessage | null> {
+    conversationId?: string
+  ): Promise<SocialMediaMessage | null> {
     const { data, error } = await supabase
-      .from('omnichannel_messages')
+      .from('social_media_messages')
       .insert({
-        conversation_id: conversationId,
-        from_user_id: fromUserId,
-        content,
-        channel_type: channelType,
+        organization_id: organizationId,
         channel_config_id: channelConfigId,
+        platform,
+        from_user_id: '', // Set by channel config
+        to_user_id: recipientId,
+        message_type: 'text',
+        content,
+        conversation_id: conversationId,
         direction: 'outbound',
-        message_status: 'sent',
+        is_read: false,
       })
       .select()
       .single();
@@ -354,15 +362,6 @@ export class OmnichannelService {
       console.error('Failed to send social media message:', error);
       return null;
     }
-
-    // In production, integrate with Facebook, Instagram, Twitter APIs
-    await supabase
-      .from('social_media_messages')
-      .update({ 
-        status: 'sent',
-        sent_at: new Date().toISOString(),
-      })
-      .eq('id', data.id);
 
     return data;
   }
