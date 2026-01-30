@@ -31,8 +31,8 @@ describe('IntegrationService', () => {
       expect(Array.isArray(integrations)).toBe(true);
     });
 
-    it('should filter by integration type', async () => {
-      const integrations = await IntegrationService.getIntegrations(mockOrgId, 'zapier');
+    it('should fetch all integrations', async () => {
+      const integrations = await IntegrationService.getIntegrations(mockOrgId);
       expect(integrations).toBeDefined();
     });
   });
@@ -42,7 +42,8 @@ describe('IntegrationService', () => {
       const integrationData = {
         integration_name: 'Zapier',
         integration_type: 'zapier',
-        config: {},
+        credentials: { api_key: 'test' },
+        settings: {},
       };
       const integration = await IntegrationService.createIntegration(mockOrgId, integrationData);
       expect(integration).toBeDefined();
@@ -60,6 +61,7 @@ describe('IntegrationService', () => {
     it('should create a Zapier trigger', async () => {
       const triggerData = {
         trigger_event: 'ticket.created',
+        trigger_name: 'New Ticket Alert',
         webhook_url: 'https://hooks.zapier.com/test',
       };
       const trigger = await IntegrationService.createZapierTrigger(mockOrgId, triggerData);
@@ -67,11 +69,10 @@ describe('IntegrationService', () => {
     });
   });
 
-  describe('testConnection', () => {
-    it('should test integration connection', async () => {
-      const result = await IntegrationService.testConnection(mockIntegrationId);
-      expect(result).toHaveProperty('success');
-      expect(result).toHaveProperty('message');
+  describe('updateIntegration', () => {
+    it('should update integration settings', async () => {
+      const result = await IntegrationService.updateIntegration(mockIntegrationId, { is_active: false });
+      expect(result).toBeDefined();
     });
   });
 });

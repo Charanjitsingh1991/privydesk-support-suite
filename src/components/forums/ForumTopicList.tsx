@@ -33,7 +33,7 @@ export function ForumTopicList({ organizationId }: { organizationId: string }) {
   };
 
   const handleVote = async (topicId: string) => {
-    await ForumService.voteTopic(topicId, 1);
+    await ForumService.voteTopic(topicId, true);
     loadTopics();
   };
 

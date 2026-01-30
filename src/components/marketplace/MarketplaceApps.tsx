@@ -31,7 +31,7 @@ export function MarketplaceApps({ organizationId }: { organizationId: string }) 
 
   const loadApps = async () => {
     setLoading(true);
-    const data = await MarketplaceService.getApps();
+    const data = await MarketplaceService.getFeaturedApps(20);
     setApps(data);
     setLoading(false);
   };
@@ -42,7 +42,7 @@ export function MarketplaceApps({ organizationId }: { organizationId: string }) 
       return;
     }
     setLoading(true);
-    const results = await MarketplaceService.searchApps(searchQuery);
+    const results = await MarketplaceService.searchApps(searchQuery, selectedCategory !== 'all' ? selectedCategory : undefined);
     setApps(results);
     setLoading(false);
   };

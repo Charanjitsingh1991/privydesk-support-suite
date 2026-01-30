@@ -37,8 +37,8 @@ describe('ForumService', () => {
       expect(topics).toBeDefined();
     });
 
-    it('should filter by solved status', async () => {
-      const topics = await ForumService.getTopics(mockOrgId, { isSolved: true });
+    it('should filter by status', async () => {
+      const topics = await ForumService.getTopics(mockOrgId, { status: 'closed' });
       expect(topics).toBeDefined();
     });
   });
@@ -47,6 +47,7 @@ describe('ForumService', () => {
     it('should create a new forum topic', async () => {
       const topicData = {
         title: 'Test Topic',
+        slug: 'test-topic',
         content: 'Test content',
         category_id: 'cat-123',
       };
@@ -57,19 +58,19 @@ describe('ForumService', () => {
 
   describe('voteTopic', () => {
     it('should upvote a topic', async () => {
-      const result = await ForumService.voteTopic(mockTopicId, 1);
+      const result = await ForumService.voteTopic(mockTopicId, true);
       expect(typeof result).toBe('boolean');
     });
 
     it('should downvote a topic', async () => {
-      const result = await ForumService.voteTopic(mockTopicId, -1);
+      const result = await ForumService.voteTopic(mockTopicId, false);
       expect(typeof result).toBe('boolean');
     });
   });
 
-  describe('markSolution', () => {
+  describe('markAsSolution', () => {
     it('should mark a reply as solution', async () => {
-      const result = await ForumService.markSolution(mockTopicId, mockReplyId);
+      const result = await ForumService.markAsSolution(mockTopicId, mockReplyId);
       expect(typeof result).toBe('boolean');
     });
   });

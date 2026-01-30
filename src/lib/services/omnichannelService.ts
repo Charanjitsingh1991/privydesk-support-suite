@@ -116,6 +116,7 @@ export class OmnichannelService {
     const { data, error } = await supabase
       .from('whatsapp_messages')
       .insert({
+        organization_id: organizationId,
         channel_config_id: channelConfigId,
         from_number: '', // Will be set by channel config
         to_number: to,
@@ -192,6 +193,7 @@ export class OmnichannelService {
     const { data, error } = await supabase
       .from('sms_messages')
       .insert({
+        organization_id: organizationId,
         channel_config_id: channelConfigId,
         from_number: '', // Will be set by channel config
         to_number: to,
@@ -265,6 +267,7 @@ export class OmnichannelService {
     const { data, error } = await supabase
       .from('voice_calls')
       .insert({
+        organization_id: organizationId,
         channel_config_id: channelConfigId,
         from_number: '', // Will be set by channel config
         to_number: to,
