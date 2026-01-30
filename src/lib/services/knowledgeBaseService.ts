@@ -334,15 +334,15 @@ export class KnowledgeBaseService {
   /**
    * Get article analytics
    */
-  static async getArticleAnalytics(
+  static async getAnalytics(
     organizationId: string,
     startDate?: Date,
     endDate?: Date
   ): Promise<{
     totalArticles: number;
     totalViews: number;
-    totalUpvotes: number;
-    totalDownvotes: number;
+    totalHelpful: number;
+    totalNotHelpful: number;
     topArticles: KBArticle[];
   }> {
     let query = supabase
