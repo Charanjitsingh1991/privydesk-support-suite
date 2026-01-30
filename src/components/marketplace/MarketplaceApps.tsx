@@ -31,7 +31,10 @@ export function MarketplaceApps({ organizationId }: { organizationId: string }) 
 
   const loadApps = async () => {
     setLoading(true);
-    const data = await MarketplaceService.getFeaturedApps(20);
+    const data = await MarketplaceService.getMarketplaceApps({ 
+      featured: true, 
+      limit: 20 
+    });
     setApps(data);
     setLoading(false);
   };
@@ -42,13 +45,14 @@ export function MarketplaceApps({ organizationId }: { organizationId: string }) 
       return;
     }
     setLoading(true);
-    const results = await MarketplaceService.searchApps(searchQuery, selectedCategory !== 'all' ? selectedCategory : undefined);
+    const results = await MarketplaceService.searchApps(searchQuery);
     setApps(results);
     setLoading(false);
   };
 
   const handleInstall = async (appId: string) => {
-    await MarketplaceService.installApp(organizationId, appId);
+    const userId = 'current-user-id'; // Get from auth context
+    await MarketplaceService.installApp(organizationId, appId, userId);
     alert('App installed successfully!');
   };
 

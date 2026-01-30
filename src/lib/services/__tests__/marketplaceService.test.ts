@@ -26,22 +26,22 @@ describe('MarketplaceService', () => {
     vi.clearAllMocks();
   });
 
-  describe('getApps', () => {
-    it('should fetch all marketplace apps', async () => {
-      const apps = await MarketplaceService.getApps();
+  describe('getFeaturedApps', () => {
+    it('should fetch featured marketplace apps', async () => {
+      const apps = await MarketplaceService.getFeaturedApps(10);
       expect(apps).toBeDefined();
       expect(Array.isArray(apps)).toBe(true);
     });
 
-    it('should filter by category', async () => {
-      const apps = await MarketplaceService.getApps('productivity');
+    it('should limit results', async () => {
+      const apps = await MarketplaceService.getFeaturedApps(5);
       expect(apps).toBeDefined();
     });
   });
 
   describe('searchApps', () => {
     it('should search apps by query', async () => {
-      const results = await MarketplaceService.searchApps('slack');
+      const results = await MarketplaceService.searchApps('slack', 'communication');
       expect(results).toBeDefined();
       expect(Array.isArray(results)).toBe(true);
     });
@@ -67,7 +67,7 @@ describe('MarketplaceService', () => {
         rating: 5,
         review_text: 'Great app!',
       };
-      const review = await MarketplaceService.createReview(mockAppId, 'user-123', reviewData);
+      const review = await MarketplaceService.createReview(mockAppId, 'user-123', mockOrgId, reviewData);
       expect(review).toBeDefined();
     });
   });
