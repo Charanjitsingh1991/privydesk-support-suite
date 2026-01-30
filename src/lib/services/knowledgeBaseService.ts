@@ -199,18 +199,11 @@ export class KnowledgeBaseService {
   }
 
   /**
-   * Increment view count
+   * Increment article view count
    */
-  static async incrementViewCount(articleId: string): Promise<void> {
-    const { data: article } = await supabase
-      .from('kb_articles')
-      .select('view_count')
-      .eq('id', articleId)
-      .single();
-
-    if (article) {
-      await supabase
-        .from('kb_articles')
+  static async incrementViewCount(articleId: string): Promise<boolean> {
+    const { error } = await supabase.rpc('increment_article_views', { article_id: articleId });
+    return !error;
         .update({ view_count: (article.view_count || 0) + 1 })
         .eq('id', articleId);
     }

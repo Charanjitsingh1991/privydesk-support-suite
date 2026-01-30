@@ -10,6 +10,7 @@ vi.mock('@/integrations/supabase/client', () => ({
       update: vi.fn().mockReturnThis(),
       delete: vi.fn().mockReturnThis(),
       eq: vi.fn().mockReturnThis(),
+      or: vi.fn().mockReturnThis(),
       single: vi.fn().mockResolvedValue({ data: {}, error: null }),
       order: vi.fn().mockReturnThis(),
       limit: vi.fn().mockReturnThis(),
