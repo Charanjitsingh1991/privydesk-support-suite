@@ -1,19 +1,10 @@
 import { useState, useEffect } from 'react';
 import { MessageSquare, ThumbsUp, CheckCircle2, Plus } from 'lucide-react';
-import { ForumService } from '@/lib/services/forumService';
+import { ForumService, type ForumTopic } from '@/lib/services/forumService';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-interface ForumTopic {
-  id: string;
-  title: string;
-  content: string;
-  author_id: string;
-  reply_count: number;
-  vote_count: number;
-  is_solved: boolean;
-  is_pinned: boolean;
   created_at: string;
 }
 

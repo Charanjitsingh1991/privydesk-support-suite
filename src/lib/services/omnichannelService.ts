@@ -329,26 +329,23 @@ export class OmnichannelService {
   /**
    * Send social media message
    */
-  static async sendSocialMediaMessage(
-    organizationId: string,
-    channelId: string,
-    platform: string,
-    recipientId: string,
-    message: string,
-    mediaUrl?: string
-  ): Promise<SocialMediaMessage | null> {
+  static async sendMessage(
+    conversationId: string,
+    fromUserId: string,
+    content: string,
+    channelType: string,
+    channelConfigId: string
+  ): Promise<OmnichannelMessage | null> {
     const { data, error } = await supabase
-      .from('social_media_messages')
+      .from('omnichannel_messages')
       .insert({
-        organization_id: organizationId,
-        channel_id: channelId,
-        platform,
-        sender_id: '', // Will be set by channel config
-        recipient_id: recipientId,
-        message_text: message,
-        media_url: mediaUrl,
+        conversation_id: conversationId,
+        from_user_id: fromUserId,
+        content,
+        channel_type: channelType,
+        channel_config_id: channelConfigId,
         direction: 'outbound',
-        status: 'pending',
+        message_status: 'sent',
       })
       .select()
       .single();
@@ -458,21 +455,20 @@ export class OmnichannelService {
    */
   static async createConversation(
     organizationId: string,
-    conversation: {
-      channel_type: string;
-      channel_id: string;
-      customer_id: string;
-      customer_name?: string;
-      customer_email?: string;
-      customer_phone?: string;
-    }
-  ): Promise<OmnichannelConversation | null> {
+    channelType: string,
+    channelIdentifier: string,
+    customerIdentifier: string,
+    customerName?: string
+  ): Promise<Conversation | null> {
     const { data, error } = await supabase
       .from('omnichannel_conversations')
       .insert({
         organization_id: organizationId,
+        channel_type: channelType,
+        channel_identifier: channelIdentifier,
+        customer_identifier: customerIdentifier,
+        customer_name: customerName,
         status: 'open',
-        ...conversation,
       })
       .select()
       .single();

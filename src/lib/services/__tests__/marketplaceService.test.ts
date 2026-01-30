@@ -26,22 +26,22 @@ describe('MarketplaceService', () => {
     vi.clearAllMocks();
   });
 
-  describe('getFeaturedApps', () => {
+  describe('getMarketplaceApps', () => {
     it('should fetch featured marketplace apps', async () => {
-      const apps = await MarketplaceService.getFeaturedApps(10);
+      const apps = await MarketplaceService.getMarketplaceApps({ featured: true, limit: 10 });
       expect(apps).toBeDefined();
       expect(Array.isArray(apps)).toBe(true);
     });
 
-    it('should limit results', async () => {
-      const apps = await MarketplaceService.getFeaturedApps(5);
+    it('should filter by category', async () => {
+      const apps = await MarketplaceService.getMarketplaceApps({ category: 'productivity' });
       expect(apps).toBeDefined();
     });
   });
 
   describe('searchApps', () => {
     it('should search apps by query', async () => {
-      const results = await MarketplaceService.searchApps('slack', 'communication');
+      const results = await MarketplaceService.searchApps('slack');
       expect(results).toBeDefined();
       expect(Array.isArray(results)).toBe(true);
     });
@@ -49,7 +49,7 @@ describe('MarketplaceService', () => {
 
   describe('installApp', () => {
     it('should install an app for organization', async () => {
-      const installation = await MarketplaceService.installApp(mockOrgId, mockAppId);
+      const installation = await MarketplaceService.installApp(mockOrgId, mockAppId, 'user-123');
       expect(installation).toBeDefined();
     });
   });
@@ -63,11 +63,7 @@ describe('MarketplaceService', () => {
 
   describe('createReview', () => {
     it('should create an app review', async () => {
-      const reviewData = {
-        rating: 5,
-        review_text: 'Great app!',
-      };
-      const review = await MarketplaceService.createReview(mockAppId, 'user-123', mockOrgId, reviewData);
+      const review = await MarketplaceService.createReview(mockAppId, 'user-123', mockOrgId, 5, 'Great app!');
       expect(review).toBeDefined();
     });
   });
