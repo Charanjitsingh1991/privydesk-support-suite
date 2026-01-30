@@ -225,9 +225,9 @@ export class GDPRService {
   static async createRetentionPolicy(
     organizationId: string,
     policy: {
-      data_type: string;
+      resource_type: string;
       retention_days: number;
-      auto_delete: boolean;
+      action_on_expiry?: string;
       description?: string;
     }
   ): Promise<DataRetentionPolicy | null> {
@@ -235,7 +235,9 @@ export class GDPRService {
       .from('data_retention_policies')
       .insert({
         organization_id: organizationId,
-        ...policy,
+        resource_type: policy.resource_type,
+        retention_days: policy.retention_days,
+        action_on_expiry: policy.action_on_expiry || 'archive',
       })
       .select()
       .single();

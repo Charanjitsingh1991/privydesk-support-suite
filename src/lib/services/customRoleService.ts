@@ -107,7 +107,7 @@ export class CustomRoleService {
       .from('user_role_assignments')
       .insert({
         user_id: userId,
-        role_id: roleId,
+        custom_role_id: roleId,
       })
       .select()
       .single();
@@ -163,9 +163,11 @@ export class CustomRoleService {
   ): Promise<boolean> {
     const roles = await this.getUserRoles(userId);
     
-    return roles.some(role => 
-      role.permissions && role.permissions.includes(permission)
-    );
+    return roles.some(role => {
+      if (!role.permissions) return false;
+      const perms = Array.isArray(role.permissions) ? role.permissions : [];
+      return perms.includes(permission);
+    });
   }
 
   /**

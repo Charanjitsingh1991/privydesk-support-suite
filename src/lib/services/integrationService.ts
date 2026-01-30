@@ -125,14 +125,14 @@ export class IntegrationService {
   /**
    * Sync integration data
    */
-  static async syncIntegration(
+  static async startSync(
     integrationId: string,
     syncType: string
   ): Promise<IntegrationSyncLog | null> {
     const { data, error } = await supabase
       .from('integration_sync_logs')
       .insert({
-        integration_id: integrationId,
+        integration_config_id: integrationId,
         sync_type: syncType,
         status: 'in_progress',
         started_at: new Date().toISOString(),
@@ -171,7 +171,7 @@ export class IntegrationService {
     const { data, error } = await supabase
       .from('integration_sync_logs')
       .select('*')
-      .eq('integration_id', integrationId)
+      .eq('integration_config_id', integrationId)
       .order('started_at', { ascending: false })
       .limit(limit);
 
@@ -189,7 +189,7 @@ export class IntegrationService {
   static async createZapierTrigger(
     organizationId: string,
     trigger: {
-      trigger_type: string;
+      trigger_event: string;
       trigger_name: string;
       webhook_url: string;
       filters?: any;
@@ -199,8 +199,11 @@ export class IntegrationService {
       .from('zapier_triggers')
       .insert({
         organization_id: organizationId,
+        trigger_event: trigger.trigger_event,
+        trigger_name: trigger.trigger_name,
+        webhook_url: trigger.webhook_url,
+        filters: trigger.filters,
         is_active: true,
-        ...trigger,
       })
       .select()
       .single();

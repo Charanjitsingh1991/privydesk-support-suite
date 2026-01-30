@@ -144,11 +144,14 @@ export class BrandingService {
     organizationId: string,
     domain: string
   ): Promise<CustomDomain | null> {
+    const verificationToken = Math.random().toString(36).substring(2, 15);
+    
     const { data, error } = await supabase
       .from('custom_domains')
       .insert({
         organization_id: organizationId,
         domain,
+        verification_token: verificationToken,
         is_verified: false,
       })
       .select()
@@ -216,16 +219,10 @@ export class BrandingService {
     organizationId: string,
     domainId: string
   ): Promise<boolean> {
-    // Unset all primary domains
-    await supabase
-      .from('custom_domains')
-      .update({ is_primary: false })
-      .eq('organization_id', organizationId);
-
-    // Set new primary
+    // Activate the selected domain
     const { error } = await supabase
       .from('custom_domains')
-      .update({ is_primary: true })
+      .update({ is_active: true })
       .eq('id', domainId);
 
     return !error;

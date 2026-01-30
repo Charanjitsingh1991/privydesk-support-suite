@@ -180,7 +180,7 @@ export class MarketplaceService {
   ): Promise<AppInstallation | null> {
     const { data, error } = await supabase
       .from('app_installations')
-      .update({ settings })
+      .update({ configuration: settings })
       .eq('id', installationId)
       .select()
       .single();
@@ -265,8 +265,8 @@ export class MarketplaceService {
     await supabase
       .from('marketplace_apps')
       .update({ 
-        average_rating: avgRating,
-        review_count: reviews.length,
+        rating_average: avgRating,
+        rating_count: reviews.length,
       })
       .eq('id', appId);
   }
@@ -293,24 +293,27 @@ export class MarketplaceService {
    * Publish app (for developers)
    */
   static async publishApp(
-    developerId: string,
+    publisherName: string,
+    publisherEmail: string,
     app: {
-      app_name: string;
+      name: string;
+      slug: string;
       description: string;
+      long_description?: string;
       category: string;
-      icon_url?: string;
-      screenshots?: string[];
-      pricing_model?: string;
-      price?: number;
-      webhook_url?: string;
-      oauth_config?: any;
+      logo_url: string;
+      pricing_model: string;
+      price_monthly?: number;
+      price_yearly?: number;
+      publisher_website?: string;
     }
   ): Promise<MarketplaceApp | null> {
     const { data, error } = await supabase
       .from('marketplace_apps')
       .insert({
-        developer_id: developerId,
-        is_published: false, // Requires approval
+        publisher_name: publisherName,
+        publisher_email: publisherEmail,
+        status: 'pending', // Requires approval
         ...app,
       })
       .select()
