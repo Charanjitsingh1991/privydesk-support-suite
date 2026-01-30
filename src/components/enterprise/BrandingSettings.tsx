@@ -78,8 +78,8 @@ export function BrandingSettings({ organizationId }: { organizationId: string })
   };
 
   const handleVerifyDomain = async (domainId: string) => {
-    const result = await BrandingService.verifyDomain(domainId);
-    alert(result.verified ? 'Domain verified!' : 'Verification failed. Please check DNS records.');
+    const result = await BrandingService.verifyCustomDomain(domainId);
+    alert(result.verified ? 'Domain verified!' : `Failed: ${result.message}`);
     loadDomains();
   };
 

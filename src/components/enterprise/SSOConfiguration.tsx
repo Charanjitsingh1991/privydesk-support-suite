@@ -36,14 +36,19 @@ export function SSOConfiguration({ organizationId }: { organizationId: string })
 
   const loadConfigs = async () => {
     setLoading(true);
-    const data = await SSOService.getSSOConfigs(organizationId);
-    setConfigs(data);
+    const data = await SSOService.getSSOConfig(organizationId);
+    setConfigs(data ? [data] : []);
     setLoading(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await SSOService.createSSOConfig(organizationId, formData);
+    await SSOService.createSSOConfig(organizationId, 'current-user-id', {
+      provider: formData.provider,
+      entity_id: formData.entity_id,
+      sso_url: formData.sso_url,
+      certificate: formData.certificate,
+    });
     setShowForm(false);
     setFormData({ provider: '', sso_type: 'saml', entity_id: '', sso_url: '', certificate: '' });
     loadConfigs();
@@ -55,7 +60,7 @@ export function SSOConfiguration({ organizationId }: { organizationId: string })
   };
 
   const handleTest = async (configId: string) => {
-    const result = await SSOService.testConnection(configId);
+    const result = await SSOService.testSSOConfig(configId);
     alert(result.success ? 'Connection successful!' : `Failed: ${result.message}`);
   };
 

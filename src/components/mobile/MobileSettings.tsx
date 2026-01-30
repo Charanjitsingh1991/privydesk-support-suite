@@ -1,22 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Smartphone, Bell, Wifi, Download, Trash2 } from 'lucide-react';
-import { MobileService } from '@/lib/services/mobileService';
+import { MobileService, type MobileDevice as ServiceMobileDevice } from '@/lib/services/mobileService';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 
-interface MobileDevice {
-  id: string;
-  device_token: string;
-  platform: string;
-  device_model: string;
-  os_version: string;
-  app_version: string;
-  is_active: boolean;
-  last_active_at: string;
-  created_at: string;
-}
+type MobileDevice = ServiceMobileDevice;
 
 interface NotificationSettings {
   newTicket: boolean;
@@ -48,7 +38,7 @@ export function MobileSettings({ organizationId, userId }: { organizationId: str
 
   const handleRemoveDevice = async (deviceId: string) => {
     if (confirm('Remove this device? You will need to log in again on that device.')) {
-      await MobileService.removeDevice(deviceId);
+      await MobileService.unregisterDevice(deviceId);
       loadDevices();
     }
   };
@@ -67,11 +57,8 @@ export function MobileSettings({ organizationId, userId }: { organizationId: str
     
     await MobileService.sendPushNotification(
       userId,
-      organizationId,
       'Test Notification',
-      'This is a test notification from PrivyDesk',
-      { type: 'test' },
-      'test'
+      'This is a test notification from PrivyDesk'
     );
     
     alert('Test notification sent to all devices!');

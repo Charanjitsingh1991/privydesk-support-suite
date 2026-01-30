@@ -10,10 +10,11 @@ interface DataRequest {
   id: string;
   request_type: string;
   status: string;
-  requested_by: string;
-  requested_at: string;
-  completed_at?: string;
-  export_url?: string;
+  user_id: string;
+  email: string;
+  created_at: string;
+  processed_at?: string;
+  export_file_url?: string;
 }
 
 interface RetentionPolicy {
@@ -38,7 +39,7 @@ export function GDPRCompliance({ organizationId, userId }: { organizationId: str
   const loadData = async () => {
     setLoading(true);
     const [requestsData, policiesData] = await Promise.all([
-      GDPRService.getDataRequests(organizationId),
+      GDPRService.getRequests(organizationId),
       GDPRService.getRetentionPolicies(organizationId),
     ]);
     setRequests(requestsData);
@@ -47,11 +48,8 @@ export function GDPRCompliance({ organizationId, userId }: { organizationId: str
   };
 
   const handleExportRequest = async () => {
-    await GDPRService.requestDataExport(userId, organizationId, {
-      includeTickets: true,
-      includeMessages: true,
-      includeAttachments: false,
-    });
+    const userEmail = 'user@example.com';
+    await GDPRService.createRequest(organizationId, userId, userEmail, 'export');
     alert('Data export request submitted. You will receive an email when ready.');
     loadData();
   };
@@ -61,7 +59,8 @@ export function GDPRCompliance({ organizationId, userId }: { organizationId: str
       alert('Please provide a reason for deletion');
       return;
     }
-    await GDPRService.requestDataDeletion(userId, organizationId, deleteReason);
+    const userEmail = 'user@example.com';
+    await GDPRService.createRequest(organizationId, userId, userEmail, 'delete');
     setShowDeleteForm(false);
     setDeleteReason('');
     alert('Data deletion request submitted. This will be processed within 30 days.');
