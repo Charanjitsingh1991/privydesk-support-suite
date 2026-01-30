@@ -365,8 +365,8 @@ export class KnowledgeBaseService {
       return {
         totalArticles: 0,
         totalViews: 0,
-        totalUpvotes: 0,
-        totalDownvotes: 0,
+        totalHelpful: 0,
+        totalNotHelpful: 0,
         topArticles: [],
       };
     }

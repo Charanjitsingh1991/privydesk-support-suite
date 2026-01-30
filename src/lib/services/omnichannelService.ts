@@ -108,7 +108,7 @@ export class OmnichannelService {
    */
   static async sendWhatsAppMessage(
     organizationId: string,
-    channelId: string,
+    channelConfigId: string,
     to: string,
     message: string,
     mediaUrl?: string
@@ -116,11 +116,11 @@ export class OmnichannelService {
     const { data, error } = await supabase
       .from('whatsapp_messages')
       .insert({
-        organization_id: organizationId,
-        channel_id: channelId,
+        channel_config_id: channelConfigId,
         from_number: '', // Will be set by channel config
         to_number: to,
-        message_body: message,
+        message_type: 'text',
+        content: message,
         media_url: mediaUrl,
         direction: 'outbound',
         status: 'pending',
@@ -183,20 +183,19 @@ export class OmnichannelService {
   /**
    * Send SMS message
    */
-  static async sendSMSMessage(
+  static async sendSMS(
     organizationId: string,
-    channelId: string,
+    channelConfigId: string,
     to: string,
     message: string
   ): Promise<SMSMessage | null> {
     const { data, error } = await supabase
       .from('sms_messages')
       .insert({
-        organization_id: organizationId,
-        channel_id: channelId,
+        channel_config_id: channelConfigId,
         from_number: '', // Will be set by channel config
         to_number: to,
-        message_body: message,
+        content: message,
         direction: 'outbound',
         status: 'pending',
       })
@@ -259,15 +258,14 @@ export class OmnichannelService {
    */
   static async initiateVoiceCall(
     organizationId: string,
-    channelId: string,
+    channelConfigId: string,
     to: string,
-    agentId: string
+    agentId?: string
   ): Promise<VoiceCall | null> {
     const { data, error } = await supabase
       .from('voice_calls')
       .insert({
-        organization_id: organizationId,
-        channel_id: channelId,
+        channel_config_id: channelConfigId,
         from_number: '', // Will be set by channel config
         to_number: to,
         agent_id: agentId,
