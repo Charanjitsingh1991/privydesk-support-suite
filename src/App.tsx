@@ -28,6 +28,7 @@ import Documentation from "./pages/Documentation";
 import APIReference from "./pages/APIReference";
 import Blog from "./pages/Blog";
 import Support from "./pages/Support";
+import GettingStarted from "./pages/docs/GettingStarted";
 import Tickets from "./pages/Tickets";
 import NewTicket from "./pages/NewTicket";
 import TicketDetail from "./pages/TicketDetail";
@@ -85,6 +86,7 @@ const AnimatedRoutes = () => {
             <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="/gdpr-compliance" element={<GDPRCompliance />} />
             <Route path="/docs" element={<Documentation />} />
+            <Route path="/docs/getting-started" element={<GettingStarted />} />
             <Route path="/api-reference" element={<APIReference />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/support" element={<Support />} />
