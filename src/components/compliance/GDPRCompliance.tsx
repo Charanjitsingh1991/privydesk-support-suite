@@ -196,7 +196,7 @@ export function GDPRCompliance({ organizationId, userId }: { organizationId: str
                         {request.request_type.replace('_', ' ')}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        Requested on {new Date(request.requested_at).toLocaleDateString()}
+                        Requested on {new Date(request.created_at).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
@@ -208,11 +208,11 @@ export function GDPRCompliance({ organizationId, userId }: { organizationId: str
                     }>
                       {request.status}
                     </Badge>
-                    {request.status === 'completed' && request.export_url && (
+                    {request.status === 'completed' && request.export_file_url && (
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => handleDownload(request.export_url!)}
+                        onClick={() => handleDownload(request.export_file_url!)}
                       >
                         <Download className="h-4 w-4" />
                       </Button>

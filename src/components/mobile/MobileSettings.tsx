@@ -55,17 +55,17 @@ export function MobileSettings({ organizationId, userId }: { organizationId: str
       return;
     }
     
-    await MobileService.sendPushNotification(
-      userId,
-      'Test Notification',
-      'This is a test notification from PrivyDesk'
-    );
+    await MobileService.sendPushNotification(userId, {
+      title: 'Test Notification',
+      body: 'This is a test notification from PrivyDesk',
+      notification_type: 'test',
+    });
     
     alert('Test notification sent to all devices!');
   };
 
-  const getPlatformIcon = (platform: string) => {
-    return platform === 'ios' ? '🍎' : '🤖';
+  const getPlatformIcon = (deviceType: string) => {
+    return deviceType === 'ios' ? '🍎' : '🤖';
   };
 
   return (
@@ -185,7 +185,7 @@ export function MobileSettings({ organizationId, userId }: { organizationId: str
                 >
                   <div className="flex items-center gap-4">
                     <div className="text-3xl">
-                      {getPlatformIcon(device.platform)}
+                      {getPlatformIcon(device.device_type)}
                     </div>
                     <div>
                       <p className="font-medium flex items-center gap-2">
@@ -198,7 +198,7 @@ export function MobileSettings({ organizationId, userId }: { organizationId: str
                         )}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {device.platform.toUpperCase()} {device.os_version} • App v{device.app_version}
+                        {device.device_type.toUpperCase()} {device.os_version} • App v{device.app_version}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         Last active: {new Date(device.last_active_at).toLocaleString()}

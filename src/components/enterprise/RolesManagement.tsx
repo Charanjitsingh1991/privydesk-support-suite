@@ -11,10 +11,12 @@ import { Textarea } from '@/components/ui/textarea';
 interface Role {
   id: string;
   name: string;
-  description: string;
-  permissions: string[];
-  user_count?: number;
+  description: string | null;
+  permissions: any;
+  organization_id: string;
+  created_by: string;
   created_at: string;
+  updated_at: string;
 }
 
 const AVAILABLE_PERMISSIONS = [

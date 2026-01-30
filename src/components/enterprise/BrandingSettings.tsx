@@ -60,11 +60,7 @@ export function BrandingSettings({ organizationId }: { organizationId: string })
     const file = e.target.files?.[0];
     if (!file) return;
     
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('organizationId', organizationId);
-    
-    const logoUrl = await BrandingService.uploadLogo(formData);
+    const logoUrl = await BrandingService.uploadLogo(organizationId, file);
     if (logoUrl) {
       setSettings({ ...settings, logo_url: logoUrl });
     }
