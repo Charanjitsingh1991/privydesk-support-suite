@@ -409,7 +409,6 @@ export class ForumService {
       .order('created_at', { ascending: false });
 
     if (error) {
-      // @ts-expect-error - Supabase type instantiation depth limitation
       console.error('Failed to search topics:', error);
       return [];
     }

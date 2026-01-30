@@ -157,6 +157,7 @@ export class MarketplaceService {
   static async getInstalledApps(
     organizationId: string
   ): Promise<Array<AppInstallation & { app: MarketplaceApp }>> {
+    // @ts-expect-error - Supabase type instantiation depth limitation
     const { data, error } = await supabase
       .from('app_installations')
       .select('*, app:marketplace_apps(*)')

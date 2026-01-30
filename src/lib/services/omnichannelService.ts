@@ -168,6 +168,7 @@ export class OmnichannelService {
       .order('created_at', { ascending: false });
 
     if (options?.conversationId) {
+      // @ts-expect-error - Supabase type instantiation depth limitation
       query = query.eq('conversation_id', options.conversationId);
     }
 
@@ -242,6 +243,7 @@ export class OmnichannelService {
       .order('created_at', { ascending: false });
 
     if (options?.conversationId) {
+      // @ts-expect-error - Supabase type instantiation depth limitation
       query = query.eq('conversation_id', options.conversationId);
     }
 
@@ -309,6 +311,7 @@ export class OmnichannelService {
       .order('created_at', { ascending: false });
 
     if (options?.agentId) {
+      // @ts-expect-error - Supabase type instantiation depth limitation
       query = query.eq('agent_id', options.agentId);
     }
 
@@ -432,6 +435,7 @@ export class OmnichannelService {
     }
 
     if (options?.assignedTo) {
+      // @ts-expect-error - Supabase type instantiation depth limitation
       query = query.eq('assigned_to', options.assignedTo);
     }
 
