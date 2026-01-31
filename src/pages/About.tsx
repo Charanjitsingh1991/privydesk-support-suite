@@ -1,11 +1,18 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { Ticket, ArrowRight, Users, Target, Award, Zap } from "lucide-react";
+import { SEOHead } from '@/components/SEO/SEOHead';
 import { GridPattern } from "@/components/ui/GridPattern";
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="About Us - Meet the PrivyDesk Team"
+        description="Learn about PrivyDesk's mission to transform customer support with AI-powered solutions. Meet our team and discover our story."
+        keywords={['about privydesk', 'customer support company', 'helpdesk team', 'company mission', 'about us']}
+      />
+      <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <motion.header
         className="fixed top-0 left-0 right-0 z-50 backdrop-blur-glass bg-black/80 border-b border-white/5"
@@ -185,6 +192,7 @@ export default function About() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

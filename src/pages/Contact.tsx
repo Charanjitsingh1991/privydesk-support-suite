@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Ticket, ArrowRight, Mail, Send } from "lucide-react";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { useState } from "react";
+import { SEOHead } from "@/components/SEO/SEOHead";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -28,7 +29,13 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="Contact Us - Get in Touch with PrivyDesk"
+        description="Contact PrivyDesk for sales inquiries, support, or partnership opportunities. We're here to help."
+        keywords={['contact privydesk', 'customer support contact', 'sales inquiry', 'get in touch', 'contact support']}
+      />
+      <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <motion.header
         className="fixed top-0 left-0 right-0 z-50 backdrop-blur-glass bg-black/80 border-b border-white/5"
@@ -188,6 +195,7 @@ export default function Contact() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
