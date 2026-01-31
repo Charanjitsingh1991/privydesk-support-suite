@@ -1,7 +1,7 @@
 {
-  "name": "PRIVYDESK",
-  "short_name": "PRIVYDESK",
-  "description": "Client Portal & Ticketing System",
+  "name": "PrivyDesk - AI-Powered Customer Support Platform",
+  "short_name": "PrivyDesk",
+  "description": "Transform your customer support with AI-powered ticketing, omnichannel support, and real-time analytics",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
