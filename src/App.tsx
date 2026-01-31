@@ -27,6 +27,7 @@ import GDPRCompliance from "./pages/GDPRCompliance";
 import Documentation from "./pages/Documentation";
 import APIReference from "./pages/APIReference";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import Support from "./pages/Support";
 import GettingStarted from "./pages/docs/GettingStarted";
 import Tickets from "./pages/Tickets";
@@ -89,6 +90,7 @@ const AnimatedRoutes = () => {
             <Route path="/docs/getting-started" element={<GettingStarted />} />
             <Route path="/api-reference" element={<APIReference />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/support" element={<Support />} />
             
             {/* Passwordless auth routes (public) */}

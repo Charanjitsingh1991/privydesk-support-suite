@@ -7,24 +7,68 @@ import { Header } from "@/components/layout/Header";
 export default function Support() {
   const faqs = [
     {
-      question: "How do I get started with PrivyDesk?",
-      answer: "Sign up for a free trial, create your organization, and invite your team members. Our onboarding wizard will guide you through the setup process.",
+      question: "How do I create a support ticket?",
+      answer: "You can create a ticket by logging into your account, clicking 'New Ticket', and filling out the required information. Alternatively, customers can submit tickets via email or the chat widget.",
     },
     {
-      question: "Can I import my existing tickets?",
-      answer: "Yes! PrivyDesk supports importing tickets from CSV files and popular platforms like Zendesk, Freshdesk, and Help Scout.",
+      question: "What are your support hours?",
+      answer: "Our support team is available 24/7 via email and chat. Phone support is available Monday-Friday, 9 AM - 6 PM EST.",
+    },
+    {
+      question: "How quickly will I get a response?",
+      answer: "Response times vary by plan: Starter (24 hours), Professional (4 hours), Enterprise (1 hour). Critical issues are prioritized across all plans.",
+    },
+    {
+      question: "Can I integrate PrivyDesk with other tools?",
+      answer: "Yes! PrivyDesk integrates with popular tools like Slack, Microsoft Teams, Salesforce, and more. Professional and Enterprise plans include API access for custom integrations.",
+    },
+    {
+      question: "Do you offer a free plan?",
+      answer: "Yes! Our Starter plan is completely free and includes up to 5 team members, 1,000 tickets/month, email ticketing, basic live chat, and 5 GB storage. Perfect for small teams getting started.",
+    },
+    {
+      question: "How do I upgrade my plan?",
+      answer: "You can upgrade your plan anytime from the Settings > Billing section. Changes take effect immediately, and you'll only pay the prorated difference.",
     },
     {
       question: "What payment methods do you accept?",
-      answer: "We accept all major credit cards (Visa, Mastercard, American Express) and support invoicing for Enterprise customers.",
+      answer: "We accept all major credit cards (Visa, Mastercard, American Express, Discover) and PayPal. Enterprise customers can also pay via wire transfer or invoice.",
     },
     {
-      question: "Is there a free trial?",
-      answer: "Yes, all plans come with a 14-day free trial. No credit card required to start.",
+      question: "Can I cancel my subscription anytime?",
+      answer: "Yes, you can cancel anytime from your account settings. Your service will continue until the end of your current billing period. The free Starter plan never expires.",
     },
     {
-      question: "Can I cancel anytime?",
-      answer: "Absolutely! You can cancel your subscription at any time from your account settings. No long-term contracts required.",
+      question: "How does the AI-powered ticket routing work?",
+      answer: "Our AI analyzes ticket content, customer history, and agent expertise to automatically route tickets to the best-suited team member. This feature is available on Professional and Enterprise plans.",
+    },
+    {
+      question: "Is my data secure?",
+      answer: "Absolutely. We use enterprise-grade encryption (AES-256), secure data centers, regular security audits, and comply with GDPR, SOC 2, and ISO 27001 standards. All data is encrypted in transit and at rest.",
+    },
+    {
+      question: "Can I import my existing tickets and data?",
+      answer: "Yes! We support data migration from popular platforms like Zendesk, Freshdesk, and Help Scout. Our team will assist you with the migration process on Professional and Enterprise plans.",
+    },
+    {
+      question: "What's included in the knowledge base?",
+      answer: "The knowledge base allows you to create help articles, FAQs, and documentation for your customers. Starter plan includes up to 50 articles, while Professional and Enterprise plans offer unlimited articles with advanced features like multi-language support.",
+    },
+    {
+      question: "Do you offer custom branding?",
+      answer: "Yes! Professional and Enterprise plans include custom branding options like your logo, colors, and custom domain for the help center and chat widget.",
+    },
+    {
+      question: "What are SLA policies?",
+      answer: "SLA (Service Level Agreement) policies let you set response and resolution time targets for different ticket priorities. Available on Professional and Enterprise plans, they help ensure your team meets customer expectations.",
+    },
+    {
+      question: "Can I add more team members to my plan?",
+      answer: "Yes! Starter includes 5 members, Professional includes 20 members, and Enterprise includes unlimited members. You can add more team members as add-ons if needed.",
+    },
+    {
+      question: "How does billing work for add-ons?",
+      answer: "Add-ons (extra storage, team members, API calls) are billed monthly along with your base plan. You can add or remove them anytime, and charges are prorated.",
     },
     {
       question: "Do you offer phone support?",

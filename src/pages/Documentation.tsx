@@ -79,26 +79,15 @@ export default function Documentation() {
                 <h3 className="text-2xl font-bold mb-3">{section.title}</h3>
                 <p className="text-white/60 mb-6">{section.description}</p>
                 <ul className="space-y-2">
-                  {index === 0 ? (
-                    <li>
-                      <Link
-                        to="/docs/getting-started"
-                        className="text-sm text-white/80 hover:text-accent-lime transition-colors flex items-center gap-2"
-                      >
-                        <ArrowRight className="w-3 h-3" />
-                        View Complete Guide
-                      </Link>
-                    </li>
-                  ) : (
-                    section.articles.map((article, i) => (
-                      <li key={i}>
-                        <span className="text-sm text-white/60 flex items-center gap-2">
-                          <ArrowRight className="w-3 h-3" />
-                          {article}
-                        </span>
-                      </li>
-                    ))
-                  )}
+                  <li>
+                    <Link
+                      to={`/docs/${section.title.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`}
+                      className="text-sm text-white/80 hover:text-accent-lime transition-colors flex items-center gap-2"
+                    >
+                      <ArrowRight className="w-3 h-3" />
+                      View Complete Guide
+                    </Link>
+                  </li>
                 </ul>
               </motion.div>
             ))}
