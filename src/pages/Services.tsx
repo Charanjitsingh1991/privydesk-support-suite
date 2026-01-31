@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Ticket, ArrowRight, MessageSquare, Mail, Bot, Shield, BarChart3, Zap, Users, Globe } from "lucide-react";
+import { SEOHead } from "@/components/SEO/SEOHead";
 import { GridPattern } from "@/components/ui/GridPattern";
 
 export default function Services() {
@@ -62,7 +63,13 @@ export default function Services() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="Services - Customer Support Solutions | PrivyDesk"
+        description="Explore PrivyDesk services: ticketing system, live chat, email support, knowledge base, team collaboration, and AI-powered automation."
+        keywords={['customer support services', 'helpdesk services', 'ticketing solutions', 'live chat service', 'support automation']}
+      />
+      <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <motion.header
         className="fixed top-0 left-0 right-0 z-50 backdrop-blur-glass bg-black/80 border-b border-white/5"
@@ -175,6 +182,7 @@ export default function Services() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

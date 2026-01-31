@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Ticket, Check, ArrowRight } from 'lucide-react';
+import { SEOHead } from '@/components/SEO/SEOHead';
+import { SEOHead } from '@/components/SEO/SEOHead';
 
 export default function Pricing() {
   const plans = [
@@ -79,13 +81,39 @@ export default function Pricing() {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Header */}
-      <motion.header
-        className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b border-white/5"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+    <>
+      <SEOHead
+        title="Pricing Plans - Affordable Customer Support Software | PrivyDesk"
+        description="Transparent pricing for PrivyDesk. Start free with Starter plan at $29/month. Professional at $79/month. Enterprise from $199/month. No per-agent fees."
+        keywords={[
+          'helpdesk pricing',
+          'customer support software pricing',
+          'affordable helpdesk',
+          'ticketing system cost',
+          'support software plans',
+          'no per-agent pricing',
+          'helpdesk software cost',
+        ]}
+      />
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Header */}
+        <motion.header
+          className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b border-white/5"
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between h-20">
+              <Link to="/" className="flex items-center gap-3 group">
+                <motion.div
+                  className="w-12 h-12 rounded-xl bg-accent-lime flex items-center justify-center"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <Ticket className="w-6 h-6 text-black" />
+                </motion.div>
+                <span className="text-2xl font-bold text-white">PrivyDesk</span>
+              </Link>
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
@@ -214,6 +242,7 @@ export default function Pricing() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

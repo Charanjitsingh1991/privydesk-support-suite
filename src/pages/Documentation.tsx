@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { BookOpen, Code, Zap, Users, Settings, BarChart3, ArrowRight, MessageSquare } from "lucide-react";
+import { SEOHead } from "@/components/SEO/SEOHead";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { Header } from "@/components/layout/Header";
 
@@ -45,7 +46,13 @@ export default function Documentation() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="Documentation - PrivyDesk Help Center & User Guide"
+        description="Complete documentation for PrivyDesk. Learn how to set up, configure, and optimize your customer support platform."
+        keywords={['privydesk documentation', 'helpdesk setup guide', 'customer support docs', 'user manual', 'help center']}
+      />
+      <div className="min-h-screen bg-black text-white">
       <Header />
 
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -111,6 +118,7 @@ export default function Documentation() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

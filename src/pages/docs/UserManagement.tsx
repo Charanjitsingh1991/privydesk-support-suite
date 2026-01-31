@@ -1,12 +1,19 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Users, UserPlus, Shield, Settings as SettingsIcon } from "lucide-react";
+import { SEOHead } from "@/components/SEO/SEOHead";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { Header } from "@/components/layout/Header";
 
 export default function UserManagement() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="User Management - PrivyDesk Documentation"
+        description="Learn how to manage team members, roles, permissions, and SSO in PrivyDesk."
+        keywords={['user management', 'team roles', 'permissions', 'SSO setup', 'team management']}
+      />
+      <div className="min-h-screen bg-black text-white">
       <Header />
 
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -289,6 +296,7 @@ export default function UserManagement() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

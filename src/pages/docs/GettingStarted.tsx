@@ -1,12 +1,19 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Zap, Download, Settings, CheckCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle } from "lucide-react";
+import { SEOHead } from "@/components/SEO/SEOHead";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { Header } from "@/components/layout/Header";
 
 export default function GettingStarted() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="Getting Started Guide - PrivyDesk Documentation"
+        description="Quick start guide for PrivyDesk. Learn how to set up your account, invite team members, and start managing support tickets."
+        keywords={['getting started', 'privydesk setup', 'quick start guide', 'helpdesk onboarding', 'setup tutorial']}
+      />
+      <div className="min-h-screen bg-black text-white">
       <Header />
 
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -249,6 +256,7 @@ export default function GettingStarted() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

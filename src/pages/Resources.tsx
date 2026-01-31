@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Ticket, ArrowRight, BookOpen, FileText, Code, Video, Download, ExternalLink } from "lucide-react";
+import { SEOHead } from "@/components/SEO/SEOHead";
 import { GridPattern } from "@/components/ui/GridPattern";
 
 export default function Resources() {
@@ -50,7 +51,13 @@ export default function Resources() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="Resources - Guides, Docs & Tutorials | PrivyDesk"
+        description="Access PrivyDesk resources: documentation, guides, tutorials, API reference, and best practices for customer support excellence."
+        keywords={['customer support resources', 'helpdesk guides', 'support documentation', 'tutorials', 'best practices']}
+      />
+      <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <motion.header
         className="fixed top-0 left-0 right-0 z-50 backdrop-blur-glass bg-black/80 border-b border-white/5"
@@ -171,6 +178,7 @@ export default function Resources() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

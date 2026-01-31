@@ -1,12 +1,19 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, BarChart3, FileText, Download, Lightbulb } from "lucide-react";
+import { SEOHead } from "@/components/SEO/SEOHead";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { Header } from "@/components/layout/Header";
 
 export default function Analytics() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="Analytics & Reporting - PrivyDesk Documentation"
+        description="Learn how to use PrivyDesk analytics, create custom reports, and export data."
+        keywords={['analytics', 'reporting', 'data export', 'performance metrics', 'support analytics']}
+      />
+      <div className="min-h-screen bg-black text-white">
       <Header />
 
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -170,6 +177,7 @@ export default function Analytics() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

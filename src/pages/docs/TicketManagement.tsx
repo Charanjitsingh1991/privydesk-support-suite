@@ -1,12 +1,19 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MessageSquare, Workflow, Zap, Clock } from "lucide-react";
+import { ArrowLeft, Ticket, MessageSquare, Workflow, Zap, Clock } from "lucide-react";
+import { SEOHead } from "@/components/SEO/SEOHead";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { Header } from "@/components/layout/Header";
 
 export default function TicketManagement() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="Ticket Management - PrivyDesk Documentation"
+        description="Master ticket workflows, automation rules, and SLA policies in PrivyDesk."
+        keywords={['ticket management', 'support workflows', 'ticket automation', 'SLA policies', 'ticket system']}
+      />
+      <div className="min-h-screen bg-black text-white">
       <Header />
 
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -75,6 +82,7 @@ export default function TicketManagement() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

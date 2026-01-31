@@ -1,12 +1,19 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Code, Key, Webhook, Gauge } from "lucide-react";
+import { SEOHead } from "@/components/SEO/SEOHead";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { Header } from "@/components/layout/Header";
 
 export default function APIIntegration() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="API Integration - PrivyDesk Documentation"
+        description="Integrate PrivyDesk with your applications using our REST API, webhooks, and SDKs."
+        keywords={['API integration', 'REST API', 'webhooks', 'API documentation', 'developer docs']}
+      />
+      <div className="min-h-screen bg-black text-white">
       <Header />
 
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -115,6 +122,7 @@ export default function APIIntegration() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

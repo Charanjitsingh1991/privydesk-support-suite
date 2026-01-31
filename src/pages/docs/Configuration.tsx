@@ -1,12 +1,19 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Settings, Mail, MessageCircle, Globe, Palette } from "lucide-react";
+import { SEOHead } from "@/components/SEO/SEOHead";
 import { GridPattern } from "@/components/ui/GridPattern";
 import { Header } from "@/components/layout/Header";
 
 export default function Configuration() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="Configuration Guide - PrivyDesk Documentation"
+        description="Configure email settings, chat widgets, custom domains, and branding in PrivyDesk."
+        keywords={['configuration', 'email setup', 'chat widget', 'custom domain', 'branding', 'settings']}
+      />
+      <div className="min-h-screen bg-black text-white">
       <Header />
 
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -131,6 +138,7 @@ export default function Configuration() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
