@@ -6,11 +6,13 @@ import { Header } from "@/components/layout/Header";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
+import { SEOHead } from "@/components/SEO/SEOHead";
+import type { BlogPost } from "@/types/blog";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
 
-  const { data: post, isLoading } = useQuery({
+  const { data: post, isLoading } = useQuery<BlogPost>({
     queryKey: ['blog-post', slug],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -33,9 +35,36 @@ export default function BlogPost() {
     enabled: !!slug,
   });
 
+  const articleSchema = post ? {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": post.featured_image,
+    "author": {
+      "@type": "Person",
+      "name": post.author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "PrivyDesk",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://privydesk.com/logo.png"
+      }
+    },
+    "datePublished": post.published_at,
+    "dateModified": post.updated_at
+  } : undefined;
+
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black text-white">
+      <>
+        <SEOHead
+          title="Loading... | PrivyDesk Blog"
+          description="Loading blog post..."
+        />
+        <div className="min-h-screen bg-black text-white">
         <Header />
         <section className="relative pt-32 pb-20">
           <GridPattern variant="grid" className="opacity-100" />
@@ -79,7 +108,15 @@ export default function BlogPost() {
   });
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title={`${post.title} | PrivyDesk Blog`}
+        description={post.excerpt}
+        keywords={post.meta_keywords || post.tags || []}
+        image={post.featured_image}
+        jsonLd={articleSchema}
+      />
+      <div className="min-h-screen bg-black text-white">
       <Header />
 
       <article className="relative pt-32 pb-20 overflow-hidden">

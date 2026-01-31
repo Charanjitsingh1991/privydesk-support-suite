@@ -5,9 +5,11 @@ import { GridPattern } from "@/components/ui/GridPattern";
 import { Header } from "@/components/layout/Header";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { SEOHead } from "@/components/SEO/SEOHead";
+import type { BlogPost } from "@/types/blog";
 
 export default function Blog() {
-  const { data: posts = [], isLoading } = useQuery({
+  const { data: posts = [], isLoading } = useQuery<BlogPost[]>({
     queryKey: ['blog-posts'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -90,7 +92,20 @@ export default function Blog() {
   })) : fallbackPosts;
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEOHead
+        title="Blog - Customer Support Insights & Best Practices | PrivyDesk"
+        description="Explore expert articles on customer support, helpdesk management, AI automation, and support best practices from the PrivyDesk team."
+        keywords={[
+          'customer support blog',
+          'helpdesk tips',
+          'support best practices',
+          'customer service insights',
+          'AI customer support',
+          'support automation',
+        ]}
+      />
+      <div className="min-h-screen bg-black text-white">
       <Header />
 
       <section className="relative pt-32 pb-20 overflow-hidden">
@@ -168,6 +183,7 @@ export default function Blog() {
           )}
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
