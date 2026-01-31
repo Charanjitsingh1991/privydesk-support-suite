@@ -9,6 +9,7 @@ import { GlassCard, StatCard } from '@/components/ui/GlassCard';
 import { GradientButton } from '@/components/ui/GradientButton';
 import { GridPattern, DottedBackground, AnimatedGrid } from '@/components/ui/GridPattern';
 import { ProfessionalWorkflow } from '@/components/ui/ProfessionalWorkflow';
+import { SEOHead, organizationSchema, softwareApplicationSchema } from '@/components/SEO/SEOHead';
 import {
   Ticket,
   Shield,
@@ -201,7 +202,25 @@ export default function Index() {
   const testimonialsInView = useInView(testimonialsRef, { threshold: 0.1 });
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <>
+      <SEOHead
+        title="PrivyDesk - AI-Powered Customer Support Platform | Helpdesk Software"
+        description="Transform your customer support with PrivyDesk. AI-powered ticketing, omnichannel support, real-time analytics, and seamless integrations. Start free today."
+        keywords={[
+          'customer support software',
+          'helpdesk software',
+          'ticketing system',
+          'AI customer service',
+          'support ticket system',
+          'customer service platform',
+          'help desk solution',
+          'customer support automation',
+          'omnichannel support',
+          'live chat software',
+        ]}
+        jsonLd={[organizationSchema, softwareApplicationSchema]}
+      />
+      <div className="min-h-screen relative overflow-hidden">
       {/* Premium Glass Header with Pill Navigation */}
       <motion.header
         className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b border-white/5"
@@ -603,6 +622,7 @@ export default function Index() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }
