@@ -35,7 +35,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 px-2 py-2 rounded-full bg-white/5 border border-white/10">
+          <nav className="hidden md:flex items-center gap-1 px-2 py-2 rounded-full bg-white/5 border border-white/10">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
@@ -53,14 +53,14 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-white p-2"
+            className="md:hidden text-white p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4">
             <Link to="/auth/login">
               <button className="px-6 py-2.5 rounded-full text-white font-medium hover:bg-white/5 transition-colors">
                 Sign In
@@ -84,7 +84,7 @@ export function Header() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="lg:hidden py-4 border-t border-white/5"
+            className="md:hidden py-4 border-t border-white/5"
           >
             <nav className="flex flex-col gap-2">
               {navLinks.map((link) => (

@@ -12,6 +12,8 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       overlay: false,
     },
+    // Fix 404 on hard refresh for SPA routing
+    historyApiFallback: true,
   },
   plugins: [
     react(),
