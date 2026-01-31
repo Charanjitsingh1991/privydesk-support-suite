@@ -30,6 +30,11 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Support from "./pages/Support";
 import GettingStarted from "./pages/docs/GettingStarted";
+import UserManagement from "./pages/docs/UserManagement";
+import TicketManagement from "./pages/docs/TicketManagement";
+import APIIntegration from "./pages/docs/APIIntegration";
+import Configuration from "./pages/docs/Configuration";
+import Analytics from "./pages/docs/Analytics";
 import Tickets from "./pages/Tickets";
 import NewTicket from "./pages/NewTicket";
 import TicketDetail from "./pages/TicketDetail";
@@ -88,6 +93,11 @@ const AnimatedRoutes = () => {
             <Route path="/gdpr-compliance" element={<GDPRCompliance />} />
             <Route path="/docs" element={<Documentation />} />
             <Route path="/docs/getting-started" element={<GettingStarted />} />
+            <Route path="/docs/user-management" element={<UserManagement />} />
+            <Route path="/docs/ticket-management" element={<TicketManagement />} />
+            <Route path="/docs/api-integration" element={<APIIntegration />} />
+            <Route path="/docs/configuration" element={<Configuration />} />
+            <Route path="/docs/analytics-and-reporting" element={<Analytics />} />
             <Route path="/api-reference" element={<APIReference />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
