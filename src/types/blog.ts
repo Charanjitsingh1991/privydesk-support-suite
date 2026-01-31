@@ -16,5 +16,6 @@ export interface BlogPost {
   updated_at: string;
   read_time: number;
   views: number;
+  view_count: number;
   tags: string[] | null;
 }
