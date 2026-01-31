@@ -113,7 +113,7 @@ export default function BlogPost() {
         title={`${post.title} | PrivyDesk Blog`}
         description={post.excerpt}
         keywords={post.meta_keywords || post.tags || []}
-        image={post.featured_image}
+        ogImage={post.featured_image}
         jsonLd={articleSchema}
       />
       <div className="min-h-screen bg-black text-white">
@@ -278,6 +278,7 @@ export default function BlogPost() {
           </motion.div>
         </div>
       </article>
-    </div>
+      </div>
+    </>
   );
 }
