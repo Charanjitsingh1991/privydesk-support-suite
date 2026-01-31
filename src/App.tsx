@@ -223,7 +223,7 @@ const AnimatedRoutes = () => {
               path="/dashboard/analytics"
               element={
                 <ProtectedRoute>
-                  <Analytics />
+                  <AnalyticsDashboard />
                 </ProtectedRoute>
               }
             />
