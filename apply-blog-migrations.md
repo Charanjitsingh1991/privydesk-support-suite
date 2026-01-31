@@ -1,4 +1,14 @@
-# Apply Blog Posts Migrations to Supabase
+# Apply Database Migrations to Supabase
+
+## Required Migrations
+
+You need to apply these migrations:
+1. **blog_posts** - Blog system (public-facing)
+2. **platform_support** - Super admin support chat system
+
+---
+
+# Blog Posts Migration
 
 ## Option 1: Using Supabase Dashboard (Recommended)
 
@@ -13,6 +23,15 @@
 
 You should see: "Success. No rows returned"
 
+### Step 1b: Create platform_support Tables
+
+1. Click **New Query** again
+2. Copy the entire contents of `supabase/migrations/20260131_platform_support.sql`
+3. Paste into the SQL editor
+4. Click **Run**
+
+You should see: "Success. No rows returned"
+
 ### Step 2: Seed Blog Posts Data
 
 1. In the SQL Editor, click **New Query** again
@@ -24,12 +43,20 @@ You should see: "Success. 6 rows affected"
 
 ### Step 3: Verify
 
-Run this query to verify:
+Run these queries to verify:
 ```sql
-SELECT title, slug, status FROM blog_posts ORDER BY published_at DESC;
+-- Check blog posts
+SELECT title, slug FROM blog_posts;
+
+-- Check platform support tables
+SELECT table_name FROM information_schema.tables 
+WHERE table_schema = 'public' 
+AND table_name IN ('platform_support_chats', 'platform_support_messages');
 ```
 
-You should see 6 blog posts listed.
+You should see:
+- 6 blog posts
+- 2 platform support tables
 
 ---
 
