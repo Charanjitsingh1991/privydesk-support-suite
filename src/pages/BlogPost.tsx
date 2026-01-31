@@ -65,17 +65,18 @@ export default function BlogPost() {
           description="Loading blog post..."
         />
         <div className="min-h-screen bg-black text-white">
-        <Header />
-        <section className="relative pt-32 pb-20">
-          <GridPattern variant="grid" className="opacity-100" />
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center py-20">
-              <div className="inline-block w-12 h-12 border-4 border-accent-lime border-t-transparent rounded-full animate-spin"></div>
-              <p className="mt-4 text-white/60">Loading article...</p>
+          <Header />
+          <section className="relative pt-32 pb-20">
+            <GridPattern variant="grid" className="opacity-100" />
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="text-center py-20">
+                <div className="inline-block w-12 h-12 border-4 border-accent-lime border-t-transparent rounded-full animate-spin"></div>
+                <p className="mt-4 text-white/60">Loading article...</p>
+              </div>
             </div>
-          </div>
-        </section>
-      </div>
+          </section>
+        </div>
+      </>
     );
   }
 
