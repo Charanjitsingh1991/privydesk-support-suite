@@ -47,7 +47,7 @@ import Files from "./pages/Files";
 import EmailArchive from "./pages/EmailArchive";
 import EmailMigration from "./pages/EmailMigration";
 import SecuritySettings from "./pages/SecuritySettings";
-import Analytics from "./pages/Analytics";
+import AnalyticsDashboard from "./pages/Analytics";
 import Team from "./pages/Team";
 import Clients from "./pages/Clients";
 import Settings from "./pages/Settings";
