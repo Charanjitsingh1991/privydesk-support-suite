@@ -9,6 +9,7 @@ import { GlassCard, StatCard } from '@/components/ui/GlassCard';
 import { GradientButton } from '@/components/ui/GradientButton';
 import { GridPattern, DottedBackground, AnimatedGrid } from '@/components/ui/GridPattern';
 import { ProfessionalWorkflow } from '@/components/ui/ProfessionalWorkflow';
+import { VideoSlider } from '@/components/home/VideoSlider';
 import { SEOHead, organizationSchema, softwareApplicationSchema } from '@/components/SEO/SEOHead';
 import {
   Ticket,
@@ -289,6 +290,9 @@ export default function Index() {
           </div>
         </div>
       </motion.header>
+
+      {/* Video Slider */}
+      <VideoSlider />
 
       {/* Hero Section - Premium Fintech */}
       <section className="relative pt-40 pb-32 lg:pt-56 lg:pb-48 overflow-hidden">
