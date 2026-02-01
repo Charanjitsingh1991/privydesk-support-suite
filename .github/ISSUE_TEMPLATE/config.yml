@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 Documentation
+    url: https://github.com/Charanjitsingh1991/privydesk-support-suite/tree/main/Documentation
+    about: Check our comprehensive documentation
+  - name: 💬 Discussions
+    url: https://github.com/Charanjitsingh1991/privydesk-support-suite/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 🔒 Security Issue
+    url: mailto:security@privydesk.com
+    about: Report security vulnerabilities privately via email
+  - name: 📧 Support
+    url: mailto:support@privydesk.com
+    about: Contact us for general support inquiries
