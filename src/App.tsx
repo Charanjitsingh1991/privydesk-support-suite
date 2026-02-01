@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { OrganizationProvider } from "@/contexts/OrganizationContext";
 import { ProtectedRoute, OnboardingRoute } from "@/components/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AnimatedBackground } from "@/components/ui/AnimatedBackground";
@@ -258,16 +259,18 @@ const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <TooltipProvider>
-          {/* Premium Animated Background */}
-          <AnimatedBackground variant="both" intensity="medium" />
-          
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <AnimatedRoutes />
-          </BrowserRouter>
-        </TooltipProvider>
+        <OrganizationProvider>
+          <TooltipProvider>
+            {/* Premium Animated Background */}
+            <AnimatedBackground variant="both" intensity="medium" />
+            
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <AnimatedRoutes />
+            </BrowserRouter>
+          </TooltipProvider>
+        </OrganizationProvider>
       </AuthProvider>
     </QueryClientProvider>
   </ErrorBoundary>
