@@ -3,8 +3,10 @@
  * Tests Vercel's automatic subdomain routing and SSL provisioning
  */
 
-const https = require('https');
-const http = require('http');
+import https from 'https';
+import http from 'http';
+import dns from 'dns';
+const dnsPromises = dns.promises;
 
 // Configuration
 const BASE_DOMAIN = 'privydesk.com';
@@ -22,11 +24,9 @@ async function testDNSResolution() {
   console.log('📡 Test 1: DNS Resolution');
   console.log('-'.repeat(60));
   
-  const dns = require('dns').promises;
-  
   try {
     const startTime = Date.now();
-    const addresses = await dns.resolve4(`${TEST_SUBDOMAIN}.${BASE_DOMAIN}`);
+    const addresses = await dnsPromises.resolve4(`${TEST_SUBDOMAIN}.${BASE_DOMAIN}`);
     const duration = Date.now() - startTime;
     
     console.log('✅ DNS Resolution: SUCCESS');
