@@ -55,23 +55,36 @@ export class SubdomainService {
 
   /**
    * Create subdomain via Hostinger API
-   * Note: This requires Hostinger API access
+   * Note: Current Hostinger API token is VPS-only and doesn't support subdomain creation
+   * Using manual workflow until proper API access is obtained
    */
   private static async createHostingerSubdomain(
     subdomain: string
-  ): Promise<{ success: boolean; message: string }> {
+  ): Promise<{ success: boolean; message: string; manualSetup?: any }> {
     // Check if API key is configured
     if (!this.HOSTINGER_API_KEY) {
       console.warn('Hostinger API key not configured. Subdomain creation will be manual.');
       return {
         success: true, // Allow creation in DB, manual setup required
         message: 'Subdomain registered. Manual DNS configuration required.',
+        manualSetup: this.getManualSetupInstructions(subdomain),
       };
     }
 
+    // Current API token is VPS-only, doesn't support subdomain management
+    // Return manual setup instructions
+    console.info('Using manual subdomain setup (VPS API token has limited access)');
+    return {
+      success: true,
+      message: 'Subdomain registered. Manual setup required in Hostinger panel.',
+      manualSetup: this.getManualSetupInstructions(subdomain),
+    };
+
+    /* 
+    // TODO: Uncomment when Hosting API token is available
     try {
-      // Hostinger API call to create subdomain
-      const response = await fetch(`${this.HOSTINGER_API_URL}/domains/subdomains`, {
+      // Hostinger Hosting API call to create subdomain
+      const response = await fetch(`${this.HOSTINGER_API_URL}/hosting/v1/subdomains`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${this.HOSTINGER_API_KEY}`,
@@ -100,6 +113,53 @@ export class SubdomainService {
         message: error instanceof Error ? error.message : 'Failed to create subdomain',
       };
     }
+    */
+  }
+
+  /**
+   * Get manual setup instructions for subdomain
+   */
+  private static getManualSetupInstructions(subdomain: string) {
+    const subdomainName = subdomain.replace(`.${this.BASE_DOMAIN}`, '');
+    
+    return {
+      title: 'Manual Subdomain Setup Required',
+      steps: [
+        {
+          step: 1,
+          action: 'Log in to Hostinger',
+          details: 'Go to https://hostinger.com and log in to your account',
+        },
+        {
+          step: 2,
+          action: 'Navigate to Subdomains',
+          details: 'Go to: Domains → privydesk.com → Subdomains',
+        },
+        {
+          step: 3,
+          action: 'Create Subdomain',
+          details: `Click "Create Subdomain" and enter: ${subdomainName}`,
+        },
+        {
+          step: 4,
+          action: 'Set Document Root',
+          details: 'Set document root to: /public_html/privydesk',
+        },
+        {
+          step: 5,
+          action: 'Wait for SSL',
+          details: 'SSL certificate will auto-provision (5-10 minutes)',
+        },
+        {
+          step: 6,
+          action: 'Verify',
+          details: `Visit https://${subdomain} to confirm it's working`,
+        },
+      ],
+      subdomain: subdomain,
+      estimatedTime: '5-10 minutes',
+      note: 'This is a one-time manual setup. Once configured, the subdomain will work automatically.',
+    };
   }
 
   /**
@@ -199,8 +259,11 @@ export class SubdomainService {
     return {
       success: true,
       subdomain: fullSubdomain,
-      message: 'Subdomain created successfully',
+      message: hostingerResult.manualSetup 
+        ? 'Subdomain registered. Please complete manual setup in Hostinger.'
+        : 'Subdomain created successfully',
       sslEnabled: sslResult.success,
+      manualSetup: hostingerResult.manualSetup,
     };
   }
 
