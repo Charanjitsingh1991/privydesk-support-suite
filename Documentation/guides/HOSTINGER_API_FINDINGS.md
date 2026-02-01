@@ -14,14 +14,29 @@
 
 ---
 
-## 🚨 **Issue: Limited API Access**
+## ✅ **CONFIRMED BY HOSTINGER SUPPORT**
 
-The Hostinger API token provided is a **VPS-only token**, which means:
+**Official Response:**
+> "You can't get DNS/domain management via API on shared hosting at Hostinger right now; the public API only covers VPS and a few account-level features, not DNS records or shared-hosting sites."
+
+**Key Facts:**
+- ❌ **No API for DNS/domain management on shared hosting**
+- ❌ **No separate "Hosting API token" exists**
+- ✅ **Wildcard DNS can be set up manually in hPanel**
+- ⚠️ **Free SSL is per-subdomain, not wildcard**
+
+---
+
+## 🚨 **Issue: No API Access for Shared Hosting**
+
+Hostinger's public API does **NOT** support shared hosting management:
 
 ❌ **Cannot create subdomains programmatically**
 ❌ **Cannot manage domains via API**
 ❌ **Cannot provision SSL via API**
 ❌ **Cannot manage DNS records via API**
+
+**This is a platform limitation, not a token issue.**
 
 ---
 
@@ -85,42 +100,38 @@ curl -X POST "https://your-domain.com:2083/execute/SSL/install_ssl" \
 
 ---
 
-### **Option 3: Wildcard Subdomain + Database Routing**
+### **Option 3: Wildcard DNS + Manual SSL** ⭐ **CONFIRMED WORKING**
 
-**Setup:**
-1. Create wildcard DNS: `*.privydesk.com → Server IP`
-2. Configure web server (Apache/Nginx) to handle all subdomains
-3. Route based on subdomain in application code
-4. No subdomain creation needed
+**Setup (One-Time):**
+1. **Add wildcard DNS in hPanel:**
+   - Go to: Domains → privydesk.com → DNS Zone Editor
+   - Add record:
+     - Type: A
+     - Name: *
+     - Value: [YOUR_SERVER_IP]
+     - TTL: 3600
+2. **Configure web server** to handle all subdomains
+3. **Create subdomains manually** in hPanel for SSL
+4. **SSL auto-provisions** per subdomain (free)
 
-**Apache .htaccess:**
-```apache
-RewriteEngine On
-RewriteCond %{HTTP_HOST} ^([^.]+)\.privydesk\.com$
-RewriteRule ^(.*)$ /index.html?org=%1 [QSA,L]
-```
-
-**Nginx config:**
-```nginx
-server {
-    server_name ~^(?<org>.+)\.privydesk\.com$;
-    root /var/www/privydesk;
-    
-    location / {
-        try_files $uri /index.html;
-    }
-}
-```
+**Per Organization:**
+1. User creates org → slug generated
+2. Admin creates subdomain in hPanel (2 min)
+3. SSL auto-provisions (5-10 min)
+4. Subdomain ready with HTTPS
 
 **Pros:**
-- ✅ Fully automated
+- ✅ One-time DNS setup
+- ✅ Free SSL per subdomain
 - ✅ No API needed
-- ✅ Instant subdomain availability
-- ✅ Scales infinitely
+- ✅ Reliable and proven
 
 **Cons:**
-- ❓ Requires server configuration access
-- ❓ Single SSL certificate for wildcard
+- ❌ Manual subdomain creation (2-3 min each)
+- ❌ SSL not instant (5-10 min wait)
+- ❌ No wildcard SSL on free plan
+
+**Note:** This is the **recommended approach** confirmed by Hostinger support.
 
 ---
 
