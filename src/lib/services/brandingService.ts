@@ -167,31 +167,20 @@ export class BrandingService {
 
   /**
    * Verify custom domain
+   * Uses real DNS verification
    */
   static async verifyCustomDomain(domainId: string): Promise<{
     verified: boolean;
     message: string;
   }> {
-    // This would check DNS records in production
-    // For now, return placeholder
-    const { error } = await supabase
-      .from('custom_domains')
-      .update({ 
-        is_verified: true,
-        verified_at: new Date().toISOString(),
-      })
-      .eq('id', domainId);
-
-    if (error) {
-      return {
-        verified: false,
-        message: 'Failed to verify domain',
-      };
-    }
-
+    // Import DomainService for real verification
+    const { DomainService } = await import('./domainService');
+    
+    const result = await DomainService.verifyCustomDomain(domainId);
+    
     return {
-      verified: true,
-      message: 'Domain verified successfully',
+      verified: result.verified || false,
+      message: result.message,
     };
   }
 
