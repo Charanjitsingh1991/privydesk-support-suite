@@ -191,14 +191,14 @@ export default function Pricing() {
                 >
                   {plan.popular && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                      <span className="px-4 py-1 rounded-full bg-accent-lime text-black text-sm font-medium">
+                      <span className="px-4 py-1 rounded-full bg-accent-lime text-black text-sm font-medium whitespace-nowrap">
                         Most Popular
                       </span>
                     </div>
                   )}
                   {plan.highlight && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                      <span className="px-4 py-1 rounded-full bg-blue-500 text-white text-sm font-medium">
+                      <span className="px-4 py-1 rounded-full bg-accent-lime/20 text-accent-lime border border-accent-lime/30 text-sm font-medium whitespace-nowrap">
                         {plan.highlight}
                       </span>
                     </div>
