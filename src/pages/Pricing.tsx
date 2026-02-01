@@ -6,6 +6,26 @@ import { SEOHead } from '@/components/SEO/SEOHead';
 export default function Pricing() {
   const plans = [
     {
+      name: 'Free',
+      price: '$0',
+      period: '/forever',
+      description: 'Perfect for trying out PrivyDesk',
+      features: [
+        'Up to 3 team members',
+        '100 tickets/month',
+        'Email ticketing system',
+        'Basic live chat widget',
+        'Community support',
+        'Basic analytics',
+        '1 GB file storage',
+        'Knowledge base (up to 10 articles)',
+        'Mobile app access',
+      ],
+      cta: 'Get Started Free',
+      popular: false,
+      highlight: 'No credit card required',
+    },
+    {
       name: 'Starter',
       price: '$29',
       period: '/month',
@@ -22,7 +42,7 @@ export default function Pricing() {
         'Mobile app access',
         'Ticket automation (basic rules)',
       ],
-      cta: 'Start Free Trial',
+      cta: 'Get Started',
       popular: false,
     },
     {
@@ -47,7 +67,7 @@ export default function Pricing() {
         'SLA management',
         'Team performance tracking',
       ],
-      cta: 'Start Free Trial',
+      cta: 'Get Started',
       popular: true,
     },
     {
@@ -150,12 +170,12 @@ export default function Pricing() {
                 Simple, Transparent <span className="text-accent-lime">Pricing</span>
               </h1>
               <p className="text-xl text-white/60">
-                Choose the perfect plan for your team. All plans include a 14-day free trial.
+                Start free, upgrade as you grow. No credit card required for Free plan.
               </p>
             </motion.div>
 
             {/* Pricing Cards */}
-            <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-4 gap-6 max-w-7xl mx-auto">
               {plans.map((plan, index) => (
                 <motion.div
                   key={plan.name}
@@ -173,6 +193,13 @@ export default function Pricing() {
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                       <span className="px-4 py-1 rounded-full bg-accent-lime text-black text-sm font-medium">
                         Most Popular
+                      </span>
+                    </div>
+                  )}
+                  {plan.highlight && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                      <span className="px-4 py-1 rounded-full bg-blue-500 text-white text-sm font-medium">
+                        {plan.highlight}
                       </span>
                     </div>
                   )}

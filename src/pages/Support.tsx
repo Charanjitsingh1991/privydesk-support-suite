@@ -24,7 +24,7 @@ export default function Support() {
     },
     {
       question: "Do you offer a free plan?",
-      answer: "Yes! Our Starter plan is completely free and includes up to 5 team members, 1,000 tickets/month, email ticketing, basic live chat, and 5 GB storage. Perfect for small teams getting started.",
+      answer: "Yes! Our Free plan is completely free forever and includes up to 3 team members, 100 tickets/month, email ticketing, basic live chat, and 1 GB storage. Perfect for trying out PrivyDesk. No credit card required. Upgrade to Starter ($29/month) or higher plans as you grow.",
     },
     {
       question: "How do I upgrade my plan?",

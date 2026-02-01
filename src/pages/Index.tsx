@@ -359,15 +359,15 @@ export default function Index() {
             >
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-white/50" />
+                <span>Free plan available</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-white/50" />
                 <span>No credit card required</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-white/50" />
-                <span>14-day free trial</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-white/50" />
-                <span>Cancel anytime</span>
+                <span>Upgrade anytime</span>
               </div>
             </motion.div>
           </motion.div>
