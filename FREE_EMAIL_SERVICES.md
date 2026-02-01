@@ -304,7 +304,7 @@ Now you can send FROM support@privydesk.com via Gmail!
 
 ## 🎉 **Final Result**
 
-After migration to Zoho + Vercel DNS:
+After migration to Cloudflare (Email + DNS):
 
 ✅ **Wildcard subdomains work automatically**
 - Create org in DB → Subdomain works instantly
@@ -312,13 +312,15 @@ After migration to Zoho + Vercel DNS:
 - Unlimited organizations
 
 ✅ **Email works perfectly**
-- Professional email on Zoho
-- 5 users free forever
-- Mobile apps + webmail
+- Unlimited email addresses
+- Forward to existing Gmail
+- Send FROM custom domain via Gmail
+- Professional appearance
 
 ✅ **Zero monthly cost**
-- Zoho Mail: Free
-- Vercel: Free (Hobby plan)
+- Cloudflare Email Routing: Free
+- Cloudflare DNS: Free
+- Vercel Hosting: Free (Hobby plan)
 - Total: $0/month
 
 ✅ **True automation achieved**
