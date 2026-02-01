@@ -1,78 +1,92 @@
-# 🎯 PRIVYDESK
+# 🎯 PrivyDesk
 
-**Professional Multi-Tenant SaaS Helpdesk & Customer Support Platform**
+<div align="center">
 
-A modern, feature-rich customer support platform built with React, TypeScript, and Supabase. PRIVYDESK provides comprehensive ticket management, live chat, email archiving, team collaboration, and AI-powered insights.
+![PrivyDesk Logo](public/logo.svg)
+
+**AI-Powered Customer Support Platform**
+
+Transform your customer support with intelligent automation, omnichannel communication, and real-time analytics.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.3-blue)](https://reactjs.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Latest-green)](https://supabase.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+[🚀 Live Demo](https://privydesk.com) • [📖 Documentation](Documentation/) • [🐛 Report Bug](https://github.com/Charanjitsingh1991/privydesk-support-suite/issues) • [✨ Request Feature](https://github.com/Charanjitsingh1991/privydesk-support-suite/issues)
+
+</div>
+
+---
+
+## 🌟 Why PrivyDesk?
+
+- **5-30x Cheaper** than Zendesk/Freshdesk - No per-agent pricing
+- **AI-Powered** - Sentiment analysis, auto-categorization, smart routing
+- **Modern Stack** - Built with React 18, TypeScript, and Supabase
+- **Real-Time** - Live updates, instant notifications, WebSocket connections
+- **Enterprise-Ready** - SSO, custom domains, audit logs, 99.9% uptime
+- **Open Source** - Transparent, customizable, community-driven
 
 ---
 
 ## ✨ Features
 
 ### 🎫 Ticket Management
-- Create, assign, and track support tickets
-- Priority levels (Low, Medium, High, Urgent)
-- Status tracking (Open, In Progress, Waiting, Resolved, Closed)
-- File attachments and rich text support
-- Internal notes and customer-visible messages
-- SLA tracking and due dates
+- **Smart Ticketing** - Create, assign, track with priority levels
+- **AI Auto-Categorization** - Automatic ticket classification
+- **SLA Management** - Track response and resolution times
+- **Custom Fields** - Extensible ticket properties
+- **Bulk Actions** - Manage multiple tickets efficiently
 
-### 💬 Live Chat Widget
-- Embeddable chat widget for websites
-- Real-time messaging with Supabase Realtime
-- Pre-chat forms and offline messages
-- Agent assignment (manual or round-robin)
-- Conversation to ticket conversion
-- Business hours configuration
+### 💬 Live Chat System
+- **Real-Time Messaging** - WebSocket-powered instant chat
+- **Embeddable Widget** - Add to any website
+- **Smart Routing** - Intelligent agent assignment
+- **Canned Responses** - Quick replies for common questions
+- **Chat-to-Ticket** - Convert conversations to tickets
 
 ### 🤖 AI-Powered Features
-- Automatic ticket categorization
-- Sentiment analysis
-- Smart tag extraction
-- Response suggestions
-- Powered by multiple AI providers (Groq, OpenRouter, OpenAI)
+- **Sentiment Analysis** - Detect customer emotion in real-time
+- **Auto-Categorization** - AI-powered ticket classification
+- **Smart Routing** - Route to best-suited agents
+- **Response Suggestions** - AI-generated reply recommendations
+- **Priority Detection** - Automatic priority assignment
 
 ### 📧 Email Integration
-- Email archive and import
-- IMAP/POP3 support
-- Email to ticket conversion
-- Attachment handling
-- Thread tracking
+- **IMAP/SMTP Support** - Connect existing email accounts
+- **Email-to-Ticket** - Automatic ticket creation
+- **Thread Tracking** - Maintain conversation context
+- **Attachment Handling** - Automatic file extraction
+- **Email Templates** - Branded responses
 
-### 👥 Team Management
-- Role-based access control (Super Admin, Admin, Agent, Client)
-- Team invitations via email
-- Agent availability tracking
-- Performance analytics per agent
+### 👥 Team Collaboration
+- **Role-Based Access** - Admin, Agent, Viewer roles
+- **Team Mentions** - @mention teammates
+- **Internal Notes** - Private team communication
+- **Performance Metrics** - Individual and team analytics
+- **Shift Scheduling** - Manage team availability
 
 ### 📊 Analytics & Reporting
-- Real-time dashboard metrics
-- Ticket volume trends
-- Response time analytics
-- Customer satisfaction (CSAT) surveys
-- Agent performance reports
-- Custom date range filtering
+- **Real-Time Dashboard** - Live metrics and KPIs
+- **Custom Reports** - Build custom analytics views
+- **Performance Metrics** - Response time, resolution time, CSAT
+- **Trend Analysis** - Historical data visualization
+- **Export Data** - CSV, PDF, Excel exports
 
-### 🔒 Security Features
-- Row Level Security (RLS) with Supabase
-- Multi-factor authentication (2FA)
-- OTP and Magic Link authentication
-- IP blocking and rate limiting
-- Content moderation and flagging
-- Security audit logs
-- Session management
+### 🔒 Enterprise Features
+- **Single Sign-On (SSO)** - Google, Microsoft, Okta, SAML
+- **Custom Domains** - White-label with your domain
+- **Advanced Security** - 2FA, IP whitelisting, encryption
+- **Audit Logs** - Complete activity tracking
+- **Data Export** - GDPR-compliant data portability
 
 ### 📱 Mobile & PWA
-- Fully responsive design
-- Progressive Web App (PWA) support
-- Offline functionality
-- Mobile-optimized UI
-- Bottom navigation for mobile
-- Install prompt for native-like experience
+- **Fully Responsive** - Works on all devices
+- **Progressive Web App** - Install as native app
+- **Offline Support** - Work without internet
+- **Push Notifications** - Real-time alerts
 
 ---
 
@@ -81,15 +95,15 @@ A modern, feature-rich customer support platform built with React, TypeScript, a
 ### Prerequisites
 
 - Node.js 18+ and npm
-- Supabase account (free tier available)
+- Supabase account ([free tier available](https://supabase.com))
 - Git
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/privydesk.git
-cd privydesk
+git clone https://github.com/Charanjitsingh1991/privydesk-support-suite.git
+cd privydesk-support-suite
 
 # Install dependencies
 npm install
@@ -107,68 +121,107 @@ npm run dev
 
 Visit `http://localhost:8080` to see the application.
 
+### Database Setup
+
+1. Create a Supabase project at [supabase.com](https://supabase.com)
+2. Run migrations in Supabase SQL Editor:
+   - `supabase/migrations/20260131_blog_posts.sql`
+   - `supabase/migrations/20260131_platform_support.sql`
+   - All other migration files in order
+3. Seed blog posts (optional):
+   - `supabase/migrations/20260131_seed_blog_posts.sql`
+
+See [Documentation/guides/SUPABASE_SETUP.md](Documentation/guides/SUPABASE_SETUP.md) for detailed instructions.
+
 ---
 
 ## 🏗️ Tech Stack
 
 ### Frontend
-- **React 18** - UI library
-- **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Utility-first styling
-- **shadcn/ui** - Component library
-- **React Router v6** - Client-side routing
-- **TanStack Query** - Server state management
-- **React Hook Form** - Form handling
-- **Zod** - Schema validation
+- **React 18.3** - UI library
+- **TypeScript 5.8** - Type safety
+- **Vite 5.4** - Build tool and dev server
+- **TailwindCSS 3.4** - Utility-first styling
+- **Framer Motion 12.29** - Animations
+- **React Router 6.30** - Client-side routing
+- **TanStack Query 5.83** - Server state management
+- **React Hook Form 7.61** - Form handling
+- **Zod 3.25** - Schema validation
 
-### Backend
-- **Supabase** - Backend as a Service
-  - PostgreSQL database
-  - Authentication
-  - Real-time subscriptions
+### Backend & Database
+- **Supabase 2.93** - Backend as a Service
+  - PostgreSQL 15+ database
+  - Authentication (JWT)
+  - Real-time subscriptions (WebSockets)
   - Edge Functions (Deno)
-  - Storage
-- **Lovable AI Gateway** - AI integrations
+  - Storage (S3-compatible)
 
-### DevOps
-- **GitHub Actions** - CI/CD (optional)
-- **Hostinger** - Production hosting
-- **Playwright** - E2E testing
-- **Vitest** - Unit testing
+### Build & Development
+- **Vite** - Lightning-fast HMR
+- **ESLint 9.32** - Code linting
+- **Vitest 3.2** - Unit testing
+- **Playwright 1.58** - E2E testing
+- **TypeScript** - Strict mode enabled
+
+### DevOps & Deployment
+- **Vercel/Netlify** - Hosting options
+- **GitHub Actions** - CI/CD
+- **Sentry** - Error tracking (optional)
+- **Google Analytics** - Analytics (optional)
 
 ---
 
 ## 📁 Project Structure
 
 ```
-privydesk/
+privydesk-support-suite/
+├── Documentation/              # 📚 All project documentation
+│   ├── api/                   # API reference docs
+│   │   ├── API_REFERENCE.md
+│   │   └── COMPLETE_API_DOCUMENTATION.md
+│   ├── architecture/          # System design docs
+│   │   ├── AUTHENTICATION.md
+│   │   └── PROJECT_BLUEPRINT.md
+│   ├── guides/                # Setup and usage guides
+│   │   ├── DEPLOYMENT.md
+│   │   ├── DEVELOPMENT_SETUP.md
+│   │   ├── SUPABASE_SETUP.md
+│   │   ├── BLOG_SETUP.md
+│   │   ├── SEO_OPTIMIZATION_GUIDE.md
+│   │   └── VIDEO_GENERATION.md
+│   └── PROJECT_OVERVIEW.md    # Complete project guide
+├── public/                    # Static assets
+│   ├── icons/                # PWA icons
+│   ├── og-image.svg          # Social sharing image
+│   ├── logo.svg              # Brand logo
+│   ├── sitemap.xml           # SEO sitemap
+│   └── robots.txt            # SEO crawler config
 ├── src/
-│   ├── components/          # React components
-│   │   ├── auth/           # Authentication
-│   │   ├── dashboard/      # Dashboard views
-│   │   ├── tickets/        # Ticket management
-│   │   ├── widget/         # Chat widget
-│   │   ├── layout/         # Layout components
-│   │   └── ui/             # shadcn/ui components
-│   ├── hooks/              # Custom React hooks
-│   ├── lib/                # Utilities
-│   │   ├── api-client.ts   # API wrapper with retry logic
-│   │   ├── error-handler.ts # Global error handling
-│   │   ├── logger.ts       # Logging utility
-│   │   └── performance-monitor.ts # Performance tracking
-│   ├── pages/              # Route pages
-│   ├── contexts/           # React contexts
-│   ├── types/              # TypeScript types
-│   └── integrations/       # External integrations
+│   ├── components/           # React components
+│   │   ├── auth/            # Authentication
+│   │   ├── home/            # Homepage components
+│   │   ├── layout/          # Headers, footers
+│   │   ├── security/        # Security features
+│   │   ├── SEO/             # SEO components
+│   │   ├── team/            # Team management
+│   │   ├── tickets/         # Ticket system
+│   │   └── ui/              # Reusable UI
+│   ├── features/            # Feature modules
+│   │   ├── ai/             # AI features
+│   │   └── enterprise/     # Enterprise features
+│   ├── hooks/               # Custom React hooks
+│   ├── integrations/        # Third-party integrations
+│   │   └── supabase/       # Supabase client
+│   ├── pages/               # Route components
+│   ├── tests/               # Test files
+│   ├── types/               # TypeScript types
+│   ├── utils/               # Utility functions
+│   ├── App.tsx              # Main app
+│   └── main.tsx             # Entry point
 ├── supabase/
-│   ├── functions/          # Edge Functions
-│   └── config.toml         # Supabase config
-├── public/                 # Static assets
-├── tests/                  # Test files
-├── DEPLOYMENT.md           # Deployment guide
-├── PROJECT_BLUEPRINT.md    # Architecture docs
-└── SUPABASE_MIGRATION.sql  # Database schema
+│   └── migrations/          # Database migrations
+├── scripts/                 # Build/deploy scripts
+└── tests/                   # E2E tests
 ```
 
 ---
@@ -179,20 +232,19 @@ privydesk/
 
 ```bash
 # Development
-npm run dev              # Start dev server
-npm run build           # Build for production
-npm run preview         # Preview production build
-npm run lint            # Run ESLint
+npm run dev              # Start dev server (localhost:8080)
+npm run build            # Build for production
+npm run preview          # Preview production build
+npm run lint             # Run ESLint
 
 # Testing
-npm run test            # Run unit tests
-npm run test:watch      # Watch mode for tests
-npm run test:e2e        # Run E2E tests (Playwright)
+npm run test             # Run unit tests
+npm run test:ui          # Run tests with UI
+npm run test:coverage    # Generate coverage report
 
 # Database
-supabase start          # Start local Supabase
-supabase db reset       # Reset local database
-supabase gen types typescript  # Generate TypeScript types
+npm run supabase:types   # Generate TypeScript types
+npm run supabase:link    # Link to Supabase project
 ```
 
 ### Environment Variables
@@ -200,36 +252,83 @@ supabase gen types typescript  # Generate TypeScript types
 Create a `.env` file in the root directory:
 
 ```env
+# Supabase Configuration
 VITE_SUPABASE_PROJECT_ID="your-project-id"
-VITE_SUPABASE_PUBLISHABLE_KEY="your-anon-key"
 VITE_SUPABASE_URL="https://your-project.supabase.co"
-VITE_ENABLE_ANALYTICS=false
-VITE_APP_VERSION="1.0.0"
+VITE_SUPABASE_PUBLISHABLE_KEY="your-anon-key"
+
+# Optional: Analytics
+VITE_GOOGLE_ANALYTICS_ID="GA-XXXXXXXXX"
+
+# Optional: AI Features
+VITE_OPENAI_API_KEY="sk-..."
 ```
 
 ---
 
 ## 🚢 Deployment
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions to Hostinger.
+### Quick Deploy to Vercel
 
-### Quick Deploy
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Charanjitsingh1991/privydesk-support-suite)
+
+### Quick Deploy to Netlify
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Charanjitsingh1991/privydesk-support-suite)
+
+### Manual Deployment
 
 ```bash
 # Build for production
 npm run build
 
 # Upload dist/ folder to your hosting provider
-# Ensure .htaccess is configured for SPA routing
+# Ensure proper routing configuration for SPA
 ```
+
+See [Documentation/guides/DEPLOYMENT.md](Documentation/guides/DEPLOYMENT.md) for detailed deployment instructions.
 
 ---
 
 ## 📖 Documentation
 
-- **[Project Blueprint](./PROJECT_BLUEPRINT.md)** - Complete architecture documentation
-- **[Deployment Guide](./DEPLOYMENT.md)** - Step-by-step deployment instructions
-- **[Database Schema](./SUPABASE_MIGRATION.sql)** - Complete database structure
+### Essential Guides
+- **[Project Overview](Documentation/PROJECT_OVERVIEW.md)** - Complete project guide from start to finish
+- **[API Documentation](Documentation/api/COMPLETE_API_DOCUMENTATION.md)** - Full API reference for developers
+- **[Development Setup](Documentation/guides/DEVELOPMENT_SETUP.md)** - Onboarding guide for new developers
+- **[Deployment Guide](Documentation/guides/DEPLOYMENT.md)** - Step-by-step deployment instructions
+- **[Project Blueprint](Documentation/architecture/PROJECT_BLUEPRINT.md)** - System architecture and design
+
+### Additional Resources
+- **[Supabase Setup](Documentation/guides/SUPABASE_SETUP.md)** - Database configuration
+- **[SEO Guide](Documentation/guides/SEO_OPTIMIZATION_GUIDE.md)** - SEO implementation details
+- **[Authentication](Documentation/architecture/AUTHENTICATION.md)** - Auth system documentation
+
+---
+
+## 💰 Pricing
+
+### Starter - $29/month
+- 5 agents included
+- 1,000 tickets/month
+- Basic features
+- Email support
+
+### Professional - $79/month
+- 20 agents included
+- 10,000 tickets/month
+- AI features
+- Priority support
+- API access
+
+### Enterprise - $199-499/month
+- Unlimited agents
+- Unlimited tickets
+- All features
+- SSO, custom domains
+- Dedicated support
+
+**No per-agent pricing** - Save 5-30x compared to Zendesk/Freshdesk!
 
 ---
 
@@ -243,6 +342,67 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and development process.
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+
+# Run E2E tests
+npm run test:e2e
+```
+
+---
+
+## 📊 Project Status
+
+- ✅ **Core Features**: Complete
+- ✅ **AI Features**: Complete
+- ✅ **Enterprise Features**: Complete
+- ✅ **Performance Optimization**: Complete
+- ✅ **SEO Optimization**: Complete
+- ✅ **Testing Infrastructure**: Complete
+- ✅ **Documentation**: Complete
+- 🚀 **Status**: Production Ready
+
+---
+
+## 🗺️ Roadmap
+
+### Q1 2026 ✅
+- ✅ AI sentiment analysis
+- ✅ Auto-categorization
+- ✅ SSO integration
+- ✅ Custom domains
+
+### Q2 2026
+- 📱 Mobile apps (iOS/Android)
+- 🌍 Multi-language support
+- 📹 Video chat support
+- 🔌 Marketplace for integrations
+
+### Q3 2026
+- 🤖 Advanced AI chatbot builder
+- 📊 Advanced reporting
+- ⚙️ Custom workflows
+- 🎨 Theme customization
+
+### Q4 2026
+- 🎙️ Voice support
+- 🖥️ Screen sharing
+- 👥 Co-browsing
+- 🔄 Advanced automation
+
 ---
 
 ## 📄 License
@@ -255,17 +415,31 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Supabase](https://supabase.com/) - Backend infrastructure
 - [shadcn/ui](https://ui.shadcn.com/) - UI components
-- [Groq](https://groq.com/) - Fast AI inference
 - [Tailwind CSS](https://tailwindcss.com/) - Styling framework
+- [Framer Motion](https://www.framer.com/motion/) - Animations
+- [Lucide](https://lucide.dev/) - Icons
 
 ---
 
 ## 📞 Support
 
-- **Documentation**: [PROJECT_BLUEPRINT.md](./PROJECT_BLUEPRINT.md)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/privydesk/issues)
-- **Email**: support@yourdomain.com
+- **Documentation**: [Documentation/](Documentation/)
+- **Issues**: [GitHub Issues](https://github.com/Charanjitsingh1991/privydesk-support-suite/issues)
+- **Email**: support@privydesk.com
+- **Website**: [privydesk.com](https://privydesk.com)
 
 ---
 
-**Built with ❤️ for better customer support**
+## 🌟 Star History
+
+If you find this project useful, please consider giving it a star ⭐
+
+---
+
+<div align="center">
+
+**Built with ❤️ by the PrivyDesk Team**
+
+[Website](https://privydesk.com) • [Documentation](Documentation/) • [GitHub](https://github.com/Charanjitsingh1991/privydesk-support-suite)
+
+</div>
