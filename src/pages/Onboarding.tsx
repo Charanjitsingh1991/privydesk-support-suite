@@ -37,64 +37,37 @@ export default function Onboarding() {
         throw new Error('You must be logged in to complete onboarding');
       }
 
-      // Create organization
-      const { data: org, error: orgError } = await supabase
-        .from('organizations')
-        .insert({
-          name: data.organizationName,
-          slug: data.slug,
-          industry: data.industry,
-          company_size: data.companySize,
-          timezone: data.timezone,
-          custom_domain: data.customDomain || null,
-          domain_verified: data.domainVerified,
-          domain_verification_token: data.domainVerificationToken || null,
-          domain_verification_method: data.domainVerificationMethod,
-          primary_color: data.primaryColor,
-          logo_url: data.logoUrl,
-          plan: data.selectedPlan,
-          branding: {
-            social_links: data.socialLinks,
-            footer_text: data.footerText,
+      // Atomic: create org + claim owner role + seed usage in one server-side call.
+      // Direct client writes to profiles.organization_id / role are blocked by the
+      // prevent_profile_privilege_escalation trigger; this RPC uses the GUC bypass.
+      const { error: orgError } = await supabase
+        .rpc('create_organization_and_claim_owner', {
+          p_name:                       data.organizationName,
+          p_slug:                       data.slug,
+          p_industry:                   data.industry,
+          p_company_size:               data.companySize,
+          p_timezone:                   data.timezone,
+          p_plan:                       data.selectedPlan,
+          p_custom_domain:              data.customDomain || null,
+          p_domain_verified:            data.domainVerified,
+          p_domain_verification_token:  data.domainVerificationToken || null,
+          p_domain_verification_method: data.domainVerificationMethod,
+          p_primary_color:              data.primaryColor,
+          p_logo_url:                   data.logoUrl,
+          p_branding: {
+            social_links:    data.socialLinks,
+            footer_text:     data.footerText,
             company_address: data.companyAddress,
           },
-          email_config: data.emailConfigType === 'default' ? {} : {
+          p_email_config: data.emailConfigType === 'default' ? {} : {
             type: data.emailConfigType,
             ...(data.emailConfigType === 'resend' && { resend_api_key: data.resendApiKey }),
-            ...(data.emailConfigType === 'smtp' && { smtp: data.smtpConfig }),
+            ...(data.emailConfigType === 'smtp'   && { smtp: data.smtpConfig }),
           },
-        })
-        .select()
-        .single();
-
-      if (orgError) throw orgError;
-
-      // Update user profile with organization
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .update({
-          organization_id: org.id,
-          role: 'admin',
-          email_verified: data.emailVerified,
-        })
-        .eq('id', user.id);
-
-      if (profileError) throw profileError;
-
-      // Create subscription usage record
-      const { error: usageError } = await supabase
-        .from('subscription_usage')
-        .insert({
-          organization_id: org.id,
-          tickets_used_this_month: 0,
-          emails_sent_this_month: 0,
-          storage_used_mb: 0,
+          p_email_verified: data.emailVerified,
         });
 
-      if (usageError) {
-        console.error('Error creating usage record:', usageError);
-        // Not critical, continue
-      }
+      if (orgError) throw orgError;
 
       // Send welcome email
       try {
