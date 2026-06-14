@@ -2,7 +2,7 @@
 
 ## 🎉 **Automatic Subdomain Routing is Now Live!**
 
-With Vercel deployment, PrivyDesk now supports **automatic subdomain-based organization routing**. No manual subdomain creation needed!
+With Cloudflare Pages + Workers deployment, PrivyDesk now supports **automatic subdomain-based organization routing**. No manual subdomain creation needed!
 
 ---
 
@@ -72,7 +72,7 @@ When organization is loaded:
 **Handles:**
 - ✅ Production domains (`acme-corp.privydesk.com`)
 - ✅ Localhost development
-- ✅ Vercel preview deployments
+- ✅ Cloudflare Pages/Workers preview deployments
 - ✅ Excludes `www` subdomain
 
 ---
@@ -401,7 +401,7 @@ function Dashboard() {
 ### **For Admins:**
 - ✅ **Zero manual work** - No subdomain creation needed
 - ✅ **Instant availability** - Subdomains work immediately
-- ✅ **Automatic SSL** - Vercel handles certificates
+- ✅ **Automatic SSL** - Cloudflare handles certificates
 - ✅ **Scalable** - Unlimited organizations
 
 ### **For Users:**
@@ -566,6 +566,6 @@ console.timeEnd('organization-load');
 
 ---
 
-**Last Updated:** February 1, 2026
+**Last Updated:** February 8, 2026
 
 **Status:** ✅ **Production Ready**

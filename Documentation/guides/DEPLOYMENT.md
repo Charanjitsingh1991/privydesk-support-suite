@@ -15,7 +15,7 @@
 
 ### Required Accounts
 - ✅ **Supabase Account** (Database & Auth)
-- ✅ **Vercel/Netlify Account** (Hosting) - or any static host
+- ✅ **Cloudflare Account** (Hosting via Cloudflare Pages)
 - ✅ **Domain Provider** (Optional - for custom domain)
 - ✅ **Email Service** (Optional - for transactional emails)
 
@@ -157,52 +157,26 @@ npm run build
 npm run preview
 ```
 
-### Deploy to Vercel
+### Deploy to Cloudflare Pages (Recommended)
 
-**Option 1: Using Vercel CLI**
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Login
-vercel login
-
-# Deploy
-vercel --prod
-```
-
-**Option 2: Using Vercel Dashboard**
-1. Go to https://vercel.com/new
-2. Import Git repository
-3. Configure:
-   - Framework: Vite
+1. Go to Cloudflare Dashboard → Workers & Pages → Create
+2. Select "Pages" tab → Connect to Git
+3. Select your GitHub repository
+4. Configure:
    - Build Command: `npm run build`
-   - Output Directory: `dist`
-4. Add environment variables from `.env`
-5. Click Deploy
+   - Build Output Directory: `dist`
+5. Add environment variables from `.env.production`
+6. Click Deploy
 
-### Deploy to Netlify
+**Custom Domains:**
+1. Go to Pages project → Custom domains
+2. Add `privydesk.com` and `app.privydesk.com`
+3. Cloudflare auto-creates DNS records
 
-**Option 1: Using Netlify CLI**
-```bash
-# Install Netlify CLI
-npm i -g netlify-cli
-
-# Login
-netlify login
-
-# Deploy
-netlify deploy --prod
-```
-
-**Option 2: Using Netlify Dashboard**
-1. Go to https://app.netlify.com/start
-2. Connect Git repository
-3. Configure:
-   - Build Command: `npm run build`
-   - Publish Directory: `dist`
-4. Add environment variables
-5. Click Deploy
+**Wildcard Subdomains (via Worker):**
+1. Create a Worker named `subdomain-router` that proxies to `app.privydesk.com`
+2. Add Worker Route: `*.privydesk.com/*` → `subdomain-router`
+3. Add DNS CNAME: `*` → `privydesk-support-suite.pages.dev` (Proxy ON)
 
 ### Deploy to Custom Server
 
@@ -258,18 +232,14 @@ server {
 
 ### 1. Configure Custom Domain
 
-**Vercel:**
-1. Go to Project Settings → Domains
-2. Add your domain
-3. Update DNS records as instructed
-
-**Netlify:**
-1. Go to Domain Settings
-2. Add custom domain
-3. Configure DNS
+**Cloudflare Pages:**
+1. Go to Pages project → Custom domains
+2. Add your domain (e.g., `privydesk.com`, `app.privydesk.com`)
+3. Cloudflare auto-creates CNAME records
+4. SSL is automatic via Cloudflare
 
 ### 2. SSL Certificate
-- Vercel/Netlify: Automatic SSL
+- Cloudflare Pages: Automatic SSL (Universal SSL)
 - Custom server: Use Let's Encrypt
   ```bash
   sudo certbot --nginx -d privydesk.com -d www.privydesk.com
@@ -288,21 +258,10 @@ In Supabase Dashboard → Authentication → Email Templates:
 - Add your branding
 
 ### 5. Set Up Redirects
-Create `public/_redirects` (Netlify) or `vercel.json` (Vercel):
+Create `public/_redirects` for SPA routing on Cloudflare Pages:
 
-**Netlify (_redirects):**
 ```
-/api/*  https://your-api-url.com/:splat  200
-/*      /index.html                       200
-```
-
-**Vercel (vercel.json):**
-```json
-{
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
-}
+/*    /index.html   200
 ```
 
 ---
@@ -403,10 +362,10 @@ npm run build -- --analyze
 
 ## Rollback Procedure
 
-### Quick Rollback (Vercel/Netlify)
-1. Go to Deployments
+### Quick Rollback (Cloudflare Pages)
+1. Go to Workers & Pages → Your project → Deployments
 2. Find previous working deployment
-3. Click "Promote to Production"
+3. Click "..." → "Rollback to this deployment"
 
 ### Database Rollback
 ```bash

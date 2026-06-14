@@ -1,6 +1,6 @@
 /**
  * Hook to detect and extract subdomain from current URL
- * Works with Vercel's automatic wildcard subdomain routing
+ * Works with Cloudflare Pages + Workers wildcard subdomain routing
  */
 
 import { useMemo } from 'react';
@@ -27,8 +27,8 @@ export function useSubdomain(): SubdomainInfo {
       };
     }
 
-    // Vercel preview deployments (e.g., privydesk-abc123.vercel.app)
-    if (hostname.includes('.vercel.app')) {
+    // Cloudflare Pages preview deployments (e.g., abc123.privydesk-support-suite.pages.dev)
+    if (hostname.includes('.pages.dev') || hostname.includes('.workers.dev')) {
       return {
         subdomain: null,
         isSubdomain: false,

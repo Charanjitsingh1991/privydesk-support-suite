@@ -18,7 +18,7 @@ $requiredSecrets = @(
 )
 
 $optionalSecrets = @(
-    "LOVABLE_API_KEY"
+    "APP_URL"
 )
 
 Write-Host "Fetching configured secrets..." -ForegroundColor Yellow

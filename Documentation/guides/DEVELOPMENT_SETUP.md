@@ -39,7 +39,7 @@ Welcome to the PrivyDesk development team! This guide will help you get your loc
 ### Required Accounts
 - **GitHub** - For code access
 - **Supabase** - For database access (ask team lead for invite)
-- **Vercel/Netlify** - For deployment previews (optional)
+- **Cloudflare** - For deployment via Cloudflare Pages
 
 ---
 
