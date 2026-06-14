@@ -164,7 +164,7 @@ See [Documentation/guides/SUPABASE_SETUP.md](Documentation/guides/SUPABASE_SETUP
 - **TypeScript** - Strict mode enabled
 
 ### DevOps & Deployment
-- **Vercel/Netlify** - Hosting options
+- **Cloudflare Pages** - Hosting with wildcard subdomain support
 - **GitHub Actions** - CI/CD
 - **Sentry** - Error tracking (optional)
 - **Google Analytics** - Analytics (optional)
@@ -268,13 +268,13 @@ VITE_OPENAI_API_KEY="sk-..."
 
 ## 🚢 Deployment
 
-### Quick Deploy to Vercel
+### Deploy to Cloudflare Pages
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Charanjitsingh1991/privydesk-support-suite)
-
-### Quick Deploy to Netlify
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Charanjitsingh1991/privydesk-support-suite)
+1. Go to Cloudflare Dashboard → Workers & Pages → Create
+2. Connect your GitHub repository
+3. Configure: Framework = None, Build command = `npm run build`, Output = `dist`
+4. Add environment variables from `.env.production`
+5. Deploy
 
 ### Manual Deployment
 

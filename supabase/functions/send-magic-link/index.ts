@@ -158,7 +158,7 @@ serve(async (req) => {
     }
 
     // Generate magic link using Supabase Auth
-    const baseUrl = redirectTo || Deno.env.get("SUPABASE_URL")!.replace('.supabase.co', '.lovable.app');
+    const baseUrl = redirectTo || Deno.env.get("APP_URL") || "https://app.privydesk.com";
     
     const { data, error } = await supabaseAdmin.auth.admin.generateLink({
       type: "magiclink",

@@ -271,11 +271,11 @@ privydesk/
 - **Code Formatting**: Prettier (via ESLint)
 
 ### DevOps & Deployment
-- **Hosting**: Vercel / Netlify
+- **Hosting**: Cloudflare Pages
 - **CI/CD**: GitHub Actions
 - **Monitoring**: Sentry (error tracking)
 - **Analytics**: Google Analytics 4
-- **CDN**: Cloudflare / Vercel Edge
+- **CDN**: Cloudflare (built-in with Pages)
 - **SSL**: Automatic Let's Encrypt
 - **DNS**: Cloudflare DNS
 
