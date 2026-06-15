@@ -413,6 +413,7 @@ export default function TicketDetail() {
               <MessageComposer
                 ref={composerRef}
                 ticketId={ticket.id}
+                organizationId={ticket.organization_id}
                 onMessageSent={refetchMessages}
                 onTyping={startTyping}
                 disabled={isClosed}

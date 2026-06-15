@@ -16,8 +16,12 @@ dist-ssr
 .env
 .env.*
 !.env.example
+!.env.test.local.example
 .env.local
 .env*.local
+
+# Isolation test reports (generated at runtime)
+tests/isolation/report/
 
 # Editor directories and files
 .vscode/*

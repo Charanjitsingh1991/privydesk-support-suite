@@ -26,6 +26,7 @@ import { cn } from '@/lib/utils';
 
 interface MessageComposerProps {
   ticketId: string;
+  organizationId: string;
   onMessageSent: () => void;
   onTyping?: () => void;
   disabled?: boolean;
@@ -38,7 +39,7 @@ export interface MessageComposerHandle {
 const DRAFT_SAVE_INTERVAL = 3000; // 3 seconds
 
 export const MessageComposer = forwardRef<MessageComposerHandle, MessageComposerProps>(
-  function MessageComposer({ ticketId, onMessageSent, onTyping, disabled = false }, ref) {
+  function MessageComposer({ ticketId, organizationId, onMessageSent, onTyping, disabled = false }, ref) {
   const { userId, role, fullName } = useUser();
   const [content, setContent] = useState('');
   const [isInternal, setIsInternal] = useState(false);
@@ -125,7 +126,7 @@ export const MessageComposer = forwardRef<MessageComposerHandle, MessageComposer
         continue;
       }
 
-      const filePath = `${ticketId}/messages/${file.id}-${file.name}`;
+      const filePath = `${organizationId}/${ticketId}/messages/${file.id}-${file.name}`;
 
       setFiles((prev) =>
         prev.map((f) =>
