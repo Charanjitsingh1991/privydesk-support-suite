@@ -71,7 +71,7 @@ export function BrandingStep({ data, onUpdate, onNext, onPrev }: BrandingStepPro
         title: 'Logo uploaded',
         description: 'Your logo has been uploaded successfully',
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error uploading logo:', error);
       toast({
         title: 'Upload failed',

@@ -3,7 +3,7 @@ import type { Database } from '@/integrations/supabase/types';
 
 type SSOConfigRow = Database['public']['Tables']['sso_configurations']['Row'];
 
-export interface SSOConfiguration extends SSOConfigRow {}
+export type SSOConfiguration = SSOConfigRow
 
 export class SSOService {
   /**

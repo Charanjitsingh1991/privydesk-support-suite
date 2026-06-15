@@ -4,8 +4,8 @@ import type { Database } from '@/integrations/supabase/types';
 type GDPRRequestRow = Database['public']['Tables']['gdpr_requests']['Row'];
 type DataRetentionPolicyRow = Database['public']['Tables']['data_retention_policies']['Row'];
 
-export interface GDPRRequest extends GDPRRequestRow {}
-export interface DataRetentionPolicy extends DataRetentionPolicyRow {}
+export type GDPRRequest = GDPRRequestRow
+export type DataRetentionPolicy = DataRetentionPolicyRow
 
 export class GDPRService {
   /**
@@ -186,7 +186,7 @@ export class GDPRService {
         .eq('id', requestId);
 
       return { success: true };
-    } catch (error: any) {
+    } catch (error) {
       await supabase
         .from('gdpr_requests')
         .update({

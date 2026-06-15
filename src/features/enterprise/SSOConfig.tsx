@@ -11,7 +11,7 @@ interface SSOProvider {
   id: string;
   name: string;
   enabled: boolean;
-  icon: any;
+  icon: React.ComponentType | null;
 }
 
 export function SSOConfig() {

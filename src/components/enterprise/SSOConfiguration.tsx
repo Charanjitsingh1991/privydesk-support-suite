@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Shield, Check, X, TestTube } from 'lucide-react';
 import { SSOService, type SSOConfiguration } from '@/lib/services/ssoService';
 import { Button } from '@/components/ui/button';
@@ -25,6 +25,7 @@ export function SSOConfiguration({ organizationId }: { organizationId: string })
 
   useEffect(() => {
     loadConfigs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   const loadConfigs = async () => {

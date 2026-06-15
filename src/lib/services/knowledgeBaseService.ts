@@ -12,7 +12,7 @@ export interface KBArticle extends KBArticleRow {
   };
 }
 
-export interface KBCategory extends KBCategoryRow {}
+export type KBCategory = KBCategoryRow
 
 export class KnowledgeBaseService {
   /**

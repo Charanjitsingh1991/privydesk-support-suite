@@ -6,10 +6,10 @@ type PushNotificationRow = Database['public']['Tables']['push_notifications']['R
 type MobileAppSessionRow = Database['public']['Tables']['mobile_app_sessions']['Row'];
 type OfflineSyncQueueRow = Database['public']['Tables']['offline_sync_queue']['Row'];
 
-export interface MobileDevice extends MobileDeviceRow {}
-export interface PushNotification extends PushNotificationRow {}
-export interface MobileAppSession extends MobileAppSessionRow {}
-export interface OfflineSyncQueue extends OfflineSyncQueueRow {}
+export type MobileDevice = MobileDeviceRow
+export type PushNotification = PushNotificationRow
+export type MobileAppSession = MobileAppSessionRow
+export type OfflineSyncQueue = OfflineSyncQueueRow
 
 export class MobileService {
   /**
@@ -110,7 +110,7 @@ export class MobileService {
     notification: {
       title: string;
       body: string;
-      data?: any;
+      data?: unknown;
       notification_type?: string;
     }
   ): Promise<PushNotification | null> {
@@ -256,7 +256,7 @@ export class MobileService {
       action_type: string;
       resource_type: string;
       resource_id?: string;
-      payload: any;
+      payload: unknown;
     }
   ): Promise<OfflineSyncQueue | null> {
     const { data, error } = await supabase

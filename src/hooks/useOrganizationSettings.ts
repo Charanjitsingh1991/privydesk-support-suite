@@ -32,7 +32,7 @@ export function useOrganizationSettings() {
 
       if (error) throw error;
       setSettings(data as unknown as OrganizationSettings);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error loading settings',
         description: error.message,
@@ -55,7 +55,7 @@ export function useOrganizationSettings() {
       try {
         const { error } = await supabase
           .from('organizations')
-          .update(updates as any)
+          .update(updates as Record<string, unknown>)
           .eq('id', organizationId);
 
         if (error) throw error;
@@ -63,7 +63,7 @@ export function useOrganizationSettings() {
         setSettings((prev) => (prev ? { ...prev, ...updates } : null));
         toast({ title: 'Settings saved successfully' });
         return true;
-      } catch (error: any) {
+      } catch (error) {
         toast({
           title: 'Error saving settings',
           description: error.message,
@@ -81,7 +81,7 @@ export function useOrganizationSettings() {
     async (branding: Partial<BrandingSettings>) => {
       const currentBranding = (settings?.branding as BrandingSettings) || {};
       return updateSettings({
-        branding: { ...currentBranding, ...branding } as any,
+        branding: { ...currentBranding, ...branding } as Record<string, unknown>,
       });
     },
     [settings, updateSettings]
@@ -91,7 +91,7 @@ export function useOrganizationSettings() {
     async (emailConfig: Partial<EmailConfig>) => {
       const currentConfig = (settings?.email_config as EmailConfig) || {};
       return updateSettings({
-        email_config: { ...currentConfig, ...emailConfig } as any,
+        email_config: { ...currentConfig, ...emailConfig } as Record<string, unknown>,
       });
     },
     [settings, updateSettings]
@@ -117,7 +117,7 @@ export function useOrganizationSettings() {
 
         await updateSettings({ logo_url: data.publicUrl });
         return data.publicUrl;
-      } catch (error: any) {
+      } catch (error) {
         toast({
           title: 'Error uploading logo',
           description: error.message,
@@ -149,7 +149,7 @@ export function useOrganizationSettings() {
 
         await updateBranding({ favicon_url: data.publicUrl });
         return data.publicUrl;
-      } catch (error: any) {
+      } catch (error) {
         toast({
           title: 'Error uploading favicon',
           description: error.message,

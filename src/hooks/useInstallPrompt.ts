@@ -23,13 +23,13 @@ export function useInstallPrompt(): InstallPromptResult {
   // Check if running on iOS
   const isIOS = typeof navigator !== 'undefined' && 
     /iPad|iPhone|iPod/.test(navigator.userAgent) && 
-    !(window as any).MSStream;
+    !(window as Window & { MSStream?: unknown }).MSStream;
 
   // Check if app is already installed
   useEffect(() => {
     // Check display-mode for standalone
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-    const isInWebApp = (navigator as any).standalone === true;
+    const isInWebApp = (navigator as Navigator & { standalone?: boolean }).standalone === true;
     
     setIsInstalled(isStandalone || isInWebApp);
 

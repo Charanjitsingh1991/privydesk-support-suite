@@ -67,7 +67,7 @@ export function validatePassword(
   }
   
   // Check for symbols
-  if (policy.requireSymbols && !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(password)) {
+  if (policy.requireSymbols && !/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~`]/.test(password)) {
     errors.push('Password must contain at least one special character');
   }
   

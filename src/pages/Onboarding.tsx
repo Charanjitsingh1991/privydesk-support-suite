@@ -120,7 +120,7 @@ export default function Onboarding() {
 
       // Redirect to dashboard
       navigate('/dashboard');
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error completing onboarding:', error);
       toast({
         title: 'Setup failed',

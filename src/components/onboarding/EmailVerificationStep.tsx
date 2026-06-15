@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -83,7 +83,7 @@ export function EmailVerificationStep({ data, onUpdate, onNext, onPrev }: EmailV
       setStep('otp');
       setResendDisabled(true);
       setResendCountdown(60);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error sending OTP:', error);
       toast({
         title: 'Failed to send code',
@@ -117,7 +117,7 @@ export function EmailVerificationStep({ data, onUpdate, onNext, onPrev }: EmailV
 
       onUpdate({ emailVerified: true });
       onNext();
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error verifying OTP:', error);
       toast({
         title: 'Verification failed',
@@ -149,6 +149,7 @@ export function EmailVerificationStep({ data, onUpdate, onNext, onPrev }: EmailV
     if (otp.length === 6) {
       verifyOtp();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otp]);
 
   if (data.emailVerified) {

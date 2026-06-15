@@ -4,8 +4,8 @@ import type { Database } from '@/integrations/supabase/types';
 type CustomRoleRow = Database['public']['Tables']['custom_roles']['Row'];
 type UserRoleAssignmentRow = Database['public']['Tables']['user_role_assignments']['Row'];
 
-export interface CustomRole extends CustomRoleRow {}
-export interface UserRoleAssignment extends UserRoleAssignmentRow {}
+export type CustomRole = CustomRoleRow
+export type UserRoleAssignment = UserRoleAssignmentRow
 
 export class CustomRoleService {
   /**
@@ -151,7 +151,7 @@ export class CustomRoleService {
       return [];
     }
 
-    return (data || []).map((item: any) => item.role).filter(Boolean);
+    return (data || []).map((item) => item.role).filter(Boolean);
   }
 
   /**

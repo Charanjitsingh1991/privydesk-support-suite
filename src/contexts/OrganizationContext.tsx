@@ -1,3 +1,4 @@
+﻿/* eslint-disable react-refresh/only-export-components */
 /**
  * Organization Context
  * Manages organization state based on subdomain detection
@@ -19,7 +20,7 @@ interface Organization {
   logo_url: string | null;
   plan: 'free' | 'starter' | 'pro' | 'enterprise';
   status: 'active' | 'suspended' | 'cancelled';
-  metadata: any;
+  metadata: Record<string, unknown>;
 }
 
 interface OrganizationContextType {
@@ -97,6 +98,7 @@ export function OrganizationProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     loadOrganization();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subdomain, isSubdomain]);
 
   const refreshOrganization = async () => {

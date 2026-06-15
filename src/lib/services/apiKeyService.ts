@@ -5,7 +5,7 @@ import type { Database } from '@/integrations/supabase/types';
 
 type ApiKeyRow = Database['public']['Tables']['api_keys']['Row'];
 
-export interface ApiKey extends ApiKeyRow {}
+export type ApiKey = ApiKeyRow
 
 export class ApiKeyService {
   /**

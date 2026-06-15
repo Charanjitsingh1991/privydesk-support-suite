@@ -225,7 +225,7 @@ export function CreateTicketModal({
       if (!isDraft && ticket) {
         navigate(`/dashboard/tickets/${ticket.id}`);
       }
-    } catch (error: any) {
+    } catch (error) {
       toast.error(error.message || 'Failed to create ticket');
     } finally {
       setLoading(false);

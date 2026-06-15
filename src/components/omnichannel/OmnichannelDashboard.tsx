@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { MessageSquare, Phone, Mail, MessageCircle, Send } from 'lucide-react';
 import { OmnichannelService } from '@/lib/services/omnichannelService';
 import { Button } from '@/components/ui/button';
@@ -36,6 +36,7 @@ export function OmnichannelDashboard({ organizationId }: { organizationId: strin
 
   useEffect(() => {
     loadConversations();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId, activeChannel]);
 
   const loadConversations = async () => {

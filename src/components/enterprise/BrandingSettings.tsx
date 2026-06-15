@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Palette, Upload, Globe, Check } from 'lucide-react';
 import { BrandingService } from '@/lib/services/brandingService';
 import { Button } from '@/components/ui/button';
@@ -37,6 +37,7 @@ export function BrandingSettings({ organizationId }: { organizationId: string })
   useEffect(() => {
     loadSettings();
     loadDomains();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   const loadSettings = async () => {

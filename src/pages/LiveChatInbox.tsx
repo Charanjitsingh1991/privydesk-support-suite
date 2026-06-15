@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
@@ -206,6 +206,7 @@ export default function LiveChatInbox() {
     };
 
     fetchMessages();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedConversation?.id]);
 
   // Assign conversation to self

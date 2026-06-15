@@ -5,9 +5,9 @@ type TicketFollowerRow = Database['public']['Tables']['ticket_followers']['Row']
 type TicketMentionRow = Database['public']['Tables']['ticket_mentions']['Row'];
 type TicketRelationshipRow = Database['public']['Tables']['ticket_relationships']['Row'];
 
-export interface TicketFollower extends TicketFollowerRow {}
-export interface TicketMention extends TicketMentionRow {}
-export interface TicketRelationship extends TicketRelationshipRow {}
+export type TicketFollower = TicketFollowerRow
+export type TicketMention = TicketMentionRow
+export type TicketRelationship = TicketRelationshipRow
 
 export class CollaborationService {
   /**
@@ -242,7 +242,7 @@ export class CollaborationService {
   /**
    * Get current edit lock
    */
-  static async getEditLock(ticketId: string): Promise<any | null> {
+  static async getEditLock(ticketId: string): Promise<unknown | null> {
     const { data, error } = await supabase
       .from('ticket_edit_locks')
       .select('*, user:users(email, full_name)')

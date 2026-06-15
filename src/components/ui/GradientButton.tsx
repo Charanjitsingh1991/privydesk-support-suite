@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * GradientButton Component
  * Premium button with gradient background, glow effects, and ripple animation

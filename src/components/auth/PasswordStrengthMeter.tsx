@@ -54,7 +54,7 @@ export function PasswordStrengthMeter({
       critical: true,
     },
     { 
-      met: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(password), 
+      met: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~`]/.test(password), 
       label: 'One special character',
       critical: true,
     },

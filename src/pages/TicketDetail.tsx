@@ -248,7 +248,7 @@ export default function TicketDetail() {
     ...messages.map((msg) => ({
       ...msg,
       user: msg.user,
-      attachments: (msg.attachments as any[]) || [],
+      attachments: (msg.attachments as unknown[]) || [],
       read_by: msg.read_by || [],
     })),
   ];

@@ -181,7 +181,7 @@ export function SecurityDashboard() {
                         <p className="text-xs text-muted-foreground truncate">
                           {event.ip_address && `IP: ${event.ip_address}`}
                           {event.details && typeof event.details === 'object' && 
-                            (event.details as any).email && ` • ${(event.details as any).email}`}
+                            (event.details as Record<string, unknown>).email && ` • ${(event.details as Record<string, unknown>).email}`}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           {formatDistanceToNow(new Date(event.created_at), { addSuffix: true })}

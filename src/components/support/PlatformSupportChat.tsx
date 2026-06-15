@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Platform Support Chat Widget
  * Allows users to chat with platform support (Super Admin)
  */
@@ -46,6 +46,7 @@ export function PlatformSupportChat() {
     if (isOpen && user) {
       loadChat();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, user]);
 
   // Subscribe to new messages

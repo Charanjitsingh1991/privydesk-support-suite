@@ -1,4 +1,4 @@
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
+﻿import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Settings,
@@ -169,6 +169,7 @@ function SecurityTabContent() {
 
   useEffect(() => {
     loadSettings();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   const loadSettings = async () => {
@@ -202,12 +203,12 @@ function SecurityTabContent() {
     try {
       const { error } = await supabase
         .from('organizations')
-        .update({ security_settings: settings as any })
+        .update({ security_settings: settings as Record<string, unknown> })
         .eq('id', organizationId);
 
       if (error) throw error;
       toast({ title: 'Settings saved successfully' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error saving settings',
         description: error.message,

@@ -40,6 +40,7 @@ export default function AuthCallback() {
           // Verify OTP token
           const { error: verifyError } = await supabase.auth.verifyOtp({
             token_hash: tokenHash,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             type: type as any,
           });
 
@@ -105,7 +106,7 @@ export default function AuthCallback() {
             navigate("/onboarding", { replace: true });
           }, 1500);
         }
-      } catch (error: any) {
+      } catch (error) {
         console.error("Auth callback error:", error);
         setStatus("error");
         setErrorMessage(error.message || "Authentication failed. Please try again.");

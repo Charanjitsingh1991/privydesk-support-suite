@@ -8,12 +8,12 @@ type VoiceCallRow = Database['public']['Tables']['voice_calls']['Row'];
 type SocialMediaMessageRow = Database['public']['Tables']['social_media_messages']['Row'];
 type OmnichannelConversationRow = Database['public']['Tables']['omnichannel_conversations']['Row'];
 
-export interface ChannelConfiguration extends ChannelConfigRow {}
-export interface WhatsAppMessage extends WhatsAppMessageRow {}
-export interface SMSMessage extends SMSMessageRow {}
-export interface VoiceCall extends VoiceCallRow {}
-export interface SocialMediaMessage extends SocialMediaMessageRow {}
-export interface OmnichannelConversation extends OmnichannelConversationRow {}
+export type ChannelConfiguration = ChannelConfigRow
+export type WhatsAppMessage = WhatsAppMessageRow
+export type SMSMessage = SMSMessageRow
+export type VoiceCall = VoiceCallRow
+export type SocialMediaMessage = SocialMediaMessageRow
+export type OmnichannelConversation = OmnichannelConversationRow
 
 // Alias for compatibility
 export type OmnichannelMessage = SocialMediaMessage;
@@ -48,8 +48,8 @@ export class OmnichannelService {
     config: {
       channel_type: string;
       channel_name: string;
-      credentials: any;
-      settings?: any;
+      credentials: unknown;
+      settings?: unknown;
     }
   ): Promise<ChannelConfiguration | null> {
     const { data, error } = await supabase
@@ -160,7 +160,7 @@ export class OmnichannelService {
       conversationId?: string;
       limit?: number;
     }
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
     let query = supabase
       .from('whatsapp_messages')
       .select('*')
@@ -419,7 +419,7 @@ export class OmnichannelService {
       assignedTo?: string;
       limit?: number;
     }
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
     let query = supabase
       .from('omnichannel_conversations')
       .select('*')

@@ -50,7 +50,7 @@ export function SignupForm() {
         description: 'Welcome to PRIVYDESK! Redirecting to dashboard...',
       });
       navigate('/dashboard');
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error signing up',
         description: error.message || 'Failed to create account',

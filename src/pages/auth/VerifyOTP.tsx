@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { ArrowLeft, Loader2, CheckCircle2, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -108,6 +108,7 @@ export default function VerifyOTP() {
         if (token_hash && tokenType) {
           const { error: verifyError } = await supabase.auth.verifyOtp({
             token_hash,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             type: tokenType as any,
           });
 
@@ -126,7 +127,7 @@ export default function VerifyOTP() {
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
-    } catch (error: any) {
+    } catch (error) {
       console.error("Verification error:", error);
       
       if (error.message?.includes("429")) {
@@ -161,7 +162,7 @@ export default function VerifyOTP() {
         title: "Code sent!",
         description: "A new verification code has been sent to your email.",
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error("Resend error:", error);
       
       if (error.message?.includes("429")) {
@@ -187,6 +188,7 @@ export default function VerifyOTP() {
     if (otp.every((digit) => digit !== "") && !isLoading && !isVerified) {
       handleVerify();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otp]);
 
   if (isVerified) {

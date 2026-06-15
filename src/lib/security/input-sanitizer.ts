@@ -90,13 +90,13 @@ export const validationSchemas = {
     .trim()
     .min(1, 'Name is required')
     .max(100, 'Name must be less than 100 characters')
-    .regex(/^[a-zA-Z\s\-'\.]+$/, 'Name contains invalid characters'),
+    .regex(/^[a-zA-Z\s\-'.]+$/, 'Name contains invalid characters'),
     
   username: z.string()
     .trim()
     .min(3, 'Username must be at least 3 characters')
     .max(50, 'Username must be less than 50 characters')
-    .regex(/^[a-zA-Z0-9_\-]+$/, 'Username can only contain letters, numbers, underscores, and hyphens'),
+    .regex(/^[a-zA-Z0-9_-]+$/, 'Username can only contain letters, numbers, underscores, and hyphens'),
     
   ticketSubject: z.string()
     .trim()

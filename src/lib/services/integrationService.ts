@@ -5,9 +5,9 @@ type IntegrationConfigRow = Database['public']['Tables']['integration_configurat
 type IntegrationSyncLogRow = Database['public']['Tables']['integration_sync_logs']['Row'];
 type ZapierTriggerRow = Database['public']['Tables']['zapier_triggers']['Row'];
 
-export interface IntegrationConfiguration extends IntegrationConfigRow {}
-export interface IntegrationSyncLog extends IntegrationSyncLogRow {}
-export interface ZapierTrigger extends ZapierTriggerRow {}
+export type IntegrationConfiguration = IntegrationConfigRow
+export type IntegrationSyncLog = IntegrationSyncLogRow
+export type ZapierTrigger = ZapierTriggerRow
 
 export class IntegrationService {
   /**
@@ -38,8 +38,8 @@ export class IntegrationService {
     integration: {
       integration_type: string;
       integration_name: string;
-      credentials: any;
-      settings?: any;
+      credentials: unknown;
+      settings?: unknown;
     }
   ): Promise<IntegrationConfiguration | null> {
     const { data, error } = await supabase
@@ -192,7 +192,7 @@ export class IntegrationService {
       trigger_event: string;
       trigger_name: string;
       webhook_url: string;
-      filters?: any;
+      filters?: unknown;
     }
   ): Promise<ZapierTrigger | null> {
     const { data, error } = await supabase
@@ -241,7 +241,7 @@ export class IntegrationService {
    */
   static async fireZapierTrigger(
     triggerId: string,
-    payload: any
+    payload: unknown
   ): Promise<boolean> {
     const { data: trigger } = await supabase
       .from('zapier_triggers')
@@ -302,7 +302,7 @@ export class IntegrationService {
    */
   static async syncSalesforceContact(
     integrationId: string,
-    contactData: any
+    contactData: unknown
   ): Promise<boolean> {
     const { data: integration } = await supabase
       .from('integration_configurations')

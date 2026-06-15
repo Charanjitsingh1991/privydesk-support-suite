@@ -30,7 +30,7 @@ export default function AuthLogin() {
       if (error) throw error;
 
       navigate("/auth/magic-link-sent", { state: { email } });
-    } catch (error: any) {
+    } catch (error) {
       console.error("Magic link error:", error);
       
       if (error.message?.includes("429") || error.message?.includes("Too many")) {
@@ -64,7 +64,7 @@ export default function AuthLogin() {
       if (error) throw error;
 
       navigate("/auth/verify-otp", { state: { email, type: "login" } });
-    } catch (error: any) {
+    } catch (error) {
       console.error("OTP error:", error);
       
       if (error.message?.includes("429") || error.message?.includes("Too many")) {

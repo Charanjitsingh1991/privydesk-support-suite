@@ -166,7 +166,7 @@ describe('generateSecurePassword', () => {
 
   it('should contain at least one symbol', () => {
     const password = generateSecurePassword(16);
-    expect(/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/.test(password)).toBe(true);
+    expect(/[!@#$%^&*()_+\-=[\]{}|;:,.<>?]/.test(password)).toBe(true);
   });
 
   it('should generate unique passwords', () => {

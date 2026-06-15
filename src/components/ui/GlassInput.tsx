@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * GlassInput Component
  * Premium input field with glassmorphism, floating label, and glow effects

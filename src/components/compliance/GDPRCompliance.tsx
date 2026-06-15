@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Download, Trash2, FileText, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { GDPRService } from '@/lib/services/gdprService';
 import { Button } from '@/components/ui/button';
@@ -34,6 +34,7 @@ export function GDPRCompliance({ organizationId, userId }: { organizationId: str
 
   useEffect(() => {
     loadData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   const loadData = async () => {

@@ -155,7 +155,7 @@ export function UsageDashboard({ organizationId, plan }: UsageDashboardProps) {
           <div className="space-y-6">
             {metrics.map((metric) => {
               const percentage = getUsagePercentage(
-                metric.label.toLowerCase().replace(/ /g, '_') as any
+                metric.label.toLowerCase().replace(/ /g, '_') as string
               );
               return (
                 <div key={metric.label}>

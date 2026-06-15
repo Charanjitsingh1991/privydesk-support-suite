@@ -57,6 +57,7 @@ export function ResponseTimeDistribution({ data, loading }: ResponseTimeDistribu
                   border: '1px solid hsl(var(--border))',
                   borderRadius: '8px'
                 }}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 formatter={(value: number, name: string, props: any) => [
                   `${value} tickets (${props.payload.percentage}%)`,
                   'Count'

@@ -1,9 +1,11 @@
+/* eslint-disable react-refresh/only-export-components */
 import { lazy, Suspense, ComponentType } from 'react';
 
 /**
  * Lazy load component with loading fallback
  * Usage: const MyComponent = lazyLoad(() => import('./MyComponent'))
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function lazyLoad<T extends ComponentType<any>>(
   importFunc: () => Promise<{ default: T }>,
   fallback: React.ReactNode = <LoadingFallback />
@@ -35,6 +37,6 @@ function LoadingFallback() {
  * Preload a lazy-loaded component
  * Usage: preloadComponent(() => import('./MyComponent'))
  */
-export function preloadComponent(importFunc: () => Promise<any>) {
+export function preloadComponent(importFunc: () => Promise<unknown>) {
   importFunc();
 }

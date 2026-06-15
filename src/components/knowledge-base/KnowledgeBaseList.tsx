@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Search, Plus, Eye, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { KnowledgeBaseService } from '@/lib/services/knowledgeBaseService';
 import { Button } from '@/components/ui/button';
@@ -25,6 +25,7 @@ export function KnowledgeBaseList({ organizationId }: { organizationId: string }
 
   useEffect(() => {
     loadArticles();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   const loadArticles = async () => {

@@ -5,8 +5,8 @@ import type { Database } from '@/integrations/supabase/types';
 type WebhookRow = Database['public']['Tables']['webhooks']['Row'];
 type WebhookDeliveryRow = Database['public']['Tables']['webhook_deliveries']['Row'];
 
-export interface Webhook extends WebhookRow {}
-export interface WebhookDelivery extends WebhookDeliveryRow {}
+export type Webhook = WebhookRow
+export type WebhookDelivery = WebhookDeliveryRow
 
 export class WebhookService {
   /**
@@ -102,7 +102,7 @@ export class WebhookService {
   static async triggerWebhook(
     organizationId: string,
     eventType: string,
-    payload: any
+    payload: unknown
   ): Promise<void> {
     // Get all active webhooks for this organization that listen to this event
     const { data: webhooks } = await supabase

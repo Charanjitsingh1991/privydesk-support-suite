@@ -52,10 +52,10 @@ export function GeneralSettingsTab() {
         industry: settings.industry || '',
         company_size: settings.company_size || '',
         timezone: settings.timezone || 'UTC',
-        description: (settings.metadata as any)?.description || '',
+        description: (settings.metadata as Record<string, unknown>)?.description as string || '',
       });
-      if ((settings.metadata as any)?.business_hours) {
-        setBusinessHours((settings.metadata as any).business_hours);
+      if ((settings.metadata as Record<string, unknown>)?.business_hours) {
+        setBusinessHours((settings.metadata as Record<string, unknown>).business_hours as Record<string, unknown>);
       }
     }
   }, [settings]);
@@ -70,7 +70,7 @@ export function GeneralSettingsTab() {
         ...(settings?.metadata as object || {}),
         description: formData.description,
         business_hours: businessHours,
-      } as any,
+      } as Record<string, unknown>,
     });
   };
 

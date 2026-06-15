@@ -5,9 +5,9 @@ type MarketplaceAppRow = Database['public']['Tables']['marketplace_apps']['Row']
 type AppInstallationRow = Database['public']['Tables']['app_installations']['Row'];
 type AppReviewRow = Database['public']['Tables']['app_reviews']['Row'];
 
-export interface MarketplaceApp extends MarketplaceAppRow {}
-export interface AppInstallation extends AppInstallationRow {}
-export interface AppReview extends AppReviewRow {}
+export type MarketplaceApp = MarketplaceAppRow
+export type AppInstallation = AppInstallationRow
+export type AppReview = AppReviewRow
 
 export class MarketplaceService {
   /**
@@ -91,7 +91,7 @@ export class MarketplaceService {
     organizationId: string,
     appId: string,
     installedBy: string,
-    settings?: any
+    settings?: unknown
   ): Promise<AppInstallation | null> {
     // Check if already installed
     const { data: existing } = await supabase
@@ -170,7 +170,7 @@ export class MarketplaceService {
       return [];
     }
 
-    return (data || []) as any;
+    return (data || []) as AppInstallation[];
   }
 
   /**
@@ -178,7 +178,7 @@ export class MarketplaceService {
    */
   static async updateAppSettings(
     installationId: string,
-    settings: any
+    settings: unknown
   ): Promise<AppInstallation | null> {
     const { data, error } = await supabase
       .from('app_installations')

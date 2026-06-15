@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -37,6 +37,7 @@ export function AllowedDomainsManager() {
     fetchDomains();
     fetchPendingClients();
     loadSecuritySettings();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchDomains, fetchPendingClients]);
 
   const loadSecuritySettings = async () => {
@@ -80,18 +81,18 @@ export function AllowedDomainsManager() {
         [key]: value,
       };
       
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const { error } = await supabase
         .from('organizations')
         .update({
-          security_settings: updatedSettings as any,
+          security_settings: updatedSettings as Record<string, unknown>,
         })
         .eq('id', organizationId);
 
       if (error) throw error;
       
       toast({ title: 'Setting updated' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error updating setting',
         description: error.message,
@@ -106,7 +107,7 @@ export function AllowedDomainsManager() {
     if (!newDomain.trim() || !organizationId) return;
     
     // Validate domain format
-    const domainRegex = /^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,}$/i;
+    const domainRegex = /^[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,}$/i;
     if (!domainRegex.test(newDomain.trim())) {
       toast({
         title: 'Invalid domain format',

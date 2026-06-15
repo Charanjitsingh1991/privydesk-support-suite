@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { MessageSquare, ThumbsUp, CheckCircle2, Plus } from 'lucide-react';
 import { ForumService, type ForumTopic } from '@/lib/services/forumService';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ export function ForumTopicList({ organizationId }: { organizationId: string }) {
 
   useEffect(() => {
     loadTopics();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   const loadTopics = async () => {

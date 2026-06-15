@@ -55,7 +55,7 @@ export function useSecurityEvents() {
       const { data, error } = await query;
       if (error) throw error;
       setEvents((data as SecurityEvent[]) || []);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error fetching security events',
         description: error.message,
@@ -79,7 +79,7 @@ export function useSecurityEvents() {
       if (error) throw error;
       await fetchEvents();
       toast({ title: 'Event marked as resolved' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error resolving event',
         description: error.message,
@@ -106,7 +106,7 @@ export function useAllowedDomains() {
 
       if (error) throw error;
       setDomains((data as AllowedDomain[]) || []);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error fetching allowed domains',
         description: error.message,
@@ -130,7 +130,7 @@ export function useAllowedDomains() {
       if (error) throw error;
       await fetchDomains();
       toast({ title: 'Domain added successfully' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error adding domain',
         description: error.message,
@@ -149,7 +149,7 @@ export function useAllowedDomains() {
       if (error) throw error;
       await fetchDomains();
       toast({ title: 'Domain removed' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error removing domain',
         description: error.message,
@@ -177,7 +177,7 @@ export function usePendingClients() {
 
       if (error) throw error;
       setPendingClients((data as PendingClient[]) || []);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error fetching pending clients',
         description: error.message,
@@ -201,7 +201,7 @@ export function usePendingClients() {
       if (error) throw error;
       await fetchPendingClients();
       toast({ title: 'Client approved' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error approving client',
         description: error.message,
@@ -224,7 +224,7 @@ export function usePendingClients() {
       if (error) throw error;
       await fetchPendingClients();
       toast({ title: 'Client rejected' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error rejecting client',
         description: error.message,
@@ -251,7 +251,7 @@ export function useUserSessions() {
 
       if (error) throw error;
       setSessions((data as UserSession[]) || []);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error fetching sessions',
         description: error.message,
@@ -272,7 +272,7 @@ export function useUserSessions() {
       if (error) throw error;
       await fetchSessions();
       toast({ title: 'Session terminated' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error terminating session',
         description: error.message,
@@ -292,7 +292,7 @@ export function useUserSessions() {
       if (error) throw error;
       await fetchSessions();
       toast({ title: 'All sessions terminated' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error terminating sessions',
         description: error.message,
@@ -324,7 +324,7 @@ export function useFlaggedContent() {
       const { data, error } = await query;
       if (error) throw error;
       setFlaggedItems((data as FlaggedContent[]) || []);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error fetching flagged content',
         description: error.message,
@@ -349,7 +349,7 @@ export function useFlaggedContent() {
       if (error) throw error;
       await fetchFlaggedContent();
       toast({ title: 'Content reviewed' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error reviewing content',
         description: error.message,
@@ -416,7 +416,7 @@ export function useGDPRCompliance() {
         title: 'Data Exported',
         description: 'Your data has been downloaded successfully.',
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error('Failed to export data:', error);
       toast({
         title: 'Export Failed',
@@ -465,7 +465,7 @@ export function useGDPRCompliance() {
       });
 
       return deletionDate;
-    } catch (error: any) {
+    } catch (error) {
       console.error('Failed to request deletion:', error);
       toast({
         title: 'Request Failed',
@@ -508,7 +508,7 @@ export function useGDPRCompliance() {
         title: 'Deletion Cancelled',
         description: 'Your account deletion has been cancelled.',
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error('Failed to cancel deletion:', error);
       toast({
         title: 'Error',
@@ -561,7 +561,7 @@ export function useGDPRCompliance() {
         title: 'Preferences Updated',
         description: 'Your privacy preferences have been saved.',
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error('Failed to update preferences:', error);
       toast({
         title: 'Error',

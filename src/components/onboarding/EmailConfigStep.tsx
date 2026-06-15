@@ -95,7 +95,7 @@ export function EmailConfigStep({ data, onUpdate, onComplete, onPrev }: EmailCon
         title: 'Connection successful',
         description: 'Email configuration is working correctly',
       });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Connection failed',
         description: error.message || 'Could not connect with the provided settings',

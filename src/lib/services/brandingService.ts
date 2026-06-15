@@ -4,8 +4,8 @@ import type { Database } from '@/integrations/supabase/types';
 type BrandingSettingsRow = Database['public']['Tables']['branding_settings']['Row'];
 type CustomDomainRow = Database['public']['Tables']['custom_domains']['Row'];
 
-export interface BrandingSettings extends BrandingSettingsRow {}
-export interface CustomDomain extends CustomDomainRow {}
+export type BrandingSettings = BrandingSettingsRow
+export type CustomDomain = CustomDomainRow
 
 export class BrandingService {
   /**

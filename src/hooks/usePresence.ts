@@ -70,6 +70,7 @@ export function usePresence({
         const users: PresenceUser[] = [];
 
         Object.values(state).forEach((presences) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (presences as any[]).forEach((presence) => {
             if (presence.id) {
               users.push({
@@ -148,7 +149,7 @@ export function usePresence({
 }
 
 // Simple throttle helper
-function throttle<T extends (...args: any[]) => void>(
+function throttle<T extends (...args: unknown[]) => void>(
   func: T,
   limit: number
 ): T {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import { useEmailImport } from '@/hooks/useEmailArchive';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { EmailImportUpload } from '@/components/emails/EmailImportUpload';
@@ -65,6 +65,7 @@ export default function EmailMigration() {
       const unsubscribe = subscribeToJob(activeJob.id);
       return unsubscribe;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeJob?.id, subscribeToJob]);
 
   const completedJobs = jobs.filter(j => j.status === 'completed' || j.status === 'failed');

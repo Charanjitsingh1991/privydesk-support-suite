@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useUser } from '@/hooks/useSession';
@@ -59,7 +60,7 @@ export function useFileStorage() {
 
       if (error) throw error;
       setFiles((data || []) as unknown as FileWithUploader[]);
-    } catch (error: any) {
+    } catch (error) {
       toast.error('Failed to load files');
       console.error(error);
     } finally {
@@ -134,7 +135,7 @@ export function useFileStorage() {
 
       toast.success(`${file.name} uploaded successfully`);
       return metadata as unknown as FileMetadata;
-    } catch (error: any) {
+    } catch (error) {
       setUploadProgress(prev => prev.map(p => 
         p.id === fileId ? { ...p, status: 'error', error: error.message } : p
       ));
@@ -190,7 +191,7 @@ export function useFileStorage() {
       setFiles(prev => prev.filter(f => f.id !== fileId));
       toast.success('File deleted');
       return true;
-    } catch (error: any) {
+    } catch (error) {
       toast.error('Failed to delete file');
       return false;
     }

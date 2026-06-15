@@ -80,7 +80,7 @@ export function RecentActivityFeed() {
         },
         (payload) => {
           if (payload.eventType === 'INSERT') {
-            const newTicket = payload.new as any;
+            const newTicket = payload.new as Record<string, unknown>;
             const newActivity: Activity = {
               id: `${newTicket.id}-created-${Date.now()}`,
               type: 'created',

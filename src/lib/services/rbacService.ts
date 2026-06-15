@@ -3,7 +3,7 @@ import type { Database } from '@/integrations/supabase/types';
 
 type CustomRoleRow = Database['public']['Tables']['custom_roles']['Row'];
 
-export interface CustomRole extends CustomRoleRow {}
+export type CustomRole = CustomRoleRow
 export interface RoleAssignment {
   id: string;
   user_id: string;

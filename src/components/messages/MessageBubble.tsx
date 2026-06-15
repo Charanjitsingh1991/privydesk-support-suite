@@ -99,7 +99,7 @@ export function MessageBubble({
 
   const renderMarkdown = (text: string) => {
     // Simple markdown rendering
-    let html = text
+    const html = text
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/_(.*?)_/g, '<em>$1</em>')
       .replace(/`(.*?)`/g, '<code class="bg-muted px-1 rounded text-sm">$1</code>')

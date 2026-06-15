@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Plug, Check, X, Settings } from 'lucide-react';
 import { IntegrationService } from '@/lib/services/integrationService';
 import { Button } from '@/components/ui/button';
@@ -20,6 +20,7 @@ export function IntegrationsList({ organizationId }: { organizationId: string })
 
   useEffect(() => {
     loadIntegrations();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   const loadIntegrations = async () => {

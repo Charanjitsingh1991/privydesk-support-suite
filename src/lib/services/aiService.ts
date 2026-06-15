@@ -281,7 +281,7 @@ Requirements:
 
     // Calculate category distribution
     const categoryCount: Record<string, number> = {};
-    let sentimentCount = { positive: 0, negative: 0, neutral: 0 };
+    const sentimentCount = { positive: 0, negative: 0, neutral: 0 };
     let totalPriority = 0;
 
     tickets.forEach(ticket => {

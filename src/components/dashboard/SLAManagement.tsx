@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -111,6 +111,7 @@ export function SLAManagement({ organizationId }: SLAManagementProps) {
 
   useEffect(() => {
     fetchPolicies();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   return (

@@ -6,12 +6,12 @@ type AutomationRuleInsert = Database['public']['Tables']['automation_rules']['In
 
 export interface AutomationTrigger {
   type: 'ticket_created' | 'ticket_updated' | 'status_changed' | 'time_based' | 'sla_breach';
-  conditions: Record<string, any>;
+  conditions: Record<string, unknown>;
 }
 
 export interface AutomationAction {
   type: 'assign_agent' | 'change_status' | 'add_tag' | 'send_email' | 'update_priority' | 'close_ticket';
-  parameters: Record<string, any>;
+  parameters: Record<string, unknown>;
 }
 
 export class AutomationService {
@@ -61,8 +61,8 @@ export class AutomationService {
       name: string;
       description?: string;
       trigger_type: string;
-      trigger_conditions: any;
-      actions: any;
+      trigger_conditions: unknown;
+      actions: unknown;
       is_active?: boolean;
     }
   ): Promise<AutomationRule | null> {
@@ -98,8 +98,8 @@ export class AutomationService {
       name?: string;
       description?: string;
       trigger_type?: string;
-      trigger_conditions?: any;
-      actions?: any;
+      trigger_conditions?: unknown;
+      actions?: unknown;
       is_active?: boolean;
     }
   ): Promise<boolean> {
@@ -156,7 +156,7 @@ export class AutomationService {
   static async executeRulesForTicket(
     ticketId: string,
     triggerType: string,
-    context: Record<string, any> = {}
+    context: Record<string, unknown> = {}
   ): Promise<void> {
     try {
       // Get ticket details
@@ -193,9 +193,9 @@ export class AutomationService {
    * Evaluate if conditions match
    */
   private static evaluateConditions(
-    conditions: any,
-    ticket: any,
-    context: Record<string, any>
+    conditions: unknown,
+    ticket: Record<string, unknown>,
+    context: Record<string, unknown>
   ): boolean {
     if (!conditions) return true;
 
@@ -211,7 +211,7 @@ export class AutomationService {
           if (!value.includes(ticketValue)) return false;
         } else if (typeof value === 'object' && value !== null) {
           // Handle operators like { $gt: 5, $lt: 10 }
-          const operators = value as Record<string, any>;
+          const operators = value as Record<string, unknown>;
           if (operators.$gt !== undefined && ticketValue <= operators.$gt) return false;
           if (operators.$lt !== undefined && ticketValue >= operators.$lt) return false;
           if (operators.$eq !== undefined && ticketValue !== operators.$eq) return false;
@@ -234,7 +234,7 @@ export class AutomationService {
   private static async executeActions(
     ruleId: string,
     ticketId: string,
-    actions: any
+    actions: unknown
   ): Promise<void> {
     try {
       const actionsArray = typeof actions === 'string' ? JSON.parse(actions) : actions;
@@ -269,7 +269,7 @@ export class AutomationService {
   /**
    * Execute a single action
    */
-  private static async executeAction(ticketId: string, action: any): Promise<void> {
+  private static async executeAction(ticketId: string, action: AutomationAction): Promise<void> {
     const { type, parameters } = action;
 
     switch (type) {
@@ -294,8 +294,7 @@ export class AutomationService {
           .eq('id', ticketId);
         break;
 
-      case 'add_tag':
-        // Get current tags
+      case 'add_tag': {
         const { data: ticket } = await supabase
           .from('tickets')
           .select('tags')
@@ -312,6 +311,7 @@ export class AutomationService {
             .eq('id', ticketId);
         }
         break;
+      }
 
       case 'send_email':
         // This would integrate with email service
@@ -339,7 +339,7 @@ export class AutomationService {
   static async getExecutionLogs(
     organizationId: string,
     limit: number = 50
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
     const { data, error } = await supabase
       .from('automation_logs')
       .select(`

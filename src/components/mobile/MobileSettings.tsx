@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Smartphone, Bell, Wifi, Download, Trash2 } from 'lucide-react';
 import { MobileService, type MobileDevice as ServiceMobileDevice } from '@/lib/services/mobileService';
 import { Button } from '@/components/ui/button';
@@ -27,6 +27,7 @@ export function MobileSettings({ organizationId, userId }: { organizationId: str
 
   useEffect(() => {
     loadDevices();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   const loadDevices = async () => {

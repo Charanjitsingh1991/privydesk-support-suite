@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
+﻿import { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useUser } from '@/hooks/useSession';
 import { Button } from '@/components/ui/button';
@@ -89,6 +89,7 @@ export const MessageComposer = forwardRef<MessageComposerHandle, MessageComposer
         const { content: draftContent, isInternal: draftInternal } = JSON.parse(draft);
         setContent(draftContent || '');
         setIsInternal(draftInternal || false);
+      // eslint-disable-next-line no-empty
       } catch {}
     }
   }, [ticketId]);
@@ -163,6 +164,7 @@ export const MessageComposer = forwardRef<MessageComposerHandle, MessageComposer
     return uploadedUrls;
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleSubmit = async () => {
     if (!content.trim() || !userId) return;
 
@@ -195,7 +197,7 @@ export const MessageComposer = forwardRef<MessageComposerHandle, MessageComposer
 
       toast.success(isInternal ? 'Internal note added' : 'Reply sent');
       onMessageSent();
-    } catch (error: any) {
+    } catch (error) {
       toast.error(error.message || 'Failed to send message');
     } finally {
       setLoading(false);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useUser } from '@/hooks/useSession';
@@ -84,7 +85,7 @@ export function useEmailArchive() {
 
       setEmails((data || []) as unknown as EmailWithAttachments[]);
       setTotalCount(count || 0);
-    } catch (error: any) {
+    } catch (error) {
       toast.error('Failed to load emails');
       console.error(error);
     } finally {
@@ -318,7 +319,7 @@ export function useEmailImport() {
 
       await fetchJobs();
       return (job as any).id;
-    } catch (error: any) {
+    } catch (error) {
       toast.error(`Upload failed: ${error.message}`);
       return null;
     } finally {

@@ -4,9 +4,9 @@ export interface AuditLogEntry {
   action: string;
   resourceType?: string;
   resourceId?: string;
-  beforeSnapshot?: any;
-  afterSnapshot?: any;
-  metadata?: Record<string, any>;
+  beforeSnapshot?: unknown;
+  afterSnapshot?: unknown;
+  metadata?: Record<string, unknown>;
 }
 
 export class AuditLogService {
@@ -47,7 +47,7 @@ export class AuditLogService {
     organizationId: string,
     userId: string,
     ticketId: string,
-    ticketData: any
+    ticketData: unknown
   ): Promise<void> {
     await this.log(organizationId, userId, {
       action: 'ticket.created',
@@ -64,8 +64,8 @@ export class AuditLogService {
     organizationId: string,
     userId: string,
     ticketId: string,
-    before: any,
-    after: any
+    before: unknown,
+    after: unknown
   ): Promise<void> {
     await this.log(organizationId, userId, {
       action: 'ticket.updated',
@@ -84,7 +84,7 @@ export class AuditLogService {
     userId: string,
     action: string,
     targetUserId: string,
-    data?: any
+    data?: unknown
   ): Promise<void> {
     await this.log(organizationId, userId, {
       action: `user.${action}`,
@@ -101,8 +101,8 @@ export class AuditLogService {
     organizationId: string,
     userId: string,
     settingType: string,
-    before: any,
-    after: any
+    before: unknown,
+    after: unknown
   ): Promise<void> {
     await this.log(organizationId, userId, {
       action: 'settings.changed',
@@ -119,7 +119,7 @@ export class AuditLogService {
     organizationId: string,
     userId: string | null,
     event: string,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): Promise<void> {
     await this.log(organizationId, userId, {
       action: `security.${event}`,
@@ -195,7 +195,7 @@ export class AuditLogService {
     });
 
     const headers = ['Timestamp', 'User', 'Action', 'Resource Type', 'Resource ID', 'Details'];
-    const rows = logs.map((log: any) => [
+    const rows = logs.map((log) => [
       new Date(log.created_at).toISOString(),
       log.user?.email || 'System',
       log.action,

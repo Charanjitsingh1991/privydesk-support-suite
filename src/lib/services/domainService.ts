@@ -287,7 +287,7 @@ export class DomainService {
   /**
    * Get organization by domain (for routing)
    */
-  static async getOrganizationByDomain(host: string): Promise<any | null> {
+  static async getOrganizationByDomain(host: string): Promise<unknown | null> {
     try {
       // Check if it's a custom domain
       if (!host.endsWith('.privydesk.com')) {

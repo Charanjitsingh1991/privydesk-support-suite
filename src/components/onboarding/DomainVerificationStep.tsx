@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -58,6 +58,7 @@ export function DomainVerificationStep({ data, onUpdate, onNext, onPrev }: Domai
       setVerificationToken(token);
       onUpdate({ domainVerificationToken: token });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const copyToClipboard = async (text: string) => {
@@ -107,7 +108,7 @@ export function DomainVerificationStep({ data, onUpdate, onNext, onPrev }: Domai
           variant: 'destructive',
         });
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error verifying domain:', error);
       setVerificationStatus('failed');
       toast({

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { UsageTrackingService, UsageData, UsageLimits } from '@/lib/services/usageTrackingService';
 import { useToast } from '@/hooks/use-toast';
 
@@ -69,6 +69,7 @@ export function useUsageTracking(organizationId: string, limits?: UsageLimits) {
       const interval = setInterval(fetchUsage, 5 * 60 * 1000);
       return () => clearInterval(interval);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   return {

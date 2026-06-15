@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
@@ -57,6 +57,7 @@ export function SecuritySettingsTab() {
 
   useEffect(() => {
     loadSettings();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   const loadSettings = async () => {
@@ -91,10 +92,10 @@ export function SecuritySettingsTab() {
     setSaving(true);
     
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const { error } = await supabase
         .from('organizations')
-        .update({ security_settings: settings as any })
+        .update({ security_settings: settings as Record<string, unknown> })
         .eq('id', organizationId);
 
       if (error) throw error;

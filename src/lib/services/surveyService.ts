@@ -59,7 +59,7 @@ export class SurveyService {
     survey: {
       name: string;
       type: 'csat' | 'nps' | 'ces' | 'custom';
-      questions: any;
+      questions: unknown;
       trigger_event?: string;
       trigger_delay_minutes?: number;
       is_active?: boolean;
@@ -95,7 +95,7 @@ export class SurveyService {
     surveyId: string,
     updates: {
       name?: string;
-      questions?: any;
+      questions?: unknown;
       trigger_event?: string;
       trigger_delay_minutes?: number;
       is_active?: boolean;
@@ -141,7 +141,7 @@ export class SurveyService {
     responses: {
       score: number;
       feedback?: string;
-      question_responses?: any;
+      question_responses?: unknown;
     }
   ): Promise<SurveyResponse | null> {
     const { data, error } = await supabase

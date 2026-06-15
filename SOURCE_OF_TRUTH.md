@@ -235,12 +235,22 @@ This collapses both RBAC and tenant isolation. **Fix before any external users.*
 
 **Fix:** Move org creation + first-admin assignment into a SECURITY DEFINER RPC (e.g. `create_organization_and_claim_owner()`); add a `BEFORE UPDATE` trigger rejecting `role`/`organization_id` changes unless service-role or existing admin; add `WITH CHECK` to the policy restricting client-updatable columns.
 
-### 6.2 🔴 Migration integrity — BLOCKER
+### 6.2 🔴 Migration integrity — BLOCKER  *(updated with LIVE introspection, see `supabase/_introspection/PROD_VS_REPO.md`)*
 
-- **Competing definitions:** `20260130_consolidated_phases_1_9.sql` **and** individual `20260130_phase1..9_*.sql` files both define overlapping tables. Applying the full set conflicts.
-- **Phantom `users` table:** ~120+ references across the 16 phase migration files target a `users` table / `users.role` (exact count is regex-dependent; a narrow `REFERENCES users(`/`FROM users WHERE` pattern matches 122). Separately, a non-existent `developer` role appears **17 times across 2 files** (`20260130_phase2_api_keys.sql`, `20260130_phase2_webhooks.sql`). The real table is `profiles` with roles `super_admin/admin/agent/client`. `20260130_rls_policies_all_phases.sql` correctly uses `profiles`, so the repo assumes two different schemas at once.
-- **Webhook table drift:** `supabase/functions/api-v1/index.ts` reads/writes `webhook_configs` / `webhook_logs` (lines 519, 556, 582, 593), but the schema defines `webhooks` / `webhook_deliveries`. **Webhook delivery is effectively broken.**
-- **Impact:** A fresh `supabase db reset` will not cleanly reproduce the intended DB. The deployed schema is currently **unverifiable** from the repo.
+Live production introspection (project `mgnuddfytlbtgprckzto`, read-only Management API) clarified the actual state — it's half-applied, not simply code-vs-schema:
+
+- **Both competing migration sets were applied.** Production has **all four** webhook tables as BASE TABLEs: `webhooks`, `webhook_deliveries`, `webhook_configs`, AND `webhook_logs`. So `api-v1`'s use of `webhook_configs`/`webhook_logs` is **not broken** (the tables exist) — but prod carries redundant duplicate tables. (Supersedes the earlier "webhook delivery is broken" claim — it isn't; it's redundant.)
+- **`users` is a VIEW, not a phantom.** Live DB has `users` defined as `SELECT * FROM profiles` — a compatibility shim so the phase migrations referencing `users` partially apply. `profiles` remains the only authoritative base table. ⚠️ Audit that no policy/grant on the `users` view exposes data the base-table RLS would deny.
+- **`developer` role confirmed absent.** Live `user_role` enum = exactly `{super_admin, admin, agent, client}`. The 17 `developer` references in phase files are dead code that will throw `invalid input value for enum` on replay.
+- **Impact:** the migration history is **not replayable** (a fresh reset would hit the `developer` enum error + duplicate-object conflicts), and prod is in a half-applied state. Forward-only reconciliation against this live snapshot is the correct path (do not rebuild).
+
+### 6.2b 🔴 NEW P0 (live-confirmed): tables with RLS DISABLED — `otp_codes`, `rate_limits`, `attachments`
+
+Introspection found three `public` tables with `rowsecurity = false`:
+- **`otp_codes` (most severe):** if this stores login OTP codes and is reachable via the anon REST API, any client could read pending OTPs for any email → **account-takeover vector requiring no existing account.** Potentially MORE immediately exploitable than §6.1. **Verify anon REST reachability immediately**; if reachable, this is a drop-everything fix.
+- **`rate_limits`:** RLS off — tampering/reading could defeat the OTP/auth rate limiting.
+- **`attachments`:** RLS off — possible cross-tenant file-metadata exposure depending on exposure.
+**Fix:** enable RLS + add owner/org-scoped policies on all three (service-role-only for `otp_codes`/`rate_limits`, which should never be client-readable). Add these to the isolation harness. **This is P0 alongside §6.1.**
 
 ### 6.3 🟠 Public API relies on manual tenant scoping
 

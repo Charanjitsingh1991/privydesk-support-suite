@@ -23,7 +23,7 @@ export function useTeamMembers(organizationId: string | null) {
 
       if (error) throw error;
       setMembers((data as TeamMember[]) || []);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error fetching team members',
         description: error.message,
@@ -44,7 +44,7 @@ export function useTeamMembers(organizationId: string | null) {
       if (error) throw error;
       await fetchMembers();
       toast({ title: 'Role updated successfully' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error updating role',
         description: error.message,
@@ -63,7 +63,7 @@ export function useTeamMembers(organizationId: string | null) {
       if (error) throw error;
       await fetchMembers();
       toast({ title: isActive ? 'User activated' : 'User deactivated' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error updating user status',
         description: error.message,
@@ -94,7 +94,7 @@ export function useClients(organizationId: string | null) {
 
       if (error) throw error;
       setClients((data as TeamMember[]) || []);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error fetching clients',
         description: error.message,
@@ -115,7 +115,7 @@ export function useClients(organizationId: string | null) {
       if (error) throw error;
       await fetchClients();
       toast({ title: isActive ? 'Client activated' : 'Client deactivated' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error updating client status',
         description: error.message,
@@ -146,7 +146,7 @@ export function useInvitations(organizationId: string | null) {
 
       if (error) throw error;
       setInvitations((data as UserInvitation[]) || []);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error fetching invitations',
         description: error.message,
@@ -217,7 +217,7 @@ export function useInvitations(organizationId: string | null) {
 
       await fetchInvitations();
       return true;
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error sending invitation',
         description: error.message,
@@ -269,7 +269,7 @@ export function useInvitations(organizationId: string | null) {
 
       await fetchInvitations();
       toast({ title: 'Invitation resent' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error resending invitation',
         description: error.message,
@@ -288,7 +288,7 @@ export function useInvitations(organizationId: string | null) {
       if (error) throw error;
       await fetchInvitations();
       toast({ title: 'Invitation cancelled' });
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: 'Error cancelling invitation',
         description: error.message,

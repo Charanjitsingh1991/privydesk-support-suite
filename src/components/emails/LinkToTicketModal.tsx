@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Search, Ticket, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useUser } from '@/hooks/useSession';
@@ -45,6 +45,7 @@ export function LinkToTicketModal({
     if (open && organizationId) {
       searchTickets('');
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, organizationId]);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export function LinkToTicketModal({
       }
     }, 300);
     return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, open]);
 
   const searchTickets = async (query: string) => {

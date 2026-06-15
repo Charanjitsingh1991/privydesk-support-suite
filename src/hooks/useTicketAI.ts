@@ -87,7 +87,7 @@ export function useTicketAI() {
       }
 
       return data.result;
-    } catch (err: any) {
+    } catch (err) {
       console.error('AI analysis error:', err);
       toast.error(err.message || 'AI analysis failed');
       return null;

@@ -39,7 +39,7 @@ export class UsageTrackingService {
         .eq('date', today)
         .single();
 
-      const updates: any = {
+      const updates: Record<string, unknown> = {
         organization_id: organizationId,
         date: today,
       };

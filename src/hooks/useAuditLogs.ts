@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { AuditLogService } from '@/lib/services/auditLogService';
 import { useToast } from '@/hooks/use-toast';
 import type { Database } from '@/integrations/supabase/types';
@@ -6,7 +6,7 @@ import type { Database } from '@/integrations/supabase/types';
 type AuditLogRow = Database['public']['Tables']['audit_logs']['Row'];
 
 export interface AuditLog extends Omit<AuditLogRow, 'metadata'> {
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   user?: {
     email: string;
     full_name: string;
@@ -31,10 +31,10 @@ export function useAuditLogs(organizationId: string) {
       setLoading(true);
       setError(null);
       const data = await AuditLogService.getLogs(organizationId, options);
-      // Cast metadata from Json to Record<string, any>
+      // Cast metadata from Json to Record<string, unknown>
       const typedLogs = data.map(log => ({
         ...log,
-        metadata: (log.metadata as any) || {},
+        metadata: (log.metadata as Record<string, unknown>) || {},
       })) as AuditLog[];
       setLogs(typedLogs);
     } catch (err) {
@@ -83,6 +83,7 @@ export function useAuditLogs(organizationId: string) {
     if (organizationId) {
       fetchLogs();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   return {

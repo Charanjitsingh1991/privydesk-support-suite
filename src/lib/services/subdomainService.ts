@@ -60,7 +60,7 @@ export class SubdomainService {
    */
   private static async createHostingerSubdomain(
     subdomain: string
-  ): Promise<{ success: boolean; message: string; manualSetup?: any }> {
+  ): Promise<{ success: boolean; message: string; manualSetup?: unknown }> {
     // Check if API key is configured
     if (!this.HOSTINGER_API_KEY) {
       console.warn('Hostinger API key not configured. Subdomain creation will be manual.');

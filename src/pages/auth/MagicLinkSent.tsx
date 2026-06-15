@@ -44,7 +44,7 @@ export default function MagicLinkSent() {
         title: "Link sent!",
         description: "A new magic link has been sent to your email.",
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error("Resend error:", error);
       
       if (error.message?.includes("429")) {

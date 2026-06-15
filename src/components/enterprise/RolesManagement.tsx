@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Shield, Plus, Edit, Trash2, Users } from 'lucide-react';
 import { RBACService, type CustomRole } from '@/lib/services/rbacService';
 import { Button } from '@/components/ui/button';
@@ -41,6 +41,7 @@ export function RolesManagement({ organizationId }: { organizationId: string }) 
 
   useEffect(() => {
     loadRoles();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organizationId]);
 
   const loadRoles = async () => {

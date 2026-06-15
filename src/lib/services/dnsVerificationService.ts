@@ -56,7 +56,7 @@ export class DNSVerificationService {
       }
 
       // TXT records are returned with quotes, need to clean them
-      const txtRecords = data.Answer.map((record: any) => 
+      const txtRecords = data.Answer.map((record: { data: string }) => 
         record.data.replace(/"/g, '')
       );
 
